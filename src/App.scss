@@ -1,0 +1,71 @@
+@import 'variables.scss';
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  color: $black;
+}
+
+h5 {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.wrapper {
+  max-width: 1200px;
+  margin: auto;
+}
+
+.content {
+  margin-top: 70px;
+}
+
+.btn {
+  display: inline-block;
+  vertical-align: top;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  background: rgba($color: $primary, $alpha: 0);
+  font-family: inherit;
+  font-size: .875rem;
+  font-weight: 600;
+  color: $primary;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  padding: .6rem 1rem;
+  opacity: 0.75;
+  transition: opacity linear .3s, background linear .3s;
+
+  &:hover {
+    opacity: 1;
+    background: rgba($color: $primary, $alpha: .05);
+  }
+  
+  &--disabled {
+    opacity: .2;
+    
+    &:hover {
+      opacity: .2;
+    }
+  }
+}
+
+.btn__outlined {
+  @extend .btn;
+    border: 1px solid $primary;
+}
+
+.btn__text {
+  @extend .btn;
+  border: none;
+}
+
+

@@ -1,0 +1,41 @@
+@import '../../variables.scss';
+
+.header {
+    width: 100%;
+    padding: 1rem 0;
+    background-color: $primary;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    box-shadow: 0px 4px 8px 0px rgba($black, .4);
+    h2 {
+        color: $white
+    }
+    .wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+.search {
+    height: 32px;
+    width: 200px;
+    border: none;
+    border-radius: 4px;
+    padding: 1rem;
+    background-color: rgba($white, .3);
+    color: $white;
+    font-size: 1rem;
+    &::placeholder {
+        color: $white;
+        font-size: 1rem;
+    }
+}
+
+.more_btn {
+    background: none;
+    border: none;
+    color: $white;
+}

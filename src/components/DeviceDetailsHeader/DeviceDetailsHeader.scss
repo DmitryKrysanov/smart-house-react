@@ -1,0 +1,20 @@
+@import '../../variables.scss';
+
+.header {
+    width: 100%;
+    padding: 1rem 0;
+    background-color: $primary;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    box-shadow: 0px 4px 8px 0px rgba($black, .4);
+    h2 {
+        color: $white
+    }
+    .wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}

@@ -1,0 +1,62 @@
+@import '../../variables.scss';
+
+#modal-root {
+  position: relative;
+  z-index: 999;
+}
+
+.dialog {
+  background-color: rgba($black, 0.5);
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-dialog__inner {
+  width: 1000px;
+  height: 510px;
+  background-color: $white;
+  display: flex;
+  border-radius: .5rem;
+  overflow: hidden;
+  box-shadow: 0px 24px 48px 0px rgba($black, .4);
+}
+
+.card-dialog__image {
+  height: 100%;
+  width: 50%;
+  overflow: hidden;
+  position: relative;
+
+  img {
+    height: 100%;
+    width: auto;
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.card-dialog__content {
+  padding: 2rem;
+  position: relative;
+  width: 50%;
+}
+
+.card-dialog__row {
+  padding: 2rem 0;
+  border-bottom: 1px solid $gray-light;
+}
+
+.action-btns {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+}
