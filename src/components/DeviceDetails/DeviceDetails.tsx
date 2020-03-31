@@ -1,36 +1,57 @@
-import React, { Component } from 'react';
+import React from 'react';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import Switch from '@material-ui/core/Switch';
 import './DeviceDetails.scss'
 
+const modesList: string[] = [
+    'mode1', 'mode2', 'mode3'
+]
+
 const DeviceDetails = () => {
+
+    const modeItems = modesList.map((item, index) => (
+        <MenuItem key={index} value={item}>{item}</MenuItem>
+        )
+    )
+
     return (
         <div className='device-details'>
             <div className='device-details__image'>
-                <img src="http://placehold.it/600" alt="sdf"/>
+                <img src="http://placehold.it/600" alt="sdf" />
             </div>
             <div className='device-details__content'>
-                <h3>Device Name</h3>
-                <p>Oven</p>
-                <div>
-                <div className='temperature__header'>
-                    <h5>Temperature</h5>
-                    <button className='btn__outlined'>Edit</button>
+                <div className='general-info'>
+                    <div className='info'>
+                        <h5>Device Name</h5>
+                        <p>Oven</p>
+                    </div>
+                    <Switch edge="end" />
                 </div>
-             
-                <div className='temperature'>
-                    <h3>10</h3>
-                    <button
-                        className='btn__outlined' >
-                            -
-                    </button>
-                    <h1>100</h1>
-                    <button
-                        className='btn__outlined' >
-                            +
-                    </button>
-                    <h3>240</h3>
+                <h6>Temperature</h6>
+                <div className='range'>
+                    <h2>100</h2>
+                    <div className='range__buttons'>
+                        <button className='btn__outlined' > - </button>
+                        <button className='btn__outlined' > + </button>
+                    </div>
                 </div>
-            </div>
-
+                <h6>Modes</h6>
+                <div className='modes'>
+                    <FormControl fullWidth={true}>
+                        <InputLabel>Current Mode</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                        //   value={age}
+                        //   onChange={handleChange}
+                        >
+                            {modeItems}
+                        </Select>
+                    </FormControl>
+                </div>
             </div>
         </div>
     )

@@ -1,18 +1,29 @@
 @import '../../variables.scss';
+
 .device-details {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    max-width: 640px;
+    width: 640px;
     display: flex;
     border-radius: 4px;
     overflow: hidden;
     box-shadow: 0px 4px 8px 0px rgba($black, .1);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    @media screen and (max-width: 414px) {
+        width: 100%;
+        flex-direction: column;
+    }
 }
 
 .device-details__image {
     width: 50%;
+
+    @media screen and (max-width: 414px) {
+        width: 100%;
+    }
+
     img {
         width: 100%;
         display: block;
@@ -22,23 +33,51 @@
 .device-details__content {
     width: 50%;
     padding: 24px;
+
+    @media screen and (max-width: 414px) {
+        width: 100%;
+    }
+
+    p {
+        font-size: 0.875rem;
+    }
+
+    h6 {
+        margin-bottom: .5rem;
+    }
 }
 
-.temperature {
+.general-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.range {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    h1 {
-        width: 30px;
-        text-align: center;
+
+    h2 {
+        font-size: 3.75rem;
+        font-weight: 300;
+        letter-spacing: -0.5;
+        margin-bottom: 1.5rem;
+
+        &:after {
+            content: "\2103";
+            font-size: 1rem;
+            font-weight: 400;
+        }
     }
 }
 
-.temperature__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
+.range__buttons button:first-of-type {
+    margin-right: 8px;
 }
 
+.modes {
+    width: 100%;
+}

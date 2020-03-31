@@ -9,17 +9,58 @@
 body {
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
-  color: $black;
+  color: rgba($black, 0.87);
+}
+
+h1 {
+  font-size: 6rem;
+  font-weight: 300;
+  letter-spacing: -1.5;
+}
+
+// h2 {
+//   font-size: 3.75rem;
+//   font-weight: 300;
+//   letter-spacing: -0.5;
+// }
+
+// h3 {
+//   font-size: 3rem;
+//   font-weight: 400;
+//   letter-spacing: 0;
+// }
+
+h4 {
+  font-size: 2.125rem;
+  font-weight: 400;
+  letter-spacing: 0.25;
 }
 
 h5 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+h6 {
   font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.5;
+}
+
+p {
+  font-size: 0.875rem;
   font-weight: 400;
 }
 
 .wrapper {
-  max-width: 1200px;
+  max-width: 1170px;
   margin: auto;
+
+  @media screen and (max-width: 1169px) {
+    width: 100%;
+    padding: 0 1rem;
+}
 }
 
 .content {
