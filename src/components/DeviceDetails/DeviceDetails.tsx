@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import DeviceDetailsHeader from '../DeviceDetailsHeader/DeviceDetailsHeader';
 import './DeviceDetails.scss'
 
 const DeviceDetails = () => {
     return (
-        <div>
-        <DeviceDetailsHeader />
         <div className='device-details'>
             <div className='device-details__image'>
                 <img src="http://placehold.it/600" alt="sdf"/>
@@ -35,7 +32,6 @@ const DeviceDetails = () => {
             </div>
 
             </div>
-        </div>
         </div>
     )
 }
