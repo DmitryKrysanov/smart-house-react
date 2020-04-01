@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
 import style from './Card.module.scss';
-// import Oven from '../../models/Oven';
-// import WashingMachine from '../../models/WashingMachine';
-// import DeviceDetailsDialogContainer from '../Dialogs/DeviceDetailsDialogContainer'
-// import ReactDOM from 'react-dom';
 import { Device } from '../../redux/reducers/deviceReducer';
 import Switch from '@material-ui/core/Switch';
 
