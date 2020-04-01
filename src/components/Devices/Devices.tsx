@@ -10,6 +10,8 @@ import Filter from '../Tabs/Tabs';
 import { addDevice } from '../../redux/actions/deviceActions/deviceActions';
 import { Dispatch } from '../../redux/store';
 import DevicesHeader from '../DevicesHeader/DevicesHeader'
+import Pagination from '../Pagination/Pagination';
+import Fab from '@material-ui/core/Fab';
 
 
 interface ConnectedProps {
@@ -54,15 +56,20 @@ class Devices extends Component<ComponentProps> {
         ))
 
     render() {
-        // console.log(this.search(this.props.devices, this.state.term))
         const { showModal } = this.state;
         return (
             <div>
                  <DevicesHeader onSearchState={this.onSearchState} />
                 <div className={style.filter}>
+                    
                 <Filter />
+                {/* <Pagination /> */}
                 </div>
-                <button className={style.fab} onClick={this.handleToggleDialog}><AddIcon color='inherit' /></button>
+                <div className={style.fab}>
+                    <Fab  color="primary" aria-label="add" onClick={this.handleToggleDialog}>
+                        <AddIcon color='inherit'/>
+                    </Fab>
+                </div>
                 {showModal ? ReactDOM.createPortal(
                     <AddDeviceContainer handleToggleDialog={this.handleToggleDialog} addDevice={this.props.addResourse}/>,
                     document.getElementById('modal-root') as HTMLInputElement
