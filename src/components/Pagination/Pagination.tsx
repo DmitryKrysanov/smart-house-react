@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import style from './Pagination.module.scss'
 
 interface State {
     devices: any[],
@@ -7,7 +8,6 @@ interface State {
     currentPage: number
 }
 
-
 class Pagination extends Component<{}, State> {
 
     state: State = {
@@ -15,14 +15,6 @@ class Pagination extends Component<{}, State> {
         totalCount: 11,
         pageSize: 4,
         currentPage: 1
-    }
-
-    componentDidMount() {
-        fetch('https://my-json-server.typicode.com/DmitryKrysanov/smart-house-react/devices')
-        .then(response => response.json())
-        .then(json => {
-            console.log(json)
-        })
     }
 
     private handleClick = (event: any) => {
@@ -60,7 +52,7 @@ class Pagination extends Component<{}, State> {
                 <ul>
                     {renderDevices}
                 </ul>
-                <ul id="page-numbers">
+                <ul id="page-numbers" className={style.page_numbers}>
                     {renderPageNumbers}
                 </ul>
             </div>
