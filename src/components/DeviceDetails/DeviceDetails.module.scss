@@ -1,6 +1,6 @@
 @import '../../variables.scss';
 
-.device-details {
+.device_details {
     width: 640px;
     display: flex;
     border-radius: 4px;
@@ -17,20 +17,27 @@
     }
 }
 
-.device-details__image {
+.device_details__image {
     width: 50%;
+    height: 380px;
+    overflow: hidden;
+    position: relative;
 
     @media screen and (max-width: 414px) {
         width: 100%;
     }
 
     img {
-        width: 100%;
+        height: 100%;
         display: block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 }
 
-.device-details__content {
+.device_details__content {
     width: 50%;
     padding: 24px;
 
@@ -47,7 +54,7 @@
     }
 }
 
-.general-info {
+.general_info {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -80,4 +87,12 @@
 
 .modes {
     width: 100%;
+    margin-bottom: 24px;
+}
+
+.row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
