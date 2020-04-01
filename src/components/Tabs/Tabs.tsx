@@ -18,8 +18,8 @@ const Filter = () => {
         onChange={handleChange}
         indicatorColor="primary"
         textColor="primary"
-        centered
       >
+        <Tab label="All" />
         <Tab label="Oven" />
         <Tab label="Washing Machine" />
       </Tabs>
