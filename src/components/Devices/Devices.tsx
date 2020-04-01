@@ -64,7 +64,6 @@ class Devices extends Component<ComponentProps> {
                 <div className={style.filter}>
                     
                 <Filter />
-                {/* <Pagination /> */}
                 </div>
                 <div className={style.fab}>
                     <Fab  color="secondary" aria-label="add" onClick={this.handleToggleDialog}>
@@ -79,6 +78,7 @@ class Devices extends Component<ComponentProps> {
                 <div className={style.collection}>
                     {this.devices()}
                 </div>
+                {/* <Pagination /> */}
             </div>
         )
     }
