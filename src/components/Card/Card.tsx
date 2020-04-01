@@ -5,6 +5,7 @@ import style from './Card.module.scss';
 // import DeviceDetailsDialogContainer from '../Dialogs/DeviceDetailsDialogContainer'
 // import ReactDOM from 'react-dom';
 import { Device } from '../../redux/reducers/deviceReducer';
+import Switch from '@material-ui/core/Switch';
 
 interface Props {
     device: Device 
@@ -33,14 +34,18 @@ class Card extends Component<Props> {
                         <img src={device.image} alt={device.name} />
                     </div>
                     <div className={style.card__content}>
-                        <h3>{device.name}</h3>
+                        <div>
+                            <h5>{device.name}</h5>
+                            <p>Type</p>
+                        </div>
+                        <Switch edge="end" />
                         {/* <button className='btn__outlined' onClick={this.handleToggleDialog}>Details</button>
                         {showModal ? ReactDOM.createPortal(
                             <DeviceDetailsDialogContainer device={device} handleToggleDialog={this.handleToggleDialog}/>,
                             document.getElementById('modal-root') as HTMLInputElement
                             ) : null  */}
 
-                        <button className='btn__outlined'>Details</button>
+                        {/* <button className='btn__outlined'>Details</button> */}
                         
                     </div>
                 </div>
