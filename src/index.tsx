@@ -16,10 +16,12 @@ const theme = createMuiTheme({
     },
     secondary: {
         main: '#673AB7'
-      }
+    },
+    error: {
+      main: '#b00020'
     }
   },
-)
+})
 
 ReactDOM.render(
 <Provider store={Store}>
