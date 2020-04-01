@@ -8,8 +8,8 @@ const App = () => {
     <div>
       <div className='wrapper'>
         <div className='content'>
-        {/* <Devices /> */}
-        <DeviceDetails />
+        <Devices />
+        {/* <DeviceDetails /> */}
         </div>
       </div>
     </div>

@@ -56,6 +56,7 @@ class Devices extends Component<ComponentProps> {
         ))
 
     render() {
+        console.log(this.state)
         const { showModal } = this.state;
         return (
             <div>
@@ -66,7 +67,7 @@ class Devices extends Component<ComponentProps> {
                 {/* <Pagination /> */}
                 </div>
                 <div className={style.fab}>
-                    <Fab  color="primary" aria-label="add" onClick={this.handleToggleDialog}>
+                    <Fab  color="secondary" aria-label="add" onClick={this.handleToggleDialog}>
                         <AddIcon color='inherit'/>
                     </Fab>
                 </div>

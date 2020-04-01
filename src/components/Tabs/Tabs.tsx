@@ -16,8 +16,8 @@ const Filter = () => {
       <Tabs
         value={value}
         onChange={handleChange}
-        indicatorColor="primary"
-        textColor="primary"
+        indicatorColor="secondary"
+        textColor="secondary"
       >
         <Tab label="All" />
         <Tab label="Oven" />

@@ -1,5 +1,5 @@
 import React from 'react';
-import DeleteIcon from '@material-ui/icons/Delete';
+import SearchIcon from '@material-ui/icons/Search';
 import './DevicesHeader.scss';
 import { Dispatch } from '../../redux/store';
 import { RemoveAllDevices } from '../../redux/actions/deviceActions/deviceActions';
@@ -18,25 +18,25 @@ class DevicesHeader extends React.Component<ComponentProps> {
   }
 
   public onSearchChange = (event: { currentTarget: { value: any; }; }) => {
-    // this.setState({
-    //   term: event.currentTarget.value
-    // })
-    // console.log(this.state.term)
-    //this.props.onSearchState(this.state.term);  //first symbol is empty
-    this.props.onSearchState(event.currentTarget.value);
+    this.setState({
+      term: event.currentTarget.value
+    })
   }
 
-  public onRemoveAllDevices = () => {
-  this.props.removeAllDevices()
-}
+  public onSearchClick = () => {
+    this.props.onSearchState(this.state.term);
+  }
 
 render() {
+  console.log(this.state)
   return (
     <header className='header'>
       <div className='wrapper'>
-          <h2>Home</h2>
-          <input type='text' className='search' placeholder='Search' onChange={this.onSearchChange}></input>
-          <button className='more_btn' onClick={this.onRemoveAllDevices} ><DeleteIcon /></button>
+          <h6>Home</h6>
+          <div className="search">
+            <input type='text' className='search__input' placeholder='Search' onChange={this.onSearchChange}></input>
+            <button className='search__btn' onClick={this.onSearchClick} ><SearchIcon /></button>
+          </div>
       </div>
     </header>
   );
