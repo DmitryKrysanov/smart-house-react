@@ -1,0 +1,55 @@
+@import '../../../variables.scss';
+
+.add_device_dialog__inner {
+    width: 800px;
+    background-color:$white;
+    padding: 2rem;
+    border-radius: .5rem;
+    box-shadow: 0px 24px 48px 0px rgba($black, .4);
+}
+
+.row {
+    width: 100%;
+    margin: 8px 0;
+    &:last-child {
+        text-align: right;
+    }
+}
+
+.general {
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+.items {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 1vw;
+    margin-bottom: 24px;
+}
+
+.modes {
+    .row {
+        display: flex;
+        .button {
+            margin-left: 16px;
+        }
+    }
+}
+
+.chips {
+    height: 52px;
+    display: flex;
+}
+
+.chip__item {
+    margin-right: 8px;
+}
+
+.action_buttons {
+    display: flex;
+    justify-content: space-between;
+    .right {
+        margin-left: 8px;
+    }
+}
