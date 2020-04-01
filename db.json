@@ -1,0 +1,44 @@
+{
+    "devices": [
+        {
+            "name": "Bosch1",
+            "id": 1
+        },
+        {
+            "name": "Bosch2",
+            "id": 2
+        },
+        {
+            "name": "Bosc3",
+            "id": 3
+        },
+        {
+            "name": "Bosch4",
+            "id": 4
+        },
+        {
+            "name": "Bosch5",
+            "id": 5
+        },
+        {
+            "name": "Bosch6",
+            "id": 6
+        },
+        {
+            "name": "Bosch7",
+            "id": 7
+        },
+        {
+            "name": "Bosch8",
+            "id": 8
+        },
+        {
+            "name": "Bosch9",
+            "id": 9
+        },
+        {
+            "name": "Bosch10",
+            "id": 10
+        }
+    ]
+}
