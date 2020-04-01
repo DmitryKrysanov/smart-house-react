@@ -1,167 +1,171 @@
-{
-    "name": "Home",
-    "devices": [
+{   
+    "home": [
         {
-            "category": "Oven",
-            "name": "Bosch1",
-            "id": 1,
-            "image": "https://s.ftcdn.net/v2013/pics/all/curated/RKyaEDwp8J7JKeZWQPuOVWvkUjGQfpCx_cover_580.jpg?r=1a0fc22192d0c808b8bb2b9bcfbf4a45b1793687",
-            "temp": {
-                "min": 10,
-                "max": 240,
-                "current": 30,
-                "step": 10
-            },
-            "modes": [
-                "Mode 1",
-                "Mode 2"
-            ]
-        },
-        {
-            "category": "Oven",
-            "name": "Bosch2",
-            "id": 2,
-            "image": "https://s.ftcdn.net/v2013/pics/all/curated/RKyaEDwp8J7JKeZWQPuOVWvkUjGQfpCx_cover_580.jpg?r=1a0fc22192d0c808b8bb2b9bcfbf4a45b1793687",
-            "temp": {
-                "min": 10,
-                "max": 240,
-                "current": 30,
-                "step": 10
-            },
-            "modes": [
-                "Mode 1"
-            ]
-        },
-        {
-            "category": "Oven",
-            "name": "Bosch3",
-            "id": 3,
-            "image": "https://s.ftcdn.net/v2013/pics/all/curated/RKyaEDwp8J7JKeZWQPuOVWvkUjGQfpCx_cover_580.jpg?r=1a0fc22192d0c808b8bb2b9bcfbf4a45b1793687",
-            "temp": {
-                "min": 10,
-                "max": 180,
-                "current": 20,
-                "step": 10
-            },
-            "modes": [
-                "Mode 1",
-                "Mode 2",
-                "Mode 3",
-                "Mode 4"
-            ]
-        },
-        {
-            "category": "Washing Machine",
-            "name": "Indesit1",
-            "id": 4,
-            "image": "https://s.ftcdn.net/v2013/pics/all/curated/RKyaEDwp8J7JKeZWQPuOVWvkUjGQfpCx_cover_580.jpg?r=1a0fc22192d0c808b8bb2b9bcfbf4a45b1793687",
-            "temp": {
-                "min": 10,
-                "max": 100,
-                "current": 20,
-                "step": 10
-            },
-            "modes": [
-                "Mode 1",
-                "Mode 2",
-                "Mode 3",
-                "Mode 4",
-                "Mode 5",
-                "Mode 6"
-            ]
-        },
-        {
-            "category": "Washing Machine",
-            "name": "Indesit2",
-            "id": 5,
-            "image": "https://s.ftcdn.net/v2013/pics/all/curated/RKyaEDwp8J7JKeZWQPuOVWvkUjGQfpCx_cover_580.jpg?r=1a0fc22192d0c808b8bb2b9bcfbf4a45b1793687",
-            "temp": {
-                "min": 10,
-                "max": 100,
-                "current": 20,
-                "step": 10
-            },
-            "modes": [
-                "Mode 1",
-                "Mode 2",
-                "Mode 3",
-                "Mode 4",
-                "Mode 5",
-                "Mode 6"
-            ]
-        },
-        {
-            "category": "Washing Machine",
-            "name": "Indesit3",
-            "id": 6,
-            "image": "https://s.ftcdn.net/v2013/pics/all/curated/RKyaEDwp8J7JKeZWQPuOVWvkUjGQfpCx_cover_580.jpg?r=1a0fc22192d0c808b8bb2b9bcfbf4a45b1793687",
-            "temp": {
-                "min": 10,
-                "max": 100,
-                "current": 20,
-                "step": 10
-            },
-            "modes": [
-                "Mode 1",
-                "Mode 2",
-                "Mode 3",
-                "Mode 4",
-                "Mode 5",
-                "Mode 6"
-            ]
-        },
-        {
-            "category": "Oven",
-            "name": "Bosch4",
-            "id": 7,
-            "image": "https://s.ftcdn.net/v2013/pics/all/curated/RKyaEDwp8J7JKeZWQPuOVWvkUjGQfpCx_cover_580.jpg?r=1a0fc22192d0c808b8bb2b9bcfbf4a45b1793687",
-            "temp": {
-                "min": 10,
-                "max": 180,
-                "current": 20,
-                "step": 10
-            },
-            "modes": [
-                "Mode 1",
-                "Mode 2"
-            ]
-        },
-        {
-            "category": "Oven",
-            "name": "Bosch5",
-            "id": 8,
-            "image": "https://s.ftcdn.net/v2013/pics/all/curated/RKyaEDwp8J7JKeZWQPuOVWvkUjGQfpCx_cover_580.jpg?r=1a0fc22192d0c808b8bb2b9bcfbf4a45b1793687",
-            "temp": {
-                "min": 10,
-                "max": 180,
-                "current": 20,
-                "step": 10
-            },
-            "modes": [
-                "Mode 1",
-                "Mode 2",
-                "Mode 3",
-                "Mode 4"
-            ]
-        },
-        {
-            "category": "Oven",
-            "name": "Bosch6",
-            "id": 9,
-            "image": "https://s.ftcdn.net/v2013/pics/all/curated/RKyaEDwp8J7JKeZWQPuOVWvkUjGQfpCx_cover_580.jpg?r=1a0fc22192d0c808b8bb2b9bcfbf4a45b1793687",
-            "temp": {
-                "min": 10,
-                "max": 180,
-                "current": 20,
-                "step": 10
-            },
-            "modes": [
-                "Mode 1",
-                "Mode 2",
-                "Mode 3",
-                "Mode 4"
-            ]
+            "name": "Home",
+            "devices": [
+                {
+                    "category": "Oven",
+                    "name": "Bosch1",
+                    "id": 1,
+                    "image": "https://s.ftcdn.net/v2013/pics/all/curated/RKyaEDwp8J7JKeZWQPuOVWvkUjGQfpCx_cover_580.jpg?r=1a0fc22192d0c808b8bb2b9bcfbf4a45b1793687",
+                    "temp": {
+                        "min": 10,
+                        "max": 240,
+                        "current": 30,
+                        "step": 10
+                    },
+                    "modes": [
+                        "Mode 1",
+                        "Mode 2"
+                    ]
+                },
+                {
+                    "category": "Oven",
+                    "name": "Bosch2",
+                    "id": 2,
+                    "image": "https://s.ftcdn.net/v2013/pics/all/curated/RKyaEDwp8J7JKeZWQPuOVWvkUjGQfpCx_cover_580.jpg?r=1a0fc22192d0c808b8bb2b9bcfbf4a45b1793687",
+                    "temp": {
+                        "min": 10,
+                        "max": 240,
+                        "current": 30,
+                        "step": 10
+                    },
+                    "modes": [
+                        "Mode 1"
+                    ]
+                },
+                {
+                    "category": "Oven",
+                    "name": "Bosch3",
+                    "id": 3,
+                    "image": "https://s.ftcdn.net/v2013/pics/all/curated/RKyaEDwp8J7JKeZWQPuOVWvkUjGQfpCx_cover_580.jpg?r=1a0fc22192d0c808b8bb2b9bcfbf4a45b1793687",
+                    "temp": {
+                        "min": 10,
+                        "max": 180,
+                        "current": 20,
+                        "step": 10
+                    },
+                    "modes": [
+                        "Mode 1",
+                        "Mode 2",
+                        "Mode 3",
+                        "Mode 4"
+                    ]
+                },
+                {
+                    "category": "Washing Machine",
+                    "name": "Indesit1",
+                    "id": 4,
+                    "image": "https://s.ftcdn.net/v2013/pics/all/curated/RKyaEDwp8J7JKeZWQPuOVWvkUjGQfpCx_cover_580.jpg?r=1a0fc22192d0c808b8bb2b9bcfbf4a45b1793687",
+                    "temp": {
+                        "min": 10,
+                        "max": 100,
+                        "current": 20,
+                        "step": 10
+                    },
+                    "modes": [
+                        "Mode 1",
+                        "Mode 2",
+                        "Mode 3",
+                        "Mode 4",
+                        "Mode 5",
+                        "Mode 6"
+                    ]
+                },
+                {
+                    "category": "Washing Machine",
+                    "name": "Indesit2",
+                    "id": 5,
+                    "image": "https://s.ftcdn.net/v2013/pics/all/curated/RKyaEDwp8J7JKeZWQPuOVWvkUjGQfpCx_cover_580.jpg?r=1a0fc22192d0c808b8bb2b9bcfbf4a45b1793687",
+                    "temp": {
+                        "min": 10,
+                        "max": 100,
+                        "current": 20,
+                        "step": 10
+                    },
+                    "modes": [
+                        "Mode 1",
+                        "Mode 2",
+                        "Mode 3",
+                        "Mode 4",
+                        "Mode 5",
+                        "Mode 6"
+                    ]
+                },
+                {
+                    "category": "Washing Machine",
+                    "name": "Indesit3",
+                    "id": 6,
+                    "image": "https://s.ftcdn.net/v2013/pics/all/curated/RKyaEDwp8J7JKeZWQPuOVWvkUjGQfpCx_cover_580.jpg?r=1a0fc22192d0c808b8bb2b9bcfbf4a45b1793687",
+                    "temp": {
+                        "min": 10,
+                        "max": 100,
+                        "current": 20,
+                        "step": 10
+                    },
+                    "modes": [
+                        "Mode 1",
+                        "Mode 2",
+                        "Mode 3",
+                        "Mode 4",
+                        "Mode 5",
+                        "Mode 6"
+                    ]
+                },
+                {
+                    "category": "Oven",
+                    "name": "Bosch4",
+                    "id": 7,
+                    "image": "https://s.ftcdn.net/v2013/pics/all/curated/RKyaEDwp8J7JKeZWQPuOVWvkUjGQfpCx_cover_580.jpg?r=1a0fc22192d0c808b8bb2b9bcfbf4a45b1793687",
+                    "temp": {
+                        "min": 10,
+                        "max": 180,
+                        "current": 20,
+                        "step": 10
+                    },
+                    "modes": [
+                        "Mode 1",
+                        "Mode 2"
+                    ]
+                },
+                {
+                    "category": "Oven",
+                    "name": "Bosch5",
+                    "id": 8,
+                    "image": "https://s.ftcdn.net/v2013/pics/all/curated/RKyaEDwp8J7JKeZWQPuOVWvkUjGQfpCx_cover_580.jpg?r=1a0fc22192d0c808b8bb2b9bcfbf4a45b1793687",
+                    "temp": {
+                        "min": 10,
+                        "max": 180,
+                        "current": 20,
+                        "step": 10
+                    },
+                    "modes": [
+                        "Mode 1",
+                        "Mode 2",
+                        "Mode 3",
+                        "Mode 4"
+                    ]
+                },
+                {
+                    "category": "Oven",
+                    "name": "Bosch6",
+                    "id": 9,
+                    "image": "https://s.ftcdn.net/v2013/pics/all/curated/RKyaEDwp8J7JKeZWQPuOVWvkUjGQfpCx_cover_580.jpg?r=1a0fc22192d0c808b8bb2b9bcfbf4a45b1793687",
+                    "temp": {
+                        "min": 10,
+                        "max": 180,
+                        "current": 20,
+                        "step": 10
+                    },
+                    "modes": [
+                        "Mode 1",
+                        "Mode 2",
+                        "Mode 3",
+                        "Mode 4"
+                    ]
+                }
+            ],
+            "totalDevices": 9
         }
-    ],
-    "totalDevices": 9
+    ]
 }
