@@ -7,7 +7,7 @@ import Card from '../Card/Card'
 import AddIcon from '@material-ui/icons/Add';
 import AddDeviceContainer from '../AddDevice/AddDeviceContainer'
 import Filter from '../Tabs/Tabs';
-import { addDevice } from '../../redux/actions/deviceActions/deviceActions';
+import { addDevice, LoadDevices } from '../../redux/actions/deviceActions/deviceActions';
 import { Dispatch } from '../../redux/store';
 import DevicesHeader from '../DevicesHeader/DevicesHeader'
 import Pagination from '../Pagination/Pagination';
@@ -24,7 +24,8 @@ class Devices extends Component<ComponentProps> {
 
     state = {
         showModal: false,
-        term: ''
+        term: '',
+        isLoading: false
     }
 
     componentDidMount = async () => {
@@ -102,6 +103,9 @@ const mapStateToProps = (state: { deviceReducer: DevicesState }): ConnectedProps
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     addResourse: (p: Device) => {
         return dispatch(addDevice(p));
+    },
+    loadDevices: (p: Device[]) => {
+        return dispatch(LoadDevices(p));
     }
 })
 

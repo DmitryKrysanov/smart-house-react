@@ -76,13 +76,43 @@ class AddDeviceOven extends Component<Props, State> {
         })
     }
 
-    private onSubmit = (e: { preventDefault: () => void; }) => {
+    private onSubmit = async (e: { preventDefault: () => void; }) => {
+        const { name, id, image, temp, modes } = this.state;
         e.preventDefault();
-        this.setState({
-            id: Math.round(Math.random() * 100)
-        });
-        this.props.addDevice(this.state);
-    }
+        try {
+            const resp = await fetch("https://jsonplaceholder.typicode.com/posts", {
+              method: "POST",
+              body: JSON.stringify({
+                name, 
+                id, 
+                image, 
+                temp, 
+                modes,
+                userId: Math.round(Math.random() * 100)
+              }),
+              headers: {
+                "Content-type": "application/json; charset=UTF-8"
+              }
+            }).then(res => {
+              this.setState(initialState);
+              return res.json();
+            });
+    
+            this.props.addDevice(resp);
+          } catch (error) {
+            this.setState(initialState);
+            alert("An error occured");
+          }
+
+    };
+
+    // private onSubmit = (e: { preventDefault: () => void; }) => {
+    //     e.preventDefault();
+    //     this.setState({
+    //         id: Math.round(Math.random() * 100)
+    //     });
+    //     this.props.addDevice(this.state);
+    // }
 
     private handleDelete = (mode: string) => {
         const newModes = this.state.modes;
