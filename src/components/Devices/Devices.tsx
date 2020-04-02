@@ -27,6 +27,15 @@ class Devices extends Component<ComponentProps> {
         term: ''
     }
 
+    componentDidMount = async () => {
+        const response = await fetch("https://my-json-server.typicode.com/SvetaShmalko/json-server/devices")
+            .then(resp => {
+                console.log(resp);
+                return resp.json();
+            });
+        this.props.loadDevices(response);
+};
+
     handleToggleDialog = () => {
         this.setState({
             showModal: !this.state.showModal
