@@ -1,5 +1,5 @@
 import { deviceActions } from './../actions/deviceActions/deviceActions';
-import { ADD_DEVICE, REMOVE_ALL_DEVICES, LOAD_DEVICES} from '../../constants/deviceActions';
+import { ADD_DEVICE, LOAD_DEVICES} from '../../constants/deviceActions';
 
 export interface DevicesState {
     devices: Device[];
@@ -27,8 +27,6 @@ export const deviceReducer = (state = initialState, action: deviceActions): Devi
     switch(action.type) {
         case ADD_DEVICE:
             return { ...state, devices: [...state.devices, action.payload] };
-        case REMOVE_ALL_DEVICES:
-            return state = initialState;
         case LOAD_DEVICES:
             return { ...state, devices: action.payload };
         default:

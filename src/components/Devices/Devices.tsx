@@ -7,15 +7,19 @@ import Card from '../Card/Card'
 import AddIcon from '@material-ui/icons/Add';
 import AddDeviceContainer from '../AddDevice/AddDeviceContainer'
 import Filter from '../Tabs/Tabs';
-import { addDevice, LoadDevices } from '../../redux/actions/deviceActions/deviceActions';
+import { addDevice, loadDevices } from '../../redux/actions/deviceActions/deviceActions';
 import { Dispatch } from '../../redux/store';
 import DevicesHeader from '../DevicesHeader/DevicesHeader'
 import Pagination from '../Pagination/Pagination';
 import Fab from '@material-ui/core/Fab';
+import { showLoader, hideLoader } from '../../redux/actions/loaderActions/loaderActions';
+import { LoaderState } from '../../redux/reducers/loaderReducer';
+import { Loader } from '../Loader/Loader';
 
 
 interface ConnectedProps {
-    devices: Device[]
+    devices: Device[],
+    isLoading: boolean
 }
 
 type ComponentProps = ConnectedProps & ReturnType<typeof mapDispatchToProps>;
@@ -29,13 +33,15 @@ class Devices extends Component<ComponentProps> {
     }
 
     componentDidMount = async () => {
+        this.props.showLoader(true);
         const response = await fetch("https://my-json-server.typicode.com/SvetaShmalko/json-server/devices")
             .then(resp => {
+                this.props.hideLoader(false);
                 console.log(resp);
                 return resp.json();
             });
         this.props.loadDevices(response);
-};
+    };
 
     handleToggleDialog = () => {
         this.setState({
@@ -50,7 +56,7 @@ class Devices extends Component<ComponentProps> {
     }
 
     private search = (devices: Device[], term: string) => {
-        if(term.length === 0) {
+        if (term.length === 0) {
             return devices;
         }
         return devices.filter((device: Device) => {
@@ -59,7 +65,7 @@ class Devices extends Component<ComponentProps> {
     }
 
     private devices = (): JSX.Element[] =>
-    this.search(this.props.devices, this.state.term).map(device => (
+        this.search(this.props.devices, this.state.term).map(device => (
             <div >
                 <Card device={device} />
             </div>
@@ -70,22 +76,26 @@ class Devices extends Component<ComponentProps> {
         const { showModal } = this.state;
         return (
             <div>
-                 <DevicesHeader onSearchState={this.onSearchState} />
+                <DevicesHeader onSearchState={this.onSearchState} />
                 <div className={style.filter}>
-                    
-                <Filter />
+
+                    <Filter />
                 </div>
                 <div className={style.fab}>
-                    <Fab  color="secondary" aria-label="add" onClick={this.handleToggleDialog}>
-                        <AddIcon color='inherit'/>
+                    <Fab color="secondary" aria-label="add" onClick={this.handleToggleDialog}>
+                        <AddIcon color='inherit' />
                     </Fab>
                 </div>
                 {showModal ? ReactDOM.createPortal(
-                    <AddDeviceContainer handleToggleDialog={this.handleToggleDialog} addDevice={this.props.addResourse}/>,
+                    <AddDeviceContainer handleToggleDialog={this.handleToggleDialog} addDevice={this.props.addResourse} />,
                     document.getElementById('modal-root') as HTMLInputElement
                 ) : null}
 
                 <div className={style.collection}>
+                    {
+                        this.state.isLoading ?
+                        <Loader /> : null
+                    }
                     {this.devices()}
                 </div>
                 {/* <Pagination /> */}
@@ -94,10 +104,11 @@ class Devices extends Component<ComponentProps> {
     }
 }
 
-const mapStateToProps = (state: { deviceReducer: DevicesState }): ConnectedProps => {
-    return ({
-        devices: state.deviceReducer.devices
-    });
+const mapStateToProps = (state: { deviceReducer: DevicesState, loaderReducer: LoaderState}): ConnectedProps => {
+    return { 
+        devices: state.deviceReducer.devices,
+        isLoading: state.loaderReducer.isLoading
+    }
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -105,8 +116,15 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
         return dispatch(addDevice(p));
     },
     loadDevices: (p: Device[]) => {
-        return dispatch(LoadDevices(p));
+        return dispatch(loadDevices(p));
+    },
+    showLoader: (p: boolean) => {
+        return dispatch(showLoader(p));
+    },
+    hideLoader: (p: boolean) => {
+        return dispatch(hideLoader(p));
     }
+
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Devices);

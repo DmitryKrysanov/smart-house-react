@@ -2,7 +2,6 @@ import React from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import './DevicesHeader.scss';
 import { Dispatch } from '../../redux/store';
-import { RemoveAllDevices } from '../../redux/actions/deviceActions/deviceActions';
 import { connect } from 'react-redux';
 
 interface Props {
@@ -45,7 +44,7 @@ render() {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   removeAllDevices: () => {
-      return dispatch(RemoveAllDevices());
+      
   }
 })
 

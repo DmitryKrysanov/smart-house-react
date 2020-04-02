@@ -1,4 +1,4 @@
-import { ADD_DEVICE, REMOVE_ALL_DEVICES, LOAD_DEVICES } from '../../../constants/deviceActions';
+import { ADD_DEVICE, LOAD_DEVICES } from '../../../constants/deviceActions';
 import { Device } from '../../reducers/deviceReducer';
 
 export interface AddDeviceAction {
@@ -11,24 +11,15 @@ export const addDevice = (payload: Device): AddDeviceAction => ({
     payload
 })
 
-interface RemoveAllDevicesAction {
-    type: typeof REMOVE_ALL_DEVICES;
-}
-
-export const RemoveAllDevices = (): RemoveAllDevicesAction => ({
-    type: REMOVE_ALL_DEVICES
-})
-
-
 interface LoadDevicesAction {
     type: typeof LOAD_DEVICES;
     payload: Device[]
 }
 
-export const LoadDevices = (payload: Device[]): LoadDevicesAction => ({
+export const loadDevices = (payload: Device[]): LoadDevicesAction => ({
     type: LOAD_DEVICES,
     payload
 })
 
 
-export type deviceActions = AddDeviceAction | RemoveAllDevicesAction | LoadDevicesAction;
+export type deviceActions = AddDeviceAction | LoadDevicesAction;
