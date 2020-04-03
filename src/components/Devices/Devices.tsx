@@ -7,17 +7,17 @@ import Card from '../Card/Card'
 import AddIcon from '@material-ui/icons/Add';
 import AddDeviceContainer from '../AddDevice/AddDeviceContainer'
 import Filter from '../Tabs/Tabs';
-import { addDevice, loadDevices } from '../../redux/actions/deviceActions/deviceActions';
+import { addDevice, setDevices, loadDevicesThunk } from '../../redux/actions/deviceActions/deviceActions';
 import { Dispatch } from '../../redux/store';
 import DevicesHeader from '../DevicesHeader/DevicesHeader'
 import Pagination from '../Pagination/Pagination';
 import Fab from '@material-ui/core/Fab';
-import { showLoader, hideLoader } from '../../redux/actions/loaderActions/loaderActions';
+import { showLoader } from '../../redux/actions/loaderActions/loaderActions';
 import { LoaderState } from '../../redux/reducers/loaderReducer';
 import { Loader } from '../Loader/Loader';
+import { devicesAPI } from '../../api/api';
 
-
-interface ConnectedProps {
+export interface ConnectedProps {
     devices: Device[],
     isLoading: boolean
 }
@@ -33,15 +33,25 @@ class Devices extends Component<ComponentProps> {
     }
 
     componentDidMount = async () => {
-        this.props.showLoader(true);
-        const response = await fetch("https://my-json-server.typicode.com/SvetaShmalko/json-server/devices")
-            .then(resp => {
-                this.props.hideLoader(false);
-                console.log(resp);
-                return resp.json();
-            });
-        this.props.loadDevices(response);
+        console.log("вызвался компонент дид маунт");
+        // this.props.showLoader(true);
+        // const response = await fetch("https://my-json-server.typicode.com/SvetaShmalko/json-server/devices")
+        //     .then(resp => {
+        //         console.log(resp);
+        //         return resp.json();
+        //     });
+        // this.props.loadDevices(response);
+
     };
+
+
+    //     componentDidMount(){
+    //     this.props.showLoader(true);
+    //  //   console.log(this.state.isLoading);
+    //     const response = devicesAPI.serverDevices();
+    //     this.props.loadDevices(response);
+    //     this.props.showLoader(false);
+    // };
 
     handleToggleDialog = () => {
         this.setState({
@@ -72,7 +82,7 @@ class Devices extends Component<ComponentProps> {
         ))
 
     render() {
-        console.log(this.state)
+      //  console.log(this.state)
         const { showModal } = this.state;
         return (
             <div>
@@ -94,7 +104,8 @@ class Devices extends Component<ComponentProps> {
                 <div className={style.collection}>
                     {
                         this.state.isLoading ?
-                        <Loader /> : null
+                        <Loader /> : console.log(this.state.isLoading)
+
                     }
                     {this.devices()}
                 </div>
@@ -107,7 +118,7 @@ class Devices extends Component<ComponentProps> {
 const mapStateToProps = (state: { deviceReducer: DevicesState, loaderReducer: LoaderState}): ConnectedProps => {
     return { 
         devices: state.deviceReducer.devices,
-        isLoading: state.loaderReducer.isLoading
+        isLoading: state.loaderReducer.isLoad
     }
 }
 
@@ -115,16 +126,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     addResourse: (p: Device) => {
         return dispatch(addDevice(p));
     },
-    loadDevices: (p: Device[]) => {
-        return dispatch(loadDevices(p));
-    },
     showLoader: (p: boolean) => {
         return dispatch(showLoader(p));
     },
-    hideLoader: (p: boolean) => {
-        return dispatch(hideLoader(p));
+    loadDevices: () => {
+        return loadDevicesThunk();
     }
-
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Devices);

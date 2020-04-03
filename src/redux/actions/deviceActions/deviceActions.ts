@@ -1,5 +1,9 @@
-import { ADD_DEVICE, LOAD_DEVICES } from '../../../constants/deviceActions';
+import { ADD_DEVICE, SET_DEVICES } from '../../../constants/deviceActions';
 import { Device } from '../../reducers/deviceReducer';
+import { showLoader } from '../loaderActions/loaderActions';
+import { devicesAPI } from '../../../api/api';
+//import { Dispatch } from 'react';
+import { Dispatch } from './../../store'
 
 export interface AddDeviceAction {
     type: typeof ADD_DEVICE;
@@ -11,15 +15,31 @@ export const addDevice = (payload: Device): AddDeviceAction => ({
     payload
 })
 
-interface LoadDevicesAction {
-    type: typeof LOAD_DEVICES;
+interface SetDevicesAction {
+    type: typeof SET_DEVICES;
     payload: Device[]
 }
 
-export const loadDevices = (payload: Device[]): LoadDevicesAction => ({
-    type: LOAD_DEVICES,
+export const setDevices = (payload: Device[]): SetDevicesAction => ({
+    type: SET_DEVICES,
     payload
 })
 
+export const loadDevicesThunk = () => {
+    return async (dispatch: Dispatch) => {
+        dispatch(showLoader(true));
 
-export type deviceActions = AddDeviceAction | LoadDevicesAction;
+        const response = await fetch("https://my-json-server.typicode.com/SvetaShmalko/json-server/devices")
+        .then(resp => {
+            console.log(resp);
+            return resp.json();
+        });
+      //  const response = devicesAPI.serverDevices();
+console.log(response);
+        dispatch(setDevices(response));
+
+    }
+}
+
+
+export type deviceActions = AddDeviceAction | SetDevicesAction;
