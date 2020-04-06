@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import style from './Devices.module.scss';
-import { DevicesState, Device } from '../../redux/reducers/deviceReducer'
+import { DevicesState, Device, RobotHoover, Oven } from '../../redux/reducers/deviceReducer'
 import { connect } from "react-redux";
 import Card from '../Card/Card'
 import AddIcon from '@material-ui/icons/Add';
 import AddDeviceContainer from '../AddDevice/AddDeviceContainer'
-import Filter from '../Tabs/Tabs';
-import { addDevice } from '../../redux/actions/deviceActions/deviceActions';
+import Filter from '../Tabs/Filter';
+import { addDevice, turnOffAllDevices, turnOnOffDevice } from '../../redux/actions/deviceActions/deviceActions';
 import { Dispatch } from '../../redux/store';
 import DevicesHeader from '../DevicesHeader/DevicesHeader'
 import Pagination from '../Pagination/Pagination';
@@ -15,7 +15,7 @@ import Fab from '@material-ui/core/Fab';
 
 
 interface ConnectedProps {
-    devices: Device[]
+    devices: Array<Oven | RobotHoover>
 }
 
 type ComponentProps = ConnectedProps & ReturnType<typeof mapDispatchToProps>;
@@ -39,11 +39,11 @@ class Devices extends Component<ComponentProps> {
         })
     }
 
-    private search = (devices: Device[], term: string) => {
+    private search = (devices: Array<Oven | RobotHoover>, term: string) => {
         if(term.length === 0) {
             return devices;
         }
-        return devices.filter((device: Device) => {
+        return devices.filter((device: Oven | RobotHoover) => {
             return device.name.toLowerCase().indexOf(term.toLowerCase()) > -1;
         })
     }
@@ -51,19 +51,17 @@ class Devices extends Component<ComponentProps> {
     private devices = (): JSX.Element[] =>
     this.search(this.props.devices, this.state.term).map(device => (
             <div >
-                <Card device={device} />
+                <Card device={device} deviceToggle={this.props.deviceToggle} />
             </div>
         ))
 
     render() {
-        console.log(this.state)
         const { showModal } = this.state;
         return (
             <div>
                  <DevicesHeader onSearchState={this.onSearchState} />
-                <div className={style.filter}>
-                    
-                <Filter />
+                <div className={style.filter}> 
+                    <Filter offDevices={this.props.offDevices} />
                 </div>
                 <div className={style.fab}>
                     <Fab  color="secondary" aria-label="add" onClick={this.handleToggleDialog}>
@@ -91,8 +89,14 @@ const mapStateToProps = (state: { deviceReducer: DevicesState }): ConnectedProps
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    addResourse: (p: Device) => {
+    addResourse: (p: Oven | RobotHoover) => {
         return dispatch(addDevice(p));
+    },
+    offDevices: () => {
+        return dispatch(turnOffAllDevices());
+    },
+    deviceToggle: (id: number) => {
+        return dispatch(turnOnOffDevice(id))
     }
 })
 
