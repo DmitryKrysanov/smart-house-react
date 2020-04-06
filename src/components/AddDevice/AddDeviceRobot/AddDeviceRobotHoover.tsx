@@ -1,42 +1,28 @@
 import React, { Component } from 'react';
 import { AddDeviceAction } from '../../../redux/actions/deviceActions/deviceActions';
-import { Device } from '../../../redux/reducers/deviceReducer';
+import { RobotHoover } from '../../../redux/reducers/deviceReducer';
 import TextField from '@material-ui/core/TextField';
-import style from './AddDeviceRobot.module.scss';
+import style from './AddDeviceRobotHoover.module.scss';
 import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
 
-interface State {
-    name: string,
-    id: number,
-    image: string,
-    temp: {
-        min: number,
-        max: number,
-        current: number,
-        step: number
-    },
-    mode: string,
-    modes: string[]
+interface State extends RobotHoover {
+    mode: string
 }
 
 const initialState: State = {
+    type: 'robot-hoover',
     name: '',
     id: 0,
-    image: 'https://placehold.it/400px',
-    temp: {
-        min: 0,
-        max: 0,
-        current: 0,
-        step: 0
-    },
-    mode: '',
+    image: 'http://placehold.it/400px',
+    status: false,
     modes: [],
+    mode: ''
 }
 
 interface Props {
     handleToggleDialog: () => void,
-    addDevice: (p: Device) => AddDeviceAction,
+    addDevice: (p: RobotHoover) => AddDeviceAction,
     handleContent: (count: number) => void
 }
 
@@ -59,7 +45,6 @@ class AddDeviceRobot extends Component<Props, State> {
     }
 
     public handleModeInputClick = (e: { preventDefault: () => void; }) => {
-        console.log(this.state.mode)
         e.preventDefault();
         this.setState({
             modes: [...this.state.modes, this.state.mode],
@@ -73,6 +58,7 @@ class AddDeviceRobot extends Component<Props, State> {
             id: Math.round(Math.random() * 100)
         });
         this.props.addDevice(this.state);
+        this.props.handleToggleDialog();
     }
 
     private handleDelete = (mode: string) => {
