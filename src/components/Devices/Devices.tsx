@@ -34,16 +34,10 @@ class Devices extends Component<ComponentProps> {
     }
 
     componentDidMount = async()=>  {
-        console.log("вызвался компонент дид маунт");
-        const instance = axios.create({
-            baseURL: 'https://my-json-server.typicode.com/SvetaShmalko/json-server/devices'
-        })
-
+        
         this.setState({ isLoading: true});
-
-        const devs = await instance.get<Device[]>('').then((response: {
-            data: any;
-        }) => response.data);
+        
+        const devs = await devicesAPI.serverDevices();
         this.props.loadDevices(devs);
     
         this.setState({ isLoading: false});
