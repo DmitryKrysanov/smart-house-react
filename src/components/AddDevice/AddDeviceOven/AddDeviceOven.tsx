@@ -1,42 +1,34 @@
 import React, { Component } from 'react';
 import { AddDeviceAction } from '../../../redux/actions/deviceActions/deviceActions';
-import { Device } from '../../../redux/reducers/deviceReducer';
+import { Device, Oven } from '../../../redux/reducers/deviceReducer';
 import TextField from '@material-ui/core/TextField';
 import style from './AddDeviceOven.module.scss';
 import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
 
-interface State {
-    name: string,
-    id: number,
-    image: string,
-    temp: {
-        min: number,
-        max: number,
-        current: number,
-        step: number
-    },
-    mode: string,
-    modes: string[]
+interface State extends Oven {
+    mode: string
 }
 
 const initialState: State = {
+    type: 'oven',
     name: '',
     id: 0,
-    image: 'https://placehold.it/400px',
+    image: 'http://placehold.it/400px',
+    status: false,
     temp: {
         min: 0,
         max: 0,
         current: 0,
-        step: 0
+        step: 0,
     },
-    mode: '',
     modes: [],
+    mode: ''
 }
 
 interface Props {
     handleToggleDialog: () => void,
-    addDevice: (p: Device) => AddDeviceAction,
+    addDevice: (p: Oven) => AddDeviceAction,
     handleContent: (count: number) => void
 }
 
@@ -68,7 +60,6 @@ class AddDeviceOven extends Component<Props, State> {
     }
 
     public handleModeInputClick = (e: { preventDefault: () => void; }) => {
-        console.log(this.state.mode)
         e.preventDefault();
         this.setState({
             modes: [...this.state.modes, this.state.mode],
@@ -82,6 +73,7 @@ class AddDeviceOven extends Component<Props, State> {
             id: Math.round(Math.random() * 100)
         });
         this.props.addDevice(this.state);
+        this.props.handleToggleDialog();
     }
 
     private handleDelete = (mode: string) => {
@@ -98,7 +90,6 @@ class AddDeviceOven extends Component<Props, State> {
             <Chip key={index} className={style.chip__item} label={mode} onDelete={() => this.handleDelete(mode)} />
         ))
     render() {
-        console.log(this.state)
         return (
             <div className={style.add_device_dialog__inner}>
                 <h5>Add Device (Oven)</h5>

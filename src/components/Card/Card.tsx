@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import style from './Card.module.scss';
-import { Device } from '../../redux/reducers/deviceReducer';
+import { Oven, RobotHoover } from '../../redux/reducers/deviceReducer';
 import Switch from '@material-ui/core/Switch';
+import Button from '@material-ui/core/Button';
 
 interface Props {
-    device: Device 
+    device: Oven | RobotHoover,
+    deviceToggle: (id: number) => void
 }
 
 class Card extends Component<Props> {
@@ -22,6 +24,7 @@ class Card extends Component<Props> {
     render() {
         // const {showModal} = this.state;
         const {device} = this.props;
+        console.log(this.props.device)
 
         return (
             <div>
@@ -32,9 +35,9 @@ class Card extends Component<Props> {
                     <div className={style.card__content}>
                         <div>
                             <h5>{device.name}</h5>
-                            <p>Type</p>
+                            <p>{this.props.device.type}</p>
                         </div>
-                        <Switch edge="end" />
+                        <Switch edge="end" onChange={() => {this.props.deviceToggle(this.props.device.id)}} checked={this.props.device.status} />
                         {/* <button className='btn__outlined' onClick={this.handleToggleDialog}>Details</button>
                         {showModal ? ReactDOM.createPortal(
                             <DeviceDetailsDialogContainer device={device} handleToggleDialog={this.handleToggleDialog}/>,
@@ -42,6 +45,25 @@ class Card extends Component<Props> {
                             ) : null  */}
 
                         {/* <button className='btn__outlined'>Details</button> */}
+                        
+                        {/* {this.props.device.type === 'oven' ? 
+                            <div className={style.range}>
+                                <h2>{this.props.device.temp.current}</h2>
+                                <div className={style.range__buttons}>
+                                    <Button 
+                                    variant='outlined' 
+                                    color='secondary' 
+                                    // onClick={this.decrease}
+                                    > - </Button>
+                                    <Button 
+                                    variant='outlined' 
+                                    color='secondary' 
+                                    // onClick={this.increase}
+                                    > + </Button>
+                                </div>
+                            </div> : null
+                        } */}
+                        
                         
                     </div>
                 </div>
