@@ -44,14 +44,9 @@ declare global {
   }
 }
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose || applyMiddleware(thunk);
 
-export const Store = createStore(rootReducer, compose(
-  applyMiddleware(
-    thunk
-    ),
-    composeEnhancers
-));
+export const Store = createStore(rootReducer, composeEnhancers());
 
 const { dispatch } = Store;
 

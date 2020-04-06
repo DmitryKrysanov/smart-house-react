@@ -1,14 +1,20 @@
-import { SHOW_LOADER } from "../../../constants/loaderActions";
+import { SHOW_LOADER, HIDE_LOADER } from "../../../constants/loaderActions";
 
 interface ShowLoaderAction {
     type: typeof SHOW_LOADER;
-    payload: boolean
 }
 
-export const showLoader = (payload: boolean): ShowLoaderAction => ({
-    type: SHOW_LOADER,
-    payload
+interface HideLoaderAction {
+    type: typeof HIDE_LOADER;
+}
+
+export const showLoader = (): ShowLoaderAction => ({
+    type: SHOW_LOADER
+})
+
+export const hideLoader = (): HideLoaderAction => ({
+    type: HIDE_LOADER
 })
 
 
-export type loaderActions = ShowLoaderAction ;
+export type loaderActions = ShowLoaderAction | HideLoaderAction ;

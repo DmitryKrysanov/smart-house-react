@@ -1,25 +1,26 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import style from './Devices.module.scss';
-import { DevicesState, Device } from '../../redux/reducers/deviceReducer'
+import { DevicesState, Device, deviceReducer } from '../../redux/reducers/deviceReducer'
 import { connect } from "react-redux";
 import Card from '../Card/Card'
 import AddIcon from '@material-ui/icons/Add';
 import AddDeviceContainer from '../AddDevice/AddDeviceContainer'
 import Filter from '../Tabs/Tabs';
-import { addDevice, setDevices, loadDevicesThunk } from '../../redux/actions/deviceActions/deviceActions';
+import { addDevice, setDevices, requestDevices } from '../../redux/actions/deviceActions/deviceActions';
 import { Dispatch } from '../../redux/store';
 import DevicesHeader from '../DevicesHeader/DevicesHeader'
 import Pagination from '../Pagination/Pagination';
 import Fab from '@material-ui/core/Fab';
-import { showLoader } from '../../redux/actions/loaderActions/loaderActions';
+import { showLoader, hideLoader } from '../../redux/actions/loaderActions/loaderActions';
 import { LoaderState } from '../../redux/reducers/loaderReducer';
 import { Loader } from '../Loader/Loader';
 import { devicesAPI } from '../../api/api';
+import axios from 'axios'
 
 export interface ConnectedProps {
     devices: Device[],
-    isLoading: boolean
+   // isLoading: boolean
 }
 
 type ComponentProps = ConnectedProps & ReturnType<typeof mapDispatchToProps>;
@@ -32,26 +33,21 @@ class Devices extends Component<ComponentProps> {
         isLoading: false
     }
 
-    componentDidMount = async () => {
+    componentDidMount = async()=>  {
         console.log("вызвался компонент дид маунт");
-        // this.props.showLoader(true);
-        // const response = await fetch("https://my-json-server.typicode.com/SvetaShmalko/json-server/devices")
-        //     .then(resp => {
-        //         console.log(resp);
-        //         return resp.json();
-        //     });
-        // this.props.loadDevices(response);
+        const instance = axios.create({
+            baseURL: 'https://my-json-server.typicode.com/SvetaShmalko/json-server/devices'
+        })
 
+        this.setState({ isLoading: true});
+
+        const devs = await instance.get<Device[]>('').then((response: {
+            data: any;
+        }) => response.data);
+        this.props.loadDevices(devs);
+    
+        this.setState({ isLoading: false});
     };
-
-
-    //     componentDidMount(){
-    //     this.props.showLoader(true);
-    //  //   console.log(this.state.isLoading);
-    //     const response = devicesAPI.serverDevices();
-    //     this.props.loadDevices(response);
-    //     this.props.showLoader(false);
-    // };
 
     handleToggleDialog = () => {
         this.setState({
@@ -77,7 +73,7 @@ class Devices extends Component<ComponentProps> {
     private devices = (): JSX.Element[] =>
         this.search(this.props.devices, this.state.term).map(device => (
             <div >
-                <Card device={device} />
+                <Card device={device} key={device.id} />
             </div>
         ))
 
@@ -102,10 +98,9 @@ class Devices extends Component<ComponentProps> {
                 ) : null}
 
                 <div className={style.collection}>
-                    {
+                {
                         this.state.isLoading ?
-                        <Loader /> : console.log(this.state.isLoading)
-
+                        <Loader /> : null
                     }
                     {this.devices()}
                 </div>
@@ -115,10 +110,20 @@ class Devices extends Component<ComponentProps> {
     }
 }
 
-const mapStateToProps = (state: { deviceReducer: DevicesState, loaderReducer: LoaderState}): ConnectedProps => {
+type MapStatePropsType = {
+    devices: Device[]
+}
+
+type MapDispatchPropsType = {
+    loadDevices: () => void
+}
+
+type PropsType = MapStatePropsType & MapDispatchPropsType
+
+
+const mapStateToProps = (state: { deviceReducer: DevicesState}): ConnectedProps => {
     return { 
-        devices: state.deviceReducer.devices,
-        isLoading: state.loaderReducer.isLoad
+        devices: state.deviceReducer.devices
     }
 }
 
@@ -126,11 +131,14 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     addResourse: (p: Device) => {
         return dispatch(addDevice(p));
     },
-    showLoader: (p: boolean) => {
-        return dispatch(showLoader(p));
+    showLoader: () => {
+        return dispatch(showLoader());
     },
-    loadDevices: () => {
-        return loadDevicesThunk();
+    hideLoader: () => {
+        return dispatch(hideLoader());
+    },
+    loadDevices: (p: Device[]) => {
+        return dispatch(setDevices(p));
     }
 })
 

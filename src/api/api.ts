@@ -1,16 +1,13 @@
+import axios from 'axios'
 import { Device } from "../redux/reducers/deviceReducer";
+
+const instance = axios.create({
+    baseURL: 'https://my-json-server.typicode.com/SvetaShmalko/json-server/devices'
+})
 
  export const devicesAPI = {
 
     serverDevices() {
-        return async ():Promise<Device[]> => {
-            return(
-             await fetch("https://my-json-server.typicode.com/SvetaShmalko/json-server/devices")
-                .then(resp => {
-                    console.log(resp);
-                    return resp.json();
-                })
-            )
-        }
+        return instance.get<Device[]>('').then(response =>  response.data)
     }
 }
