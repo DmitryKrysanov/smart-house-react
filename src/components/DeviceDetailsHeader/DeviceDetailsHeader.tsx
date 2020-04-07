@@ -1,12 +1,20 @@
 import React from 'react';
-import './DeviceDetailsHeader.scss';
+import style from './DeviceDetailsHeader.module.scss';
+import Button from '@material-ui/core/Button';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { Link } from 'react-router-dom';
+import IconButton from '@material-ui/core/IconButton';
 
 
 const DeviceDetailsHeader = () => {
     return (
-        <header className='header'>
+        <header className={style.header}>
         <div className='wrapper'>
-            <h2>Home</h2>
+            <div className={style.header__inner}>
+                <Link to={'/home'}>
+                    <IconButton><ArrowBackIcon /></IconButton>
+                </Link>
+            </div>
         </div>
       </header>
     );
