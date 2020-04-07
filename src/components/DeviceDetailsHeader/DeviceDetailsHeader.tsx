@@ -1,6 +1,5 @@
 import React from 'react';
 import style from './DeviceDetailsHeader.module.scss';
-import Button from '@material-ui/core/Button';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { Link } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';

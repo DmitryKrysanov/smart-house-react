@@ -9,7 +9,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import style from './DeviceDetails.module.scss'
 import DeviceDetailsHeader from '../DeviceDetailsHeader/DeviceDetailsHeader';
 import { Oven, RobotHoover } from '../../redux/reducers/deviceReducer';
-import { useRouteMatch, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 interface Props {
     devices: Array<Oven | RobotHoover>

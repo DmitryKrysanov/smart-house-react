@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import style from './Devices.module.scss';
 import { DevicesState, Device, RobotHoover, Oven } from '../../redux/reducers/deviceReducer'
@@ -27,6 +27,13 @@ interface Props {
     hideLoader: () => void
 }
 
+interface Resp {
+ data: Array<Oven | RobotHoover>,
+ totalPages: number,
+ page: number,
+ perPage: number
+}
+
 class Devices extends Component<Props> {
 
     state = {
@@ -39,8 +46,9 @@ class Devices extends Component<Props> {
 
         this.setState({ isLoading: true });
 
-        const devs = await devicesAPI.serverDevices();
-        this.props.loadDevices(devs);
+        const devs: any = await devicesAPI.serverDevices();
+        // console.log(devs)
+        this.props.loadDevices(devs.data);
      
 
         this.setState({ isLoading: false });
@@ -69,12 +77,12 @@ class Devices extends Component<Props> {
 
     private devices = (): JSX.Element[] =>
     this.props.devices.map(device => (
-            <div >
+            <Fragment key={device.id} >
                 <Link to={`device/${device.id}`}>
-                    <Card device={device} 
+                    <Card  device={device} 
                     deviceToggle={this.props.deviceToggle} />
                 </Link>
-            </div>
+            </Fragment>
         ))
 
     render() {

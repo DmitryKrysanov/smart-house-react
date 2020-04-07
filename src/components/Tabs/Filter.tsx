@@ -1,8 +1,7 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import style from './Filter.module.scss';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Switch from '@material-ui/core/Switch';
 import Button from '@material-ui/core/Button';
 
 interface Props {
