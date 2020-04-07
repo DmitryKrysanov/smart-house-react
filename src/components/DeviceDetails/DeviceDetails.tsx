@@ -13,6 +13,7 @@ import { useRouteMatch, useParams } from 'react-router-dom';
 
 interface Props {
     devices: Array<Oven | RobotHoover>
+    deviceToggle: (id: number) => void
 }
 
 interface MatchParams {
@@ -51,7 +52,9 @@ const DeviceDetails = (props: Props) => {
                         <h5>{device.name}</h5>
                         <p>{device.type}</p>
                     </div>
-                    <Switch edge="end" />
+                    <Switch edge="end"
+                        onChange={() => { props.deviceToggle(device.id) }}
+                        checked={device.status} />
                 </div>
                 <h6>Temperature</h6>
                 <div className={style.range}>

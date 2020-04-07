@@ -35,7 +35,10 @@ const App = (props: ComponentProps) => {
               />
             </Route>
             <Route path='/device/:deviceId'>
-              <DeviceDetails devices={props.devices} />
+              <DeviceDetails 
+              devices={props.devices} 
+              deviceToggle={props.deviceToggle}
+              />
             </Route>
           </Switch>
         </div>
