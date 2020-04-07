@@ -35,7 +35,10 @@ import { rootReducer } from './reducers'
 // export default home;
 
 
-import { createStore, compose } from "redux";
+import { createStore, compose, applyMiddleware } from "redux";
+import thunk from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
+import rootSaga from '../sagas';
 
 declare global {
   interface Window {
@@ -43,9 +46,15 @@ declare global {
   }
 }
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+//const sagaMiddleware = createSagaMiddleware();
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || 
+  compose || 
+  applyMiddleware(thunk);
 
 export const Store = createStore(rootReducer, composeEnhancers());
+
+//sagaMiddleware.run(rootSaga);
 
 const { dispatch } = Store;
 

@@ -67,7 +67,8 @@ class AddDeviceOven extends Component<Props, State> {
         })
     }
 
-    private onSubmit = (e: { preventDefault: () => void; }) => {
+    private onSubmit = async (e: { preventDefault: () => void; }) => {
+        const { name, id, image, temp, modes } = this.state;
         e.preventDefault();
         this.setState({
             id: Math.round(Math.random() * 100)

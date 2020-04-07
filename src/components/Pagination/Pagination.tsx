@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
 import style from './Pagination.module.scss'
+import { Device } from '../../redux/reducers/deviceReducer';
+
 
 interface State {
-    devices: any[],
+    devices: Device[],
     totalCount: number,
     pageSize: number,
     currentPage: number
 }
 
+
 class Pagination extends Component<{}, State> {
 
     state: State = {
-        devices: ['a','b','c','d','e','f','g','h','i','j','k'],
-        totalCount: 11,
+        devices: [],
+        totalCount: this.state.devices.length,
         pageSize: 4,
         currentPage: 1
     }
@@ -28,7 +31,7 @@ class Pagination extends Component<{}, State> {
 
         const indexOfLastDevice: number = currentPage * pageSize;
         const indexOfFirstDevice: number = indexOfLastDevice - pageSize;
-        const currentDevices: string[] = devices.slice(indexOfFirstDevice, indexOfLastDevice);
+        const currentDevices: Device[] = devices.slice(indexOfFirstDevice, indexOfLastDevice);
 
         const renderDevices = currentDevices.map((device, index) => {
             return <li key={index}>{device}</li>;

@@ -51,7 +51,7 @@ class AddDeviceRobot extends Component<Props, State> {
             mode: ''
         })
     }
-
+    
     private onSubmit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         this.setState({
@@ -60,6 +60,7 @@ class AddDeviceRobot extends Component<Props, State> {
         this.props.addDevice(this.state);
         this.props.handleToggleDialog();
     }
+   
 
     private handleDelete = (mode: string) => {
         const newModes = this.state.modes;

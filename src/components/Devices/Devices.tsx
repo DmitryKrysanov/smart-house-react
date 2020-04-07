@@ -13,21 +13,38 @@ import DevicesHeader from '../DevicesHeader/DevicesHeader'
 import Pagination from '../Pagination/Pagination';
 import Fab from '@material-ui/core/Fab';
 import { Link } from 'react-router-dom';
+import { devicesAPI } from '../../api/api';
+import { Loader } from '../Loader/Loader';
 
 
 interface Props {
     devices: Array<Oven | RobotHoover>,
     addResourse: (p: Oven | RobotHoover) => AddDeviceAction,
     offDevices: () => void,
-    deviceToggle: (id: number) => void
+    deviceToggle: (id: number) => void,
+    loadDevices: (p: Array<Oven | RobotHoover>) => void
+    showLoader: () => void,
+    hideLoader: () => void
 }
 
 class Devices extends Component<Props> {
 
     state = {
         showModal: false,
-        term: ''
+        term: '',
+        isLoading: false
     }
+
+    componentDidMount = async () => {
+
+        this.setState({ isLoading: true });
+
+        const devs = await devicesAPI.serverDevices();
+        this.props.loadDevices(devs);
+     
+
+        this.setState({ isLoading: false });
+    };
 
     handleToggleDialog = () => {
         this.setState({
@@ -69,16 +86,20 @@ class Devices extends Component<Props> {
                     <Filter offDevices={this.props.offDevices} />
                 </div>
                 <div className={style.fab}>
-                    <Fab  color="secondary" aria-label="add" onClick={this.handleToggleDialog}>
-                        <AddIcon color='inherit'/>
+                    <Fab color="secondary" aria-label="add" onClick={this.handleToggleDialog}>
+                        <AddIcon color='inherit' />
                     </Fab>
                 </div>
                 {showModal ? ReactDOM.createPortal(
-                    <AddDeviceContainer handleToggleDialog={this.handleToggleDialog} addDevice={this.props.addResourse}/>,
+                    <AddDeviceContainer handleToggleDialog={this.handleToggleDialog} addDevice={this.props.addResourse} />,
                     document.getElementById('modal-root') as HTMLInputElement
                 ) : null}
 
                 <div className={style.collection}>
+                    {
+                        this.state.isLoading ?
+                            <Loader /> : null
+                    }
                     {this.devices()}
                 </div>
                 {/* <Pagination /> */}
