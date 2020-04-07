@@ -7,31 +7,24 @@ import Card from '../Card/Card'
 import AddIcon from '@material-ui/icons/Add';
 import AddDeviceContainer from '../AddDevice/AddDeviceContainer'
 import Filter from '../Tabs/Filter';
-import { addDevice, turnOffAllDevices, turnOnOffDevice, setDevices } from '../../redux/actions/deviceActions/deviceActions';
+import { addDevice, turnOffAllDevices, turnOnOffDevice, AddDeviceAction } from '../../redux/actions/deviceActions/deviceActions';
 import { Dispatch } from '../../redux/store';
 import DevicesHeader from '../DevicesHeader/DevicesHeader'
 import Pagination from '../Pagination/Pagination';
 import Fab from '@material-ui/core/Fab';
-import { showLoader, hideLoader } from '../../redux/actions/loaderActions/loaderActions';
-import { LoaderState } from '../../redux/reducers/loaderReducer';
-import { Loader } from '../Loader/Loader';
-import { devicesAPI } from '../../api/api';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { devicesAPI } from '../../api/api';
+import { Loader } from '../Loader/Loader';
 
 
-// export interface ConnectedProps {
-//     devices: Device[],
-//     // isLoading: boolean
-
-
-interface ConnectedProps {
-    devices: Array<Oven | RobotHoover>
+interface Props {
+    devices: Array<Oven | RobotHoover>,
+    addResourse: (p: Oven | RobotHoover) => AddDeviceAction,
+    offDevices: () => void,
+    deviceToggle: (id: number) => void
 }
 
-type ComponentProps = ConnectedProps & ReturnType<typeof mapDispatchToProps>;
-
-export class Devices extends Component<ComponentProps> {
+class Devices extends Component<Props> {
 
     state = {
         showModal: false,
@@ -44,7 +37,7 @@ export class Devices extends Component<ComponentProps> {
         this.setState({ isLoading: true });
 
         const devs = await devicesAPI.serverDevices();
-       // this.props.loadDevices(devs);
+      //  this.props.loadDevices(devs);
 
         this.setState({ isLoading: false });
     };
@@ -61,20 +54,21 @@ export class Devices extends Component<ComponentProps> {
         })
     }
 
-    private search = (devices: Array<Oven | RobotHoover>, term: string) => {
-        if(term.length === 0) {
-            return devices;
-        }
-        return devices.filter((device: Oven | RobotHoover) => {
-            return device.name.toLowerCase().indexOf(term.toLowerCase()) > -1;
-        })
-    }
+    // private search = (devices: Array<Oven | RobotHoover>, term: string) => {
+    //     if(term.length === 0) {
+    //         return devices;
+    //     }
+    //     return devices.filter((device: Oven | RobotHoover) => {
+    //         return device.name.toLowerCase().indexOf(term.toLowerCase()) > -1;
+    //     })
+    // }
 
     private devices = (): JSX.Element[] =>
-        this.search(this.props.devices, this.state.term).map(device => (
+    this.props.devices.map(device => (
             <div >
-                <Link to={`id/${device.id}`}>
-                    <Card device={device} deviceToggle={this.props.deviceToggle} />
+                <Link to={`device/${device.id}`}>
+                    <Card device={device} 
+                    deviceToggle={this.props.deviceToggle} />
                 </Link>
             </div>
         ))
@@ -110,42 +104,5 @@ export class Devices extends Component<ComponentProps> {
     }
 }
 
-type MapStatePropsType = {
-    devices: Device[]
-}
 
-type MapDispatchPropsType = {
-    loadDevices: () => void
-}
-
-type PropsType = MapStatePropsType & MapDispatchPropsType
-
-
-const mapStateToProps = (state: { deviceReducer: DevicesState }): ConnectedProps => {
-    return {
-        devices: state.deviceReducer.devices
-    }
-}
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-    addResourse: (p: Oven | RobotHoover) => {
-        return dispatch(addDevice(p));
-    },
-    // showLoader: () => {
-    //     return dispatch(showLoader());
-    // },
-    // hideLoader: () => {
-    //     return dispatch(hideLoader());
-    // },
-    // loadDevices: (p: Device[]) => {
-    //     return dispatch(setDevices(p));
-    // },
-     offDevices: () => {
-         return dispatch(turnOffAllDevices());
-     },
-    deviceToggle: (id: number) => {
-        return dispatch(turnOnOffDevice(id))
-    }
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Devices);
+export default Devices;

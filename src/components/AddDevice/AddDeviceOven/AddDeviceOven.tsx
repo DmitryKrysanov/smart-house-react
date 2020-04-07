@@ -74,7 +74,7 @@ class AddDeviceOven extends Component<Props, State> {
             id: Math.round(Math.random() * 100)
         });
         this.props.addDevice(this.state);
-        this.props.handleToggleDialog();
+        // this.props.handleToggleDialog();
     }
 
     private handleDelete = (mode: string) => {

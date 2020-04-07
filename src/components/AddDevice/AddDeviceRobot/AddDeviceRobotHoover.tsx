@@ -52,34 +52,14 @@ class AddDeviceRobot extends Component<Props, State> {
         })
     }
     
-    private onSubmit = async (e: { preventDefault: () => void; }) => {
-        const { name, id, image, modes } = this.state;
+    private onSubmit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        try {
-            const resp = await fetch("https://jsonplaceholder.typicode.com/posts", {
-              method: "POST",
-              body: JSON.stringify({
-                name, 
-                id, 
-                image,  
-                modes,
-                userId: Math.round(Math.random() * 100)
-              }),
-              headers: {
-                "Content-type": "application/json; charset=UTF-8"
-              }
-            }).then(res => {
-              this.setState(initialState);
-              return res.json();
-            });
-    
-            this.props.addDevice(resp);
-          } catch (error) {
-            this.setState(initialState);
-            alert("An error occured");
-          }
-
-    };
+        this.setState({
+            id: Math.round(Math.random() * 100)
+        });
+        this.props.addDevice(this.state);
+        this.props.handleToggleDialog();
+    }
    
 
     private handleDelete = (mode: string) => {
