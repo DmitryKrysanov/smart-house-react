@@ -61,7 +61,7 @@ class AddDeviceRobot extends Component<Props, State> {
         const { type, name, image, status, modes, currentMode } = this.state;
         e.preventDefault();
         try {
-            const resp = await fetch("https://jsonplaceholder.typicode.com/posts", {
+            const resp = await fetch('http://localhost:3001/api/homes/1/devices', {
                 method: "POST",
                 body: JSON.stringify({
                     type,
@@ -76,6 +76,7 @@ class AddDeviceRobot extends Component<Props, State> {
                 }
             }).then(res => {
                 this.setState(initialState);
+                console.log(res);
                 return res.json();
             });
 

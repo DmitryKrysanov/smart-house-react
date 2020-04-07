@@ -78,7 +78,7 @@ class AddDeviceOven extends Component<Props, State> {
         const { type, name, image, status, temp, modes, currentMode } = this.state;
         e.preventDefault();
         try {
-            const resp = await fetch("https://jsonplaceholder.typicode.com/posts", {
+            const resp = await fetch('http://localhost:3001/api/homes/1/devices', {
                 method: "POST",
                 body: JSON.stringify({
                     type,

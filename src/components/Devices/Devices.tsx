@@ -40,7 +40,9 @@ class Devices extends Component<Props> {
         this.setState({ isLoading: true });
 
         const devs = await devicesAPI.serverDevices();
+    
         this.props.loadDevices(devs);
+        console.log(devs);
      
 
         this.setState({ isLoading: false });
