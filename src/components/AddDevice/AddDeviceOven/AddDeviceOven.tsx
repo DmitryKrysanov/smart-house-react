@@ -6,14 +6,21 @@ import style from './AddDeviceOven.module.scss';
 import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
 
-interface State extends Oven {
-    mode: string
+
+
+interface State {
+    type: string,
+    name: string,
+    image: string,
+    status: boolean,
+    temp: {},
+    modes: string[],
+    currentMode: string
 }
 
 const initialState: State = {
     type: 'oven',
     name: '',
-    id: 0,
     image: 'http://placehold.it/400px',
     status: false,
     temp: {
@@ -23,7 +30,7 @@ const initialState: State = {
         step: 0,
     },
     modes: [],
-    mode: ''
+    currentMode: ''
 }
 
 interface Props {
@@ -55,25 +62,48 @@ class AddDeviceOven extends Component<Props, State> {
 
     public handleModeInputChange = (event: { currentTarget: { value: string; }; }) => {
         this.setState({
-            mode: event.currentTarget.value
+            currentMode: event.currentTarget.value
         })
     }
 
     public handleModeInputClick = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         this.setState({
-            modes: [...this.state.modes, this.state.mode],
-            mode: ''
+            modes: [...this.state.modes, this.state.currentMode],
+            currentMode: ''
         })
     }
 
     private onSubmit = async (e: { preventDefault: () => void; }) => {
-        const { name, id, image, temp, modes } = this.state;
+        const { type, name, image, status, temp, modes, currentMode } = this.state;
         e.preventDefault();
-        this.setState({
-            id: Math.round(Math.random() * 100)
-        });
-        this.props.addDevice(this.state);
+        try {
+            const resp = await fetch("https://jsonplaceholder.typicode.com/posts", {
+                method: "POST",
+                body: JSON.stringify({
+                    type,
+                    name,
+                    image,
+                    status,
+                    temp,
+                    modes,
+                    currentMode
+                }),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            }).then(res => {
+                this.setState(initialState);
+                console.log(res);
+                return res.json();
+            });
+            
+            this.props.addDevice(resp);
+        } catch (error) {
+            this.setState(initialState);
+            alert("An error occured");
+        }
+     
         // this.props.handleToggleDialog();
     }
 
@@ -157,7 +187,7 @@ class AddDeviceOven extends Component<Props, State> {
                                 name='image'
                                 label='Mode'
                                 color='secondary'
-                                value={this.state.mode}
+                                value={this.state.currentMode}
                                 onChange={this.handleModeInputChange} />
                             <Button className={style.button} variant="outlined" color="secondary" onClick={this.handleModeInputClick}>+</Button>
                         </div>
