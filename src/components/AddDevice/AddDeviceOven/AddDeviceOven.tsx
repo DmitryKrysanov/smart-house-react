@@ -5,6 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import style from './AddDeviceOven.module.scss';
 import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
+import { devicesAPI } from '../../../api/api';
 
 
 
@@ -77,32 +78,37 @@ class AddDeviceOven extends Component<Props, State> {
     private onSubmit = async (e: { preventDefault: () => void; }) => {
         const { type, name, image, status, temp, modes, currentMode } = this.state;
         e.preventDefault();
-        try {
-            const resp = await fetch('http://localhost:3001/api/homes/1/devices', {
-                method: "POST",
-                body: JSON.stringify({
-                    type,
-                    name,
-                    image,
-                    status,
-                    temp,
-                    modes,
-                    currentMode
-                }),
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8"
-                }
-            }).then(res => {
-                this.setState(initialState);
-                console.log(res);
-                return res.json();
-            });
+
+        const respOven = await devicesAPI.postOven(this.state);
+        console.log(respOven);
+        this.props.addDevice(respOven);
+
+        // try {
+        //     const resp = await fetch('http://localhost:3001/api/homes/1/devices', {
+        //         method: "POST",
+        //         body: JSON.stringify({
+        //             type,
+        //             name,
+        //             image,
+        //             status,
+        //             temp,
+        //             modes,
+        //             currentMode
+        //         }),
+        //         headers: {
+        //             "Content-type": "application/json; charset=UTF-8"
+        //         }
+        //     }).then(res => {
+        //         this.setState(initialState);
+        //         console.log(res);
+        //         return res.json();
+        //     });
             
-            this.props.addDevice(resp);
-        } catch (error) {
-            this.setState(initialState);
-            alert("An error occured");
-        }
+        //     this.props.addDevice(resp);
+        // } catch (error) {
+        //     this.setState(initialState);
+        //     alert("An error occured");
+        // }
      
         // this.props.handleToggleDialog();
     }
