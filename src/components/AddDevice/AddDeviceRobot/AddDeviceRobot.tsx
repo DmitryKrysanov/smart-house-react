@@ -96,13 +96,7 @@ class AddDeviceRobot extends Component<Props, State> {
           }
 
     };
-    // private onSubmit = (e: { preventDefault: () => void; }) => {
-    //     e.preventDefault();
-    //     this.setState({
-    //         id: Math.round(Math.random() * 100)
-    //     });
-    //     this.props.addDevice(this.state);
-    // }
+   
 
     private handleDelete = (mode: string) => {
         const newModes = this.state.modes;

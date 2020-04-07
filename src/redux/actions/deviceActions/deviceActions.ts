@@ -30,7 +30,7 @@ export const setDevices = (payload: Device[]): SetDevicesAction => ({
     payload
 })
 
-
+//////////////////////////// НЕ РАБОТАЕТ /////////////////////////////
 type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, deviceActions>
 
 export const requestDevices = (): ThunkType => {

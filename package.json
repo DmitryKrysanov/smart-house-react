@@ -16,6 +16,7 @@
     "@types/redux": "^3.6.0",
     "axios": "^0.19.2",
     "babel-eslint": "^10.1.0",
+    "classnames": "^2.2.6",
     "node-sass": "^4.13.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
@@ -47,5 +48,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/classnames": "^2.2.10"
   }
 }

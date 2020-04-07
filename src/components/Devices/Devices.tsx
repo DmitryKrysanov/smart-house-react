@@ -16,11 +16,11 @@ import { showLoader, hideLoader } from '../../redux/actions/loaderActions/loader
 import { LoaderState } from '../../redux/reducers/loaderReducer';
 import { Loader } from '../Loader/Loader';
 import { devicesAPI } from '../../api/api';
-import axios from 'axios'
+import axios from 'axios';
 
 export interface ConnectedProps {
     devices: Device[],
-   // isLoading: boolean
+    // isLoading: boolean
 }
 
 type ComponentProps = ConnectedProps & ReturnType<typeof mapDispatchToProps>;
@@ -33,14 +33,14 @@ class Devices extends Component<ComponentProps> {
         isLoading: false
     }
 
-    componentDidMount = async()=>  {
-        
-        this.setState({ isLoading: true});
-        
+    componentDidMount = async () => {
+
+        this.setState({ isLoading: true });
+
         const devs = await devicesAPI.serverDevices();
         this.props.loadDevices(devs);
-    
-        this.setState({ isLoading: false});
+
+        this.setState({ isLoading: false });
     };
 
     handleToggleDialog = () => {
@@ -72,7 +72,7 @@ class Devices extends Component<ComponentProps> {
         ))
 
     render() {
-      //  console.log(this.state)
+        //  console.log(this.state)
         const { showModal } = this.state;
         return (
             <div>
@@ -92,9 +92,9 @@ class Devices extends Component<ComponentProps> {
                 ) : null}
 
                 <div className={style.collection}>
-                {
+                    {
                         this.state.isLoading ?
-                        <Loader /> : null
+                            <Loader /> : null
                     }
                     {this.devices()}
                 </div>
@@ -115,8 +115,8 @@ type MapDispatchPropsType = {
 type PropsType = MapStatePropsType & MapDispatchPropsType
 
 
-const mapStateToProps = (state: { deviceReducer: DevicesState}): ConnectedProps => {
-    return { 
+const mapStateToProps = (state: { deviceReducer: DevicesState }): ConnectedProps => {
+    return {
         devices: state.deviceReducer.devices
     }
 }
