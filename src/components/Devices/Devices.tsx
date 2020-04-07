@@ -12,6 +12,7 @@ import { Dispatch } from '../../redux/store';
 import DevicesHeader from '../DevicesHeader/DevicesHeader'
 import Pagination from '../Pagination/Pagination';
 import Fab from '@material-ui/core/Fab';
+import { Link } from 'react-router-dom';
 
 
 interface ConnectedProps {
@@ -51,7 +52,10 @@ class Devices extends Component<ComponentProps> {
     private devices = (): JSX.Element[] =>
     this.search(this.props.devices, this.state.term).map(device => (
             <div >
-                <Card device={device} deviceToggle={this.props.deviceToggle} />
+                <Link to={`id/${device.id}`}>
+                    <Card device={device} deviceToggle={this.props.deviceToggle} />
+                </Link>
+                
             </div>
         ))
 

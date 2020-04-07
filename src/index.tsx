@@ -4,7 +4,8 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
-import { Store } from './redux/store'
+import { Store } from './redux/store';
+import { BrowserRouter } from 'react-router-dom';
 
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 
@@ -24,10 +25,12 @@ const theme = createMuiTheme({
 })
 
 ReactDOM.render(
-<Provider store={Store}>
-    <MuiThemeProvider theme={theme}>
-        <App />
-    </MuiThemeProvider>
-</Provider>, document.getElementById('root'));
+  <BrowserRouter>
+    <Provider store={Store}>
+        <MuiThemeProvider theme={theme}>
+            <App />
+        </MuiThemeProvider>
+    </Provider>
+</BrowserRouter>, document.getElementById('root'));
 
 serviceWorker.unregister();
