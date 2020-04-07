@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.scss';
 import DeviceDetails from './components/DeviceDetails/DeviceDetails';
-import { Switch, Route, useRouteMatch, useParams } from 'react-router-dom';
-import { Oven, RobotHoover, DevicesState, Device } from './redux/reducers/deviceReducer';
+import { Switch, Route } from 'react-router-dom';
+import { Oven, RobotHoover, DevicesState } from './redux/reducers/deviceReducer';
 import { Dispatch } from './redux/store';
 import { addDevice, turnOffAllDevices, turnOnOffDevice, setDevices } from './redux/actions/deviceActions/deviceActions';
 import { connect } from 'react-redux';
