@@ -1,42 +1,34 @@
 import React, { Component } from 'react';
 import { AddDeviceAction } from '../../../redux/actions/deviceActions/deviceActions';
-import { Device } from '../../../redux/reducers/deviceReducer';
+import { Device, Oven } from '../../../redux/reducers/deviceReducer';
 import TextField from '@material-ui/core/TextField';
 import style from './AddDeviceOven.module.scss';
 import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
 
-interface State {
-    name: string,
-    id: number,
-    image: string,
-    temp: {
-        min: number,
-        max: number,
-        current: number,
-        step: number
-    },
-    mode: string,
-    modes: string[]
+interface State extends Oven {
+    mode: string
 }
 
 const initialState: State = {
+    type: 'oven',
     name: '',
     id: 0,
-    image: 'https://placehold.it/400px',
+    image: 'http://placehold.it/400px',
+    status: false,
     temp: {
         min: 0,
         max: 0,
         current: 0,
-        step: 0
+        step: 0,
     },
-    mode: '',
     modes: [],
+    mode: ''
 }
 
 interface Props {
     handleToggleDialog: () => void,
-    addDevice: (p: Device) => AddDeviceAction,
+    addDevice: (p: Oven) => AddDeviceAction,
     handleContent: (count: number) => void
 }
 
@@ -68,7 +60,6 @@ class AddDeviceOven extends Component<Props, State> {
     }
 
     public handleModeInputClick = (e: { preventDefault: () => void; }) => {
-        console.log(this.state.mode)
         e.preventDefault();
         this.setState({
             modes: [...this.state.modes, this.state.mode],
@@ -79,40 +70,12 @@ class AddDeviceOven extends Component<Props, State> {
     private onSubmit = async (e: { preventDefault: () => void; }) => {
         const { name, id, image, temp, modes } = this.state;
         e.preventDefault();
-        try {
-            const resp = await fetch("https://jsonplaceholder.typicode.com/posts", {
-              method: "POST",
-              body: JSON.stringify({
-                name, 
-                id, 
-                image, 
-                temp, 
-                modes,
-                userId: Math.round(Math.random() * 100)
-              }),
-              headers: {
-                "Content-type": "application/json; charset=UTF-8"
-              }
-            }).then(res => {
-              this.setState(initialState);
-              return res.json();
-            });
-    
-            this.props.addDevice(resp);
-          } catch (error) {
-            this.setState(initialState);
-            alert("An error occured");
-          }
-
-    };
-
-    // private onSubmit = (e: { preventDefault: () => void; }) => {
-    //     e.preventDefault();
-    //     this.setState({
-    //         id: Math.round(Math.random() * 100)
-    //     });
-    //     this.props.addDevice(this.state);
-    // }
+        this.setState({
+            id: Math.round(Math.random() * 100)
+        });
+        this.props.addDevice(this.state);
+        this.props.handleToggleDialog();
+    }
 
     private handleDelete = (mode: string) => {
         const newModes = this.state.modes;
@@ -128,7 +91,6 @@ class AddDeviceOven extends Component<Props, State> {
             <Chip key={index} className={style.chip__item} label={mode} onDelete={() => this.handleDelete(mode)} />
         ))
     render() {
-        console.log(this.state)
         return (
             <div className={style.add_device_dialog__inner}>
                 <h5>Add Device (Oven)</h5>

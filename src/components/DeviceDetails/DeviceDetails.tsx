@@ -7,6 +7,7 @@ import Switch from '@material-ui/core/Switch';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import style from './DeviceDetails.module.scss'
+import DeviceDetailsHeader from '../DeviceDetailsHeader/DeviceDetailsHeader';
 
 const modesList: string[] = [
     'mode1', 'mode2', 'mode3'
@@ -20,7 +21,9 @@ const DeviceDetails = () => {
     )
 
     return (
-        <div className={style.device_details}>
+        <div>
+            <DeviceDetailsHeader />
+            <div className={style.device_details}>
             <div className={style.device_details__image}>
                 <img src="http://placehold.it/600" alt="sdf" />
             </div>
@@ -73,6 +76,8 @@ const DeviceDetails = () => {
                 </div>
             </div>
         </div>
+        </div>
+        
     )
 }
 

@@ -27,7 +27,6 @@ class DevicesHeader extends React.Component<ComponentProps> {
   }
 
 render() {
-  console.log(this.state)
   return (
     <header className='header'>
       <div className='wrapper'>

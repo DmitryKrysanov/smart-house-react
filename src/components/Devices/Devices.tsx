@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import style from './Devices.module.scss';
-import { DevicesState, Device, deviceReducer } from '../../redux/reducers/deviceReducer'
+import { DevicesState, Device, RobotHoover, Oven } from '../../redux/reducers/deviceReducer'
 import { connect } from "react-redux";
 import Card from '../Card/Card'
 import AddIcon from '@material-ui/icons/Add';
 import AddDeviceContainer from '../AddDevice/AddDeviceContainer'
-import Filter from '../Tabs/Tabs';
-import { addDevice, setDevices, requestDevices } from '../../redux/actions/deviceActions/deviceActions';
+import Filter from '../Tabs/Filter';
+import { addDevice, turnOffAllDevices, turnOnOffDevice, setDevices } from '../../redux/actions/deviceActions/deviceActions';
 import { Dispatch } from '../../redux/store';
 import DevicesHeader from '../DevicesHeader/DevicesHeader'
 import Pagination from '../Pagination/Pagination';
@@ -17,15 +17,21 @@ import { LoaderState } from '../../redux/reducers/loaderReducer';
 import { Loader } from '../Loader/Loader';
 import { devicesAPI } from '../../api/api';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
-export interface ConnectedProps {
-    devices: Device[],
-    // isLoading: boolean
+
+// export interface ConnectedProps {
+//     devices: Device[],
+//     // isLoading: boolean
+
+
+interface ConnectedProps {
+    devices: Array<Oven | RobotHoover>
 }
 
 type ComponentProps = ConnectedProps & ReturnType<typeof mapDispatchToProps>;
 
-class Devices extends Component<ComponentProps> {
+export class Devices extends Component<ComponentProps> {
 
     state = {
         showModal: false,
@@ -38,7 +44,7 @@ class Devices extends Component<ComponentProps> {
         this.setState({ isLoading: true });
 
         const devs = await devicesAPI.serverDevices();
-        this.props.loadDevices(devs);
+       // this.props.loadDevices(devs);
 
         this.setState({ isLoading: false });
     };
@@ -55,11 +61,11 @@ class Devices extends Component<ComponentProps> {
         })
     }
 
-    private search = (devices: Device[], term: string) => {
-        if (term.length === 0) {
+    private search = (devices: Array<Oven | RobotHoover>, term: string) => {
+        if(term.length === 0) {
             return devices;
         }
-        return devices.filter((device: Device) => {
+        return devices.filter((device: Oven | RobotHoover) => {
             return device.name.toLowerCase().indexOf(term.toLowerCase()) > -1;
         })
     }
@@ -67,19 +73,19 @@ class Devices extends Component<ComponentProps> {
     private devices = (): JSX.Element[] =>
         this.search(this.props.devices, this.state.term).map(device => (
             <div >
-                <Card device={device} key={device.id} />
+                <Link to={`id/${device.id}`}>
+                    <Card device={device} deviceToggle={this.props.deviceToggle} />
+                </Link>
             </div>
         ))
 
     render() {
-        //  console.log(this.state)
         const { showModal } = this.state;
         return (
             <div>
-                <DevicesHeader onSearchState={this.onSearchState} />
-                <div className={style.filter}>
-
-                    <Filter />
+                 <DevicesHeader onSearchState={this.onSearchState} />
+                <div className={style.filter}> 
+                    <Filter offDevices={this.props.offDevices} />
                 </div>
                 <div className={style.fab}>
                     <Fab color="secondary" aria-label="add" onClick={this.handleToggleDialog}>
@@ -122,17 +128,23 @@ const mapStateToProps = (state: { deviceReducer: DevicesState }): ConnectedProps
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    addResourse: (p: Device) => {
+    addResourse: (p: Oven | RobotHoover) => {
         return dispatch(addDevice(p));
     },
-    showLoader: () => {
-        return dispatch(showLoader());
-    },
-    hideLoader: () => {
-        return dispatch(hideLoader());
-    },
-    loadDevices: (p: Device[]) => {
-        return dispatch(setDevices(p));
+    // showLoader: () => {
+    //     return dispatch(showLoader());
+    // },
+    // hideLoader: () => {
+    //     return dispatch(hideLoader());
+    // },
+    // loadDevices: (p: Device[]) => {
+    //     return dispatch(setDevices(p));
+    // },
+     offDevices: () => {
+         return dispatch(turnOffAllDevices());
+     },
+    deviceToggle: (id: number) => {
+        return dispatch(turnOnOffDevice(id))
     }
 })
 

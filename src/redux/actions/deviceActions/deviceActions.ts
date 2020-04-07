@@ -1,60 +1,99 @@
-import { ADD_DEVICE, SET_DEVICES } from '../../../constants/deviceActions';
-import { Device } from '../../reducers/deviceReducer';
-import { showLoader, hideLoader } from '../loaderActions/loaderActions';
-import { devicesAPI } from '../../../api/api';
-//import { Dispatch } from 'react';
-import { Dispatch } from './../../store'
-import { ThunkAction } from 'redux-thunk';
-import { rootReducer } from '../../reducers';
+import { ADD_DEVICE, 
+    TURN_OFF_ALL_DEVICES,
+    TURN_ON_OFF_DEVICE, 
+    DECREASE,
+    INCREASE,
+    SET_MODE,
+    REMOVE_DEVICE,
+    SET_DEVICES
+ } from '../../../constants/deviceActions';
+import { Device, RobotHoover, Oven } from '../../reducers/deviceReducer';
 
-type RootReducerType = typeof rootReducer;
-export type AppStateType = ReturnType<RootReducerType>
 
 export interface AddDeviceAction {
-    type: typeof ADD_DEVICE;
-    payload: Device
+    type: typeof ADD_DEVICE,
+    payload: Oven | RobotHoover
 }
 
-export const addDevice = (payload: Device): AddDeviceAction => ({
+export const addDevice = (payload: Oven | RobotHoover): AddDeviceAction => ({
     type: ADD_DEVICE,
     payload
 })
 
 interface SetDevicesAction {
     type: typeof SET_DEVICES;
-    payload: Device[]
+  //  payload: Device[]
 }
 
 export const setDevices = (payload: Device[]): SetDevicesAction => ({
     type: SET_DEVICES,
+  //  payload
+})
+
+interface turnOffAllDevicesAction {
+    type: typeof TURN_OFF_ALL_DEVICES
+    // payload: Device
+}
+
+export const turnOffAllDevices = (): turnOffAllDevicesAction => ({
+    type: TURN_OFF_ALL_DEVICES
+    // payload
+})
+
+interface turnOnOffDeviceAction {
+    type: typeof TURN_ON_OFF_DEVICE,
+    id: number
+}
+
+export const turnOnOffDevice = (id: number): turnOnOffDeviceAction => ({
+    type: TURN_ON_OFF_DEVICE,
+    id
+})
+
+interface decreaseAction {
+    type: typeof DECREASE,
+    payload: Device
+}
+
+export const decrease = (payload: Device): decreaseAction => ({
+    type: DECREASE,
     payload
 })
 
-//////////////////////////// НЕ РАБОТАЕТ /////////////////////////////
-type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, deviceActions>
-
-export const requestDevices = (): ThunkType => {
-    return async (dispatch, getState) => {
-
-        let data = await devicesAPI.serverDevices();
-        dispatch(setDevices(data));
-
-    }
+interface increaseAction {
+    type: typeof INCREASE,
+    payload: Device
 }
 
-// export const loadDevicesThunk = () => {
-//     return async (dispatch: Dispatch) => {
-//         dispatch(showLoader());
-//         const response = await fetch("https://my-json-server.typicode.com/SvetaShmalko/json-server/devices");
-//         const json = await response.json();
-//         dispatch({
-//             type: SET_DEVICES, 
-//             payload: json
-//         });
-//         dispatch(hideLoader());
+export const increase = (payload: Device): increaseAction => ({
+    type: INCREASE,
+    payload
+})
 
-//     }
-// }
+interface setModeAction {
+    type: typeof SET_MODE,
+    payload: Device
+}
 
+export const setMode = (payload: Device): setModeAction => ({
+    type: SET_MODE,
+    payload
+})
 
-export type deviceActions = AddDeviceAction | SetDevicesAction;
+interface removeDeviceAction {
+    type: typeof REMOVE_DEVICE,
+    payload: Device
+}
+
+export const removeDevice = (payload: Device): removeDeviceAction => ({
+    type: REMOVE_DEVICE,
+    payload
+})
+
+export type deviceActions = AddDeviceAction 
+| turnOffAllDevicesAction
+| turnOnOffDeviceAction
+| decreaseAction
+| increaseAction
+| setModeAction
+| removeDeviceAction;

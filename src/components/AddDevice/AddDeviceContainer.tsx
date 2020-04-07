@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import AddDeviceOven from './AddDeviceOven/AddDeviceOven';
-import AddDeviceRobot from './AddDeviceRobot/AddDeviceRobot';
+import AddDeviceRobot from './AddDeviceRobot/AddDeviceRobotHoover';
 import style from './AddDeviceContainer.module.scss';
-import { Device } from '../../redux/reducers/deviceReducer'
+import { Oven, RobotHoover } from '../../redux/reducers/deviceReducer'
 import { AddDeviceAction } from '../../redux/actions/deviceActions/deviceActions'
 import SelectDevice from '../SelectDevice/SelectDevice';
 
 interface Props {
     handleToggleDialog: () => void,
-    addDevice: (p: Device) => AddDeviceAction
+    addDevice: (p: Oven | RobotHoover) => AddDeviceAction
 }
 
 export default class AddDeviceContainer extends Component<Props> {
