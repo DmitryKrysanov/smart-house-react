@@ -8,36 +8,54 @@ import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import style from './DeviceDetails.module.scss'
 import DeviceDetailsHeader from '../DeviceDetailsHeader/DeviceDetailsHeader';
+import { Oven, RobotHoover } from '../../redux/reducers/deviceReducer';
+import { useRouteMatch, useParams } from 'react-router-dom';
 
-const modesList: string[] = [
-    'mode1', 'mode2', 'mode3'
-]
+interface Props {
+    devices: Array<Oven | RobotHoover>
+}
 
-const DeviceDetails = () => {
+interface MatchParams {
 
-    const modeItems = modesList.map((item, index) => (
-        <MenuItem key={index} value={item}>{item}</MenuItem>
+}
+
+const DeviceDetails = (props: Props) => {
+
+    const match: any = useParams();
+    const deviceId = +match.deviceId;
+    const device = props.devices.find(( {id} ) => id === deviceId);
+
+    const modes = () => {
+        if(device !== undefined) {
+        const modeItems = device.modes.map((item, index) => (
+            <MenuItem key={index} value={item}>{item}</MenuItem>
+            )
         )
-    )
+        return modeItems;
+    }
+}
+
+   
 
     return (
         <div>
             <DeviceDetailsHeader />
+            {device !== undefined ? 
             <div className={style.device_details}>
             <div className={style.device_details__image}>
-                <img src="http://placehold.it/600" alt="sdf" />
+                <img src={device.image} alt={device.name} />
             </div>
             <div className={style.device_details__content}>
                 <div className={style.general_info}>
                     <div className={style.info}>
-                        <h5>Device Name</h5>
-                        <p>Oven</p>
+                        <h5>{device.name}</h5>
+                        <p>{device.type}</p>
                     </div>
                     <Switch edge="end" />
                 </div>
                 <h6>Temperature</h6>
                 <div className={style.range}>
-                    <h2>100</h2>
+                    <h2> - </h2>
                     <div className={style.range__buttons}>
                         <Button 
                         variant='outlined' 
@@ -61,7 +79,7 @@ const DeviceDetails = () => {
                         //   value={age}
                         //   onChange={handleChange}
                         >
-                            {modeItems}
+                            {modes}
                         </Select>
                     </FormControl>
                 </div>
@@ -75,7 +93,8 @@ const DeviceDetails = () => {
                     </Button>
                 </div>
             </div>
-        </div>
+        </div> : <h5>Device not found</h5>}
+            
         </div>
         
     )
