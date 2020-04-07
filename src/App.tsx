@@ -28,7 +28,9 @@ const App = (props: ComponentProps) => {
                 addResourse={props.addResourse}
                 offDevices={props.offDevices}
                 deviceToggle={props.deviceToggle}
-                //loadDevices={props.loadDevices}
+                loadDevices={props.loadDevices}
+                showLoader={props.showLoader}
+                hideLoader={props.hideLoader}
 
               />
             </Route>
@@ -66,7 +68,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   },
   loadDevices: (p: Array<Oven | RobotHoover>) => {
     return dispatch(setDevices(p));
-  },
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

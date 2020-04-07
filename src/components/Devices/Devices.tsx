@@ -21,7 +21,10 @@ interface Props {
     devices: Array<Oven | RobotHoover>,
     addResourse: (p: Oven | RobotHoover) => AddDeviceAction,
     offDevices: () => void,
-    deviceToggle: (id: number) => void
+    deviceToggle: (id: number) => void,
+    loadDevices: () => Array<Oven | RobotHoover>,
+    showLoader: () => void,
+    hideLoader: () => void
 }
 
 class Devices extends Component<Props> {
@@ -37,7 +40,8 @@ class Devices extends Component<Props> {
         this.setState({ isLoading: true });
 
         const devs = await devicesAPI.serverDevices();
-      //  this.props.loadDevices(devs);
+       // this.props.loadDevices(devs);
+     
 
         this.setState({ isLoading: false });
     };
