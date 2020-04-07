@@ -55,7 +55,6 @@ class Devices extends Component<ComponentProps> {
                 <Link to={`id/${device.id}`}>
                     <Card device={device} deviceToggle={this.props.deviceToggle} />
                 </Link>
-                
             </div>
         ))
 

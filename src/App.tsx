@@ -2,7 +2,7 @@ import React from 'react';
 import Devices from './components/Devices/Devices';
 import './App.scss';
 import DeviceDetails from './components/DeviceDetails/DeviceDetails';
-import { Router, Switch, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 const App = () => {
   return (
