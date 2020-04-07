@@ -10,4 +10,9 @@ const instance = axios.create({
     serverDevices() {
         return instance.get<Device[]>('').then(response =>  response.data)
     }
+
+    // detailsDevice() {
+    //     return 
+    // }
+    
 }
