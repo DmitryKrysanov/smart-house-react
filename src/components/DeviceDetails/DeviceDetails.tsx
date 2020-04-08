@@ -42,9 +42,9 @@ const DeviceDetails = (props: Props) => {
     const handleDelete = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         if(typeof device != 'undefined'){
-           const delResp = await devicesAPI.deleteDevice(device.id);
+           await devicesAPI.deleteDevice(device.id);
            console.log(device, device.id);
-         //  props.removeDevice();
+           props.removeDevice(device.id);
         } else {
             console.log('nothing to delete');
         }
