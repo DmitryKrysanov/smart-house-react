@@ -10,6 +10,8 @@ import style from './DeviceDetails.module.scss'
 import DeviceDetailsHeader from '../DeviceDetailsHeader/DeviceDetailsHeader';
 import { Oven, RobotHoover } from '../../redux/reducers/deviceReducer';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { devicesAPI } from '../../api/api';
 
 interface Props {
     devices: Array<Oven | RobotHoover>
@@ -43,9 +45,16 @@ const DeviceDetails = (props: Props) => {
     //     }
     // }
 
-    const handleDelete = (e: { preventDefault: () => void; }) => {
+    const handleDelete = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        
+        if(typeof device != 'undefined'){
+           await devicesAPI.deleteDevice(device.id);
+           console.log(device, device.id);
+           props.removeDevice(device.id);
+        } else {
+            console.log('nothing to delete');
+        }
+       
     }
 
 //    console.log(device)
