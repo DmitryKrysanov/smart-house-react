@@ -6,9 +6,37 @@ const instance = axios.create({
     baseURL: 'http://localhost:3001/api/homes/1/devices'
 })
 
- export const devicesAPI = {
+interface PostOven {
+    type: string,
+    name: string,
+    image: string,
+    status: boolean,
+    temp: {},
+    modes: string[],
+    currentMode: string
+}
+
+interface PostRobot {
+    type: string,
+    name: string,
+    image: string,
+    status: boolean,
+    modes: string[],
+    currentMode: string
+}
+
+
+export const devicesAPI = {
 
     serverDevices() {
         return instance.get<Array<Oven | RobotHoover>>('').then(response => response.data)
+    },
+
+    postOven(oven: PostOven) {
+        return instance.post<Oven>('', oven).then(response => response.data)
+    },
+
+    postRobot(robot: PostRobot) {
+        return instance.post<RobotHoover>('', robot).then(response => response.data)
     }
 }
