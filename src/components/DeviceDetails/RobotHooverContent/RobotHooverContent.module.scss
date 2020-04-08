@@ -1,0 +1,28 @@
+.device_details__content {
+    width: 50%;
+    padding: 24px;
+    position: relative;
+
+    @media screen and (max-width: 414px) {
+        width: 100%;
+    }
+
+    p {
+        font-size: 0.875rem;
+    }
+
+    h6 {
+        margin-bottom: .5rem;
+    }
+}
+
+.row {
+    padding: 24px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
