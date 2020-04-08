@@ -5,10 +5,11 @@ import Tab from '@material-ui/core/Tab';
 import Button from '@material-ui/core/Button';
 import { devicesAPI } from '../../api/api';
 import { Oven, RobotHoover } from '../../redux/reducers/deviceReducer';
+import { SetDevicesAction } from '../../redux/actions/deviceActions/deviceActions';
 
 interface Props {
   offDevices: () => void,
-  loadDevices: (p: Array<Oven | RobotHoover>) => void
+  loadDevices: (p: Array<Oven | RobotHoover>) => SetDevicesAction
 }
 const Filter = (props: Props) => {
 

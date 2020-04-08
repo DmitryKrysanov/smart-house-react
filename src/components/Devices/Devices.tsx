@@ -6,7 +6,7 @@ import Card from '../Card/Card'
 import AddIcon from '@material-ui/icons/Add';
 import AddDeviceContainer from '../AddDevice/AddDeviceContainer'
 import Filter from '../Tabs/Filter';
-import { AddDeviceAction } from '../../redux/actions/deviceActions/deviceActions';
+import { AddDeviceAction, SetDevicesAction } from '../../redux/actions/deviceActions/deviceActions';
 import DevicesHeader from '../DevicesHeader/DevicesHeader'
 import Pagination from '../Pagination/Pagination';
 import Fab from '@material-ui/core/Fab';
@@ -19,7 +19,7 @@ interface Props {
     addResourse: (p: Oven | RobotHoover) => AddDeviceAction,
     offDevices: () => void,
     deviceToggle: (id: number) => void,
-    loadDevices: (p: Array<Oven | RobotHoover>) => void
+    loadDevices: (p: Array<Oven | RobotHoover>) => SetDevicesAction,
     showLoader: () => void,
     hideLoader: () => void
 }

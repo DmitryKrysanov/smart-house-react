@@ -48,6 +48,10 @@ export const devicesAPI = {
         return instance.post<RobotHoover>('', robot).then(response => response.data)
     },
 
+    deleteDevice(id: number) {
+        return instance.delete(`${id}`).then(response => response.data)
+    },
+
     filter(type: string) {
         return instance.get<Array<Oven | RobotHoover>>(`?type=${type}`).then(response => response.data) 
     },
