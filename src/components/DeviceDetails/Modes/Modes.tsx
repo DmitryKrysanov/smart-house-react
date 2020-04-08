@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import style from './Modes.module.scss';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -29,19 +29,22 @@ class Modes extends Component<Props> {
 
 
     render() {
-        console.log(this.state)
+        // console.log(this.state)
         return (
-            <div className={style.modes}>
-                <FormControl fullWidth={true}>
-                    <InputLabel>Current Mode</InputLabel>
-                    <Select
-                        value={this.state.currentMode}
-                        onChange={this.currentMode}
-                    >
-                        {this.modeItems()}
-                    </Select>
-                </FormControl>
-            </div>
+            <Fragment>
+                <h6>Modes</h6>
+                <div className={style.modes}>
+                    <FormControl fullWidth={true}>
+                        <InputLabel>Current Mode</InputLabel>
+                        <Select
+                            value={this.state.currentMode}
+                            onChange={this.currentMode}
+                        >
+                            {this.modeItems()}
+                        </Select>
+                    </FormControl>
+                </div>
+            </Fragment>
         );
     }
 

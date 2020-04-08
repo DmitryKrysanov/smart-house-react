@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -10,8 +10,9 @@ import style from './DeviceDetails.module.scss'
 import DeviceDetailsHeader from '../DeviceDetailsHeader/DeviceDetailsHeader';
 import { Oven, RobotHoover } from '../../redux/reducers/deviceReducer';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import { devicesAPI } from '../../api/api';
+import Modes from './Modes/Modes';
+import Temperature from './Temperature/Temperature';
 
 interface Props {
     devices: Array<Oven | RobotHoover>
@@ -27,101 +28,101 @@ const DeviceDetails = (props: Props) => {
 
     const match: any = useParams();
     const deviceId: number = +match.deviceId;
-    const device = props.devices.find(( {id} ) => id === deviceId);  // can be undefined!
-    // if(device instanceof RobotHoover) {
-    //     ((Oven)device).
-    // }
-    
-    console.log(props.devices)
-    const xyx = device as Oven
-    console.log(xyx.temp)
-    // const modes = () => {
-    //     if(device !== undefined) {
-    //     const modeItems: JSX.Element[] = device.modes.map((item, index) => (
-    //         <MenuItem key={index} value={item}>{item}</MenuItem>
-    //         )
-    //     )
-    //     return modeItems;
-    //     }
-    // }
+    const device: Oven | RobotHoover | undefined = props.devices.find(({ id }) => id === deviceId);  // can be undefined!
+
+    const content = (device: Oven | RobotHoover | undefined) => {
+        if (device === undefined) {
+            return <h4>Error</h4>
+        } else {
+            if (device.type === 'oven') {
+                const oven = device as Oven;
+                return (
+                    <Fragment>
+                        {image(oven.image)}
+                        <div className={style.device_details__content}>
+                            {generalInfo(oven.name,
+                                oven.type,
+                                oven.id,
+                                oven.status)}
+                            <Temperature temp={oven.temp} />
+                            <Modes modes={oven.modes} />
+                            {remove()}
+                        </div>
+                    </Fragment>
+                )
+            } else {
+                const robotHoover = device as RobotHoover;
+                return (
+                    <Fragment>
+                        {image(robotHoover.image)}
+                        <div className={style.device_details__content}>
+                            {generalInfo(robotHoover.name,
+                                robotHoover.type,
+                                robotHoover.id,
+                                robotHoover.status)}
+                            <Modes modes={robotHoover.modes} />
+                            {remove()}
+                        </div>
+                    </Fragment>
+                )
+            }
+        }
+    }
+
+    const image = (image: string): JSX.Element => {
+        return (
+            <div className={style.device_details__image}>
+                <img src={image} alt={image} />
+            </div>
+        )
+    }
+
+    const generalInfo = (name: string, type: string, id: number, status: boolean): JSX.Element => {
+        return (
+            <div className={style.general_info}>
+                <div className={style.info}>
+                    <h5>{name}</h5>
+                    <p>{type}</p>
+                </div>
+                <Switch edge="end"
+                    onChange={() => { props.deviceToggle(id) }}
+                    checked={status} />
+            </div>
+        )
+    }
+
+    const remove = (): JSX.Element => {
+        return (
+            <div className={style.row}>
+                <h6>Remove device</h6>
+                <Button
+                    variant='outlined'
+                    color='secondary'
+                    onClick={handleDelete}>
+                    <DeleteIcon />
+                </Button>
+            </div>
+        )
+    }
 
     const handleDelete = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        if(typeof device != 'undefined'){
-           await devicesAPI.deleteDevice(device.id);
-           console.log(device, device.id);
-           props.removeDevice(device.id);
+        if (typeof device != 'undefined') {
+            await devicesAPI.deleteDevice(device.id);
+            console.log(device, device.id);
+            props.removeDevice(device.id);
         } else {
             console.log('nothing to delete');
         }
-       
     }
-
-//    console.log(device)
-
 
     return (
         <div>
             <DeviceDetailsHeader />
-            {device !== undefined ? 
-                <div className={style.device_details}>
-                <div className={style.device_details__image}>
-                    <img src={device.image} alt={device.name} />
-                </div>
-                <div className={style.device_details__content}>
-                    <div className={style.general_info}>
-                        <div className={style.info}>
-                            <h5>{device.name}</h5>
-                            <p>{device.type}</p>
-                        </div>
-                        <Switch edge="end"
-                            onChange={() => { props.deviceToggle(device.id) }}
-                            checked={device.status} />
-                    </div>
-                    <h6>Temperature</h6>
-                    <div className={style.range}>
-                        <h2> - </h2>
-                        <div className={style.range__buttons}>
-                            <Button 
-                            variant='outlined' 
-                            color='secondary' 
-                            // onClick={this.decrease}
-                            > - </Button>
-                            <Button 
-                            variant='outlined' 
-                            color='secondary' 
-                            // onClick={this.increase}
-                            > + </Button>
-                        </div>
-                    </div>
-                    <h6>Modes</h6>
-                    <div className={style.modes}>
-                        {/* <FormControl fullWidth={true}>
-                            <InputLabel>Current Mode</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                            //   value={age}
-                            //   onChange={handleChange}
-                            >
-                                {modes}
-                            </Select>
-                        </FormControl> */}
-                    </div>
-                    <div className={style.row}>
-                        <h6>Remove device</h6>
-                        <Button 
-                            variant='outlined' 
-                            color='secondary' 
-                            onClick={handleDelete}
-                            ><DeleteIcon />
-                        </Button>
-                    </div>
-                </div>
-            </div> : <h5>Device not found</h5>}
-            
+            <div className={style.device_details}>
+                {content(device)}
+            </div>
         </div>
-        
     )
 }
 
