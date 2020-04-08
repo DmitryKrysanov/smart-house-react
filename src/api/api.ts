@@ -36,8 +36,8 @@ interface Search {
 
 export const devicesAPI = {
 
-    serverDevices() {
-        return instance.get<Array<Oven | RobotHoover>>('').then(response => response.data)
+    serverDevices(page: number) {
+        return instance.get<Array<Oven | RobotHoover>>(`?page=${page}`).then(response => response.data)
     },
 
     postOven(oven: PostOven) {
