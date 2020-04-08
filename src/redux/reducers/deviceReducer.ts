@@ -10,6 +10,7 @@ import { ADD_DEVICE, SET_DEVICES, TURN_OFF_ALL_DEVICES, TURN_ON_OFF_DEVICE, DECR
 //     REMOVE_DEVICE
 // } from '../../constants/deviceActions';
 
+
 export interface DevicesState {
     devices: Array<Oven | RobotHoover>;
 }
