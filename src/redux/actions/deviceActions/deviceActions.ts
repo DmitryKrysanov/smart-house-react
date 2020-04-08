@@ -29,7 +29,7 @@ export const RemoveAllDevices = (): RemoveAllDevicesAction => ({
     type: REMOVE_ALL_DEVICES
 })
 
-interface SetDevicesAction {
+export interface SetDevicesAction {
     type: typeof SET_DEVICES;
     payload: Array<Oven | RobotHoover>
 }
