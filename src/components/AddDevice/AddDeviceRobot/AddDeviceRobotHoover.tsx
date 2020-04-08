@@ -18,7 +18,7 @@ interface State {
 }
 
 const initialState: State = {
-    type: 'robot-hoover',
+    type: 'robot hoover',
     name: '',
     image: 'http://placehold.it/400px',
     status: false,
