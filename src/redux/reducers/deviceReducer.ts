@@ -1,18 +1,23 @@
 import { deviceActions, setDevices } from './../actions/deviceActions/deviceActions';
-import { ADD_DEVICE, SET_DEVICES, TURN_OFF_ALL_DEVICES, TURN_ON_OFF_DEVICE, DECREASE, INCREASE, SET_MODE, REMOVE_DEVICE, REMOVE_ALL_DEVICES} from '../../constants/deviceActions';
-// import { ADD_DEVICE, 
-//     REMOVE_ALL_DEVICES,
-//     TURN_OFF_ALL_DEVICES,
-//     TURN_ON_OFF_DEVICE, 
-//     DECREASE,
-//     INCREASE,
-//     SET_MODE,
-//     REMOVE_DEVICE
-// } from '../../constants/deviceActions';
+import { ADD_DEVICE, 
+        SET_DEVICES, 
+        TURN_OFF_ALL_DEVICES, 
+        TURN_ON_OFF_DEVICE, 
+        DECREASE, 
+        INCREASE, 
+        SET_MODE, 
+        REMOVE_DEVICE, 
+        REMOVE_ALL_DEVICES,
+        SET_CURRENT_PAGE} from '../../constants/deviceActions';
+
+
 
 
 export interface DevicesState {
-    devices: Array<Oven | RobotHoover>;
+    devices: Array<Oven | RobotHoover>,
+    totalPages: number,
+    page: number,
+    perPage: number
 }
 
 export interface Device {
@@ -71,7 +76,10 @@ export const toggleStatus = (devices: Array<Oven | RobotHoover>, deviceId: numbe
 }
 
 const initialState: DevicesState = {
-    devices: []
+    devices: [],
+    totalPages: 1,
+    page: 1,
+    perPage: 8
 }
 
 export const deviceReducer = (state = initialState, action: deviceActions): DevicesState => {
@@ -93,6 +101,10 @@ export const deviceReducer = (state = initialState, action: deviceActions): Devi
             return {
                 ...state,
                 devices: toggleStatus(state.devices, action.id)
+            }
+        case SET_CURRENT_PAGE:
+            return {
+                ...state, page: action.payload
             }
 
         case DECREASE:

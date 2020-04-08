@@ -6,9 +6,20 @@ import { ADD_DEVICE,
     INCREASE,
     SET_MODE,
     REMOVE_DEVICE,
-    SET_DEVICES
+    SET_DEVICES,
+    SET_CURRENT_PAGE
  } from '../../../constants/deviceActions';
 import { RobotHoover, Oven } from '../../reducers/deviceReducer';
+
+export interface SetCurrentPageAction {
+    type: typeof SET_CURRENT_PAGE,
+    payload: number
+}
+
+export const SetCurrentPage = (payload: number): SetCurrentPageAction => ({
+    type: SET_CURRENT_PAGE,
+    payload
+})
 
 
 export interface AddDeviceAction {
@@ -105,4 +116,5 @@ export type deviceActions = AddDeviceAction
 | increaseAction
 | setModeAction
 | removeDeviceAction
-| SetDevicesAction;
+| SetDevicesAction
+| SetCurrentPageAction;

@@ -16,6 +16,9 @@ import { Loader } from '../Loader/Loader';
 
 interface Props {
     devices: Array<Oven | RobotHoover>,
+    totalPages: number,
+    page: number,
+    perPage: number,
     addResourse: (p: Oven | RobotHoover) => AddDeviceAction,
     offDevices: () => void,
     deviceToggle: (id: number) => void,
@@ -35,12 +38,13 @@ class Devices extends Component<Props> {
 
     state = {
         showModal: false,
-        isLoading: false
+        isLoading: false,
+        currentPage: 1
     }
 
     componentDidMount = async () => {
         this.setState({ isLoading: true });
-        const devs: any = await devicesAPI.serverDevices();
+        const devs: any = await devicesAPI.serverDevices(2);
         this.props.loadDevices(devs.data);
         this.setState({ isLoading: false });
     };

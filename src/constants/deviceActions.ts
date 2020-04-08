@@ -7,3 +7,4 @@ export const DECREASE = "DECREASE";
 export const INCREASE = "INCREASE";
 export const SET_MODE = "SET_MODE";
 export const REMOVE_DEVICE = "REMOVE_DEVICE"; 
+export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
