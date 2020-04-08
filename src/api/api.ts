@@ -46,6 +46,10 @@ export const devicesAPI = {
 
     postRobot(robot: PostRobot) {
         return instance.post<RobotHoover>('', robot).then(response => response.data)
+    },
+
+    filter(type: string) {
+        return instance.get<Array<Oven | RobotHoover>>(`?type=${type}`).then(response => response.data) 
     }
 
 }

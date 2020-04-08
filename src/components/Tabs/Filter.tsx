@@ -3,16 +3,27 @@ import style from './Filter.module.scss';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Button from '@material-ui/core/Button';
+import { devicesAPI } from '../../api/api';
+import { Oven, RobotHoover } from '../../redux/reducers/deviceReducer';
 
 interface Props {
-  offDevices: () => void
+  offDevices: () => void,
+  loadDevices: (p: Array<Oven | RobotHoover>) => void
 }
 const Filter = (props: Props) => {
 
     const [value, setValue] = React.useState(0);
   
-  const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+  const handleChange = async (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
+    let type = ''
+    if(newValue === 1) {
+      type = 'oven'
+    } if(newValue === 2) {
+      type = 'robot-hoover'
+    }
+    const respOvens: any = await devicesAPI.filter(type);
+    props.loadDevices(respOvens.data);
   };
 
   return (
@@ -25,7 +36,7 @@ const Filter = (props: Props) => {
           >
             <Tab label="All" />
             <Tab label="Oven" />
-            <Tab label="Washing Machine" />
+            <Tab label="Robot Hoover" />
       </Tabs>
       <Button variant='outlined' color={'secondary'} onClick={props.offDevices}>Turn off all devices</Button>
     </div>

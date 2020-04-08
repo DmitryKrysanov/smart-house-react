@@ -80,7 +80,7 @@ class Devices extends Component<Props> {
             <div>
                  <DevicesHeader onSearchState={this.onSearchState} />
                 <div className={style.filter}> 
-                    <Filter offDevices={this.props.offDevices} />
+                    <Filter offDevices={this.props.offDevices} loadDevices={this.props.loadDevices} />
                 </div>
                 <div className={style.fab}>
                     <Fab color="secondary" aria-label="add" onClick={this.handleToggleDialog}>
