@@ -1,20 +1,17 @@
-import React, { Fragment } from 'react';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import Switch from '@material-ui/core/Switch';
-import Button from '@material-ui/core/Button';
-import DeleteIcon from '@material-ui/icons/Delete';
+import React from 'react';
+// import Button from '@material-ui/core/Button';
+// import DeleteIcon from '@material-ui/icons/Delete';
 import style from './DeviceDetails.module.scss'
 import DeviceDetailsHeader from '../DeviceDetailsHeader/DeviceDetailsHeader';
 import { Oven, RobotHoover } from '../../redux/reducers/deviceReducer';
 import { useParams } from 'react-router-dom';
-import { devicesAPI } from '../../api/api';
-import Modes from './Modes/Modes';
-import Temperature from './Temperature/Temperature';
-import Image from './Image/Image';
-import GeneralInfo from './GeneralInfo/GeneralInfo';
+// import { devicesAPI } from '../../api/api';
+// import Modes from './Modes/Modes';
+// import Temperature from './Temperature/Temperature';
+// import Image from './Image/Image';
+// import GeneralInfo from './GeneralInfo/GeneralInfo';
+import RobotHooverContent from './RobotHooverContent/RobotHooverContent';
+import OvenContent from './OvenContent/OvenContent'
 
 interface Props {
     devices: Array<Oven | RobotHoover>
@@ -39,54 +36,20 @@ const DeviceDetails = (props: Props) => {
             if (device.type === 'oven') {
                 const oven = device as Oven;
                 return (
-                    <Fragment>
-                        <Image image={oven.image} />
-                        <div className={style.device_details__content}>
-                            <GeneralInfo device={oven} deviceToggle={props.deviceToggle}/>
-                            <Temperature temp={oven.temp} />
-                            <Modes modes={oven.modes} />
-                            {remove()}
-                        </div>
-                    </Fragment>
+                    <OvenContent 
+                    device={oven} 
+                    deviceToggle={props.deviceToggle} 
+                    removeDevice={props.removeDevice} />
                 )
             } else {
                 const robotHoover = device as RobotHoover;
                 return (
-                    <Fragment>
-                        <Image image={robotHoover.image} />
-                        <div className={style.device_details__content}>
-                        <GeneralInfo device={robotHoover} deviceToggle={props.deviceToggle}/>
-                            <Modes modes={robotHoover.modes} />
-                            {remove()}
-                        </div>
-                    </Fragment>
+                    <RobotHooverContent 
+                    device={robotHoover} 
+                    deviceToggle={props.deviceToggle} 
+                    removeDevice={props.removeDevice} />
                 )
             }
-        }
-    }
-
-    const remove = (): JSX.Element => {
-        return (
-            <div className={style.row}>
-                <h6>Remove device</h6>
-                <Button
-                    variant='outlined'
-                    color='secondary'
-                    onClick={handleDelete}>
-                    <DeleteIcon />
-                </Button>
-            </div>
-        )
-    }
-
-    const handleDelete = async (e: { preventDefault: () => void; }) => {
-        e.preventDefault();
-        if (typeof device != 'undefined') {
-            await devicesAPI.deleteDevice(device.id);
-            console.log(device, device.id);
-            props.removeDevice(device.id);
-        } else {
-            console.log('nothing to delete');
         }
     }
 

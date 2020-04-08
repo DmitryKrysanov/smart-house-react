@@ -18,7 +18,7 @@ interface State {
 }
 
 const initialState: State = {
-    type: 'robot hoover',
+    type: 'robot-hoover',
     name: '',
     image: 'http://placehold.it/400px',
     status: false,
@@ -64,34 +64,7 @@ class AddDeviceRobot extends Component<Props, State> {
 
         const respRobot = await devicesAPI.postRobot(this.state);
         this.props.addDevice(respRobot);
-
-        // try {
-        //     const resp = await fetch('http://localhost:3001/api/homes/1/devices', {
-        //         method: "POST",
-        //         body: JSON.stringify({
-        //             type,
-        //             name,
-        //             image,
-        //             status,
-        //             modes,
-        //             currentMode
-        //         }),
-        //         headers: {
-        //             "Content-type": "application/json; charset=UTF-8"
-        //         }
-        //     }).then(res => {
-        //         this.setState(initialState);
-        //         console.log(res);
-        //         return res.json();
-        //     });
-
-        //     this.props.addDevice(resp);
-        // } catch (error) {
-        //     this.setState(initialState);
-        //     alert("An error occured");
-        // }
-        
-        // this.props.handleToggleDialog();
+        this.props.handleToggleDialog();
     }
 
 

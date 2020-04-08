@@ -4,20 +4,23 @@ import Switch from '@material-ui/core/Switch';
 import style from './GeneralInfo.module.scss';
 
 interface Props {
-    device: Oven | RobotHoover,
-    deviceToggle: (id: number) => void
+    type: string,
+    name: string,
+    status: boolean
+
+    handleToggle: () => void
 }
 
 const generalInfo = (props: Props) => {
     return (
         <div className={style.general_info}>
             <div className={style.info}>
-                <h5>{props.device.name}</h5>
-                <p>{props.device.type}</p>
+                <h5>{props.name}</h5>
+                <p>{props.type}</p>
             </div>
             <Switch edge="end"
-                onChange={() => { props.deviceToggle(props.device.id) }}
-                checked={props.device.status} />
+                onChange={props.handleToggle}
+                checked={props.status} />
         </div>
     )
 }
