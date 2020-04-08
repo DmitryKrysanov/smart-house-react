@@ -58,6 +58,10 @@ export const devicesAPI = {
 
     search(subname: string) {
         return instance.get<Array<Oven | RobotHoover>>(`?subname=${subname}`).then(response => response.data) 
+    },
+
+    updateDevice(oven: PostOven, id: number) {
+        return instance.put<Oven>(`/${id}`, oven).then(response => response.data)
     }
 
 }

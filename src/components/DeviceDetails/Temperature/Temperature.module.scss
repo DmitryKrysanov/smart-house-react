@@ -1,0 +1,23 @@
+.range {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h2 {
+        font-size: 3.75rem;
+        font-weight: 300;
+        letter-spacing: -0.5;
+        margin-bottom: 1.5rem;
+
+        &:after {
+            content: "\2103";
+            font-size: 1rem;
+            font-weight: 400;
+        }
+    }
+}
+
+.range__buttons button:first-of-type {
+    margin-right: 8px;
+}

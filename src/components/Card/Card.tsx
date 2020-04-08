@@ -23,9 +23,9 @@ const Card = (props: Props) => {
                         <h5>{device.name}</h5>
                         <p>{props.device.type}</p>
                     </div>
-                    <Switch edge="end"
+                    {/* <Switch edge="end"
                         onChange={() => { props.deviceToggle(props.device.id) }}
-                        checked={props.device.status} />
+                        checked={props.device.status} /> */}
                 </div>
             </div>
         </div>
