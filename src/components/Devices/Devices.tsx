@@ -13,6 +13,7 @@ import Fab from '@material-ui/core/Fab';
 import { Link } from 'react-router-dom';
 import { devicesAPI } from '../../api/api';
 import { Loader } from '../Loader/Loader';
+import { Button } from '@material-ui/core';
 
 interface Props {
     devices: Array<Oven | RobotHoover>,
@@ -39,20 +40,29 @@ class Devices extends Component<Props> {
     state = {
         showModal: false,
         isLoading: false,
-        currentPage: 1
+        currentPage: 1,
+        totalPages: 1
     }
 
     componentDidMount = async () => {
         this.setState({ isLoading: true });
-        const devs: any = await devicesAPI.serverDevices(2);
+        const devs: any = await devicesAPI.serverDevices(1);
         this.props.loadDevices(devs.data);
         this.setState({ isLoading: false });
+        this.setState({totalPages: devs.totalPages})
     };
 
     handleToggleDialog = () => {
         this.setState({
             showModal: !this.state.showModal
         })
+    }
+
+    private onChangePage = async (number: number) => {
+        this.setState({ isLoading: true });
+        const devs: any = await devicesAPI.serverDevices(number);
+        this.props.loadDevices(devs.data);
+        this.setState({ isLoading: false });
     }
 
     private devices = (): JSX.Element[] =>
@@ -67,6 +77,23 @@ class Devices extends Component<Props> {
 
     render() {
         const { showModal } = this.state;
+        const pageNumbers = [];
+        for (let i = 1; i <= this.state.totalPages; i++) {
+        pageNumbers.push(i);
+    }
+
+    const renderPageNumbers = pageNumbers.map(number => {
+        return (
+          <Button 
+          className={style.button} 
+          variant="outlined" 
+          color="secondary" 
+          key={number} 
+          onClick={()=>{this.onChangePage(number)}} >
+            {number}
+            </Button>
+        );
+      });
         return (
             <div>
                  <DevicesHeader loadDevices={this.props.loadDevices} />
@@ -89,7 +116,9 @@ class Devices extends Component<Props> {
                     }
                     {this.devices()}
                 </div>
-                {/* <Pagination /> */}
+                <div className={style.paginationButtons}>
+                {renderPageNumbers}
+                </div>
             </div>
         )
     }
