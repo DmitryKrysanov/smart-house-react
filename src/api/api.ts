@@ -46,6 +46,11 @@ export const devicesAPI = {
 
     postRobot(robot: PostRobot) {
         return instance.post<RobotHoover>('', robot).then(response => response.data)
+    },
+
+    deleteDevice(id: number) {
+        return instance.delete<Array<Oven | RobotHoover>>(`/api/homes/1/devices/${id}`)
+        .then(response => response.data)
     }
 
 }
