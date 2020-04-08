@@ -13,6 +13,8 @@ import { useParams } from 'react-router-dom';
 import { devicesAPI } from '../../api/api';
 import Modes from './Modes/Modes';
 import Temperature from './Temperature/Temperature';
+import Image from './Image/Image';
+import GeneralInfo from './GeneralInfo/GeneralInfo';
 
 interface Props {
     devices: Array<Oven | RobotHoover>
@@ -38,12 +40,9 @@ const DeviceDetails = (props: Props) => {
                 const oven = device as Oven;
                 return (
                     <Fragment>
-                        {image(oven.image)}
+                        <Image image={oven.image} />
                         <div className={style.device_details__content}>
-                            {generalInfo(oven.name,
-                                oven.type,
-                                oven.id,
-                                oven.status)}
+                            <GeneralInfo device={oven} deviceToggle={props.deviceToggle}/>
                             <Temperature temp={oven.temp} />
                             <Modes modes={oven.modes} />
                             {remove()}
@@ -54,12 +53,9 @@ const DeviceDetails = (props: Props) => {
                 const robotHoover = device as RobotHoover;
                 return (
                     <Fragment>
-                        {image(robotHoover.image)}
+                        <Image image={robotHoover.image} />
                         <div className={style.device_details__content}>
-                            {generalInfo(robotHoover.name,
-                                robotHoover.type,
-                                robotHoover.id,
-                                robotHoover.status)}
+                        <GeneralInfo device={robotHoover} deviceToggle={props.deviceToggle}/>
                             <Modes modes={robotHoover.modes} />
                             {remove()}
                         </div>
@@ -67,28 +63,6 @@ const DeviceDetails = (props: Props) => {
                 )
             }
         }
-    }
-
-    const image = (image: string): JSX.Element => {
-        return (
-            <div className={style.device_details__image}>
-                <img src={image} alt={image} />
-            </div>
-        )
-    }
-
-    const generalInfo = (name: string, type: string, id: number, status: boolean): JSX.Element => {
-        return (
-            <div className={style.general_info}>
-                <div className={style.info}>
-                    <h5>{name}</h5>
-                    <p>{type}</p>
-                </div>
-                <Switch edge="end"
-                    onChange={() => { props.deviceToggle(id) }}
-                    checked={status} />
-            </div>
-        )
     }
 
     const remove = (): JSX.Element => {
