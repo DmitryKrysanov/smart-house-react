@@ -4,7 +4,7 @@ import DeviceDetails from './components/DeviceDetails/DeviceDetails';
 import { Switch, Route } from 'react-router-dom';
 import { Oven, RobotHoover, DevicesState } from './redux/reducers/deviceReducer';
 import { Dispatch } from './redux/store';
-import { addDevice, turnOffAllDevices, turnOnOffDevice, setDevices } from './redux/actions/deviceActions/deviceActions';
+import { addDevice, turnOffAllDevices, turnOnOffDevice, setDevices, removeDevice } from './redux/actions/deviceActions/deviceActions';
 import { connect } from 'react-redux';
 import { showLoader, hideLoader } from './redux/actions/loaderActions/loaderActions';
 import Devices from './components/Devices/Devices';
@@ -38,6 +38,7 @@ const App = (props: ComponentProps) => {
               <DeviceDetails 
               devices={props.devices} 
               deviceToggle={props.deviceToggle}
+              removeDevice={props.removeDevice}
               />
             </Route>
           </Switch>
@@ -61,7 +62,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     return dispatch(turnOffAllDevices());
   },
   deviceToggle: (id: number) => {
-    return dispatch(turnOnOffDevice(id))
+    return dispatch(turnOnOffDevice(id));
   },
   showLoader: () => {
     return dispatch(showLoader());
@@ -71,6 +72,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   },
   loadDevices: (p: Array<Oven | RobotHoover>) => {
     return dispatch(setDevices(p));
+  },
+  removeDevice: (id: number) => {
+    return dispatch(removeDevice(id));
   }
 })
 

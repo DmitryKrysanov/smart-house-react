@@ -63,7 +63,6 @@ class AddDeviceRobot extends Component<Props, State> {
         e.preventDefault();
 
         const respRobot = await devicesAPI.postRobot(this.state);
-        console.log(respRobot);
         this.props.addDevice(respRobot);
 
         // try {

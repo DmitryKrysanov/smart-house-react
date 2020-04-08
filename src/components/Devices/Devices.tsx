@@ -1,14 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import style from './Devices.module.scss';
-import { DevicesState, Device, RobotHoover, Oven } from '../../redux/reducers/deviceReducer'
-import { connect } from "react-redux";
+import { RobotHoover, Oven } from '../../redux/reducers/deviceReducer'
 import Card from '../Card/Card'
 import AddIcon from '@material-ui/icons/Add';
 import AddDeviceContainer from '../AddDevice/AddDeviceContainer'
 import Filter from '../Tabs/Filter';
-import { addDevice, turnOffAllDevices, turnOnOffDevice, AddDeviceAction } from '../../redux/actions/deviceActions/deviceActions';
-import { Dispatch } from '../../redux/store';
+import { AddDeviceAction } from '../../redux/actions/deviceActions/deviceActions';
 import DevicesHeader from '../DevicesHeader/DevicesHeader'
 import Pagination from '../Pagination/Pagination';
 import Fab from '@material-ui/core/Fab';
@@ -47,7 +45,6 @@ class Devices extends Component<Props> {
         this.setState({ isLoading: true });
 
         const devs: any = await devicesAPI.serverDevices();
-        // console.log(devs)
         this.props.loadDevices(devs.data);
      
 
@@ -66,14 +63,6 @@ class Devices extends Component<Props> {
         })
     }
 
-    // private search = (devices: Array<Oven | RobotHoover>, term: string) => {
-    //     if(term.length === 0) {
-    //         return devices;
-    //     }
-    //     return devices.filter((device: Oven | RobotHoover) => {
-    //         return device.name.toLowerCase().indexOf(term.toLowerCase()) > -1;
-    //     })
-    // }
 
     private devices = (): JSX.Element[] =>
     this.props.devices.map(device => (

@@ -25,6 +25,14 @@ interface PostRobot {
     currentMode: string
 }
 
+interface Filter {
+    type: string
+}
+
+interface Search {
+    subname: string
+}
+
 
 export const devicesAPI = {
 
@@ -39,4 +47,5 @@ export const devicesAPI = {
     postRobot(robot: PostRobot) {
         return instance.post<RobotHoover>('', robot).then(response => response.data)
     }
+
 }

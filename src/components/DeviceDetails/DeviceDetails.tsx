@@ -10,10 +10,12 @@ import style from './DeviceDetails.module.scss'
 import DeviceDetailsHeader from '../DeviceDetailsHeader/DeviceDetailsHeader';
 import { Oven, RobotHoover } from '../../redux/reducers/deviceReducer';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 interface Props {
     devices: Array<Oven | RobotHoover>
-    deviceToggle: (id: number) => void
+    deviceToggle: (id: number) => void,
+    removeDevice: (id: number) => void
 }
 
 interface MatchParams {
@@ -33,10 +35,13 @@ const DeviceDetails = (props: Props) => {
             )
         )
         return modeItems;
+        }
     }
-}
 
-   
+    const handleDelete = (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
+        
+    }
 
     return (
         <div>
@@ -74,7 +79,7 @@ const DeviceDetails = (props: Props) => {
                 </div>
                 <h6>Modes</h6>
                 <div className={style.modes}>
-                    <FormControl fullWidth={true}>
+                    {/* <FormControl fullWidth={true}>
                         <InputLabel>Current Mode</InputLabel>
                         <Select
                             labelId="demo-simple-select-label"
@@ -84,14 +89,14 @@ const DeviceDetails = (props: Props) => {
                         >
                             {modes}
                         </Select>
-                    </FormControl>
+                    </FormControl> */}
                 </div>
                 <div className={style.row}>
-                    <h6>Delete device</h6>
+                    <h6>Remove device</h6>
                     <Button 
                         variant='outlined' 
                         color='secondary' 
-                        // onClick={this.increase}
+                        onClick={handleDelete}
                         ><DeleteIcon />
                     </Button>
                 </div>

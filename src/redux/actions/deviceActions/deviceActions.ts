@@ -8,7 +8,7 @@ import { ADD_DEVICE,
     REMOVE_DEVICE,
     SET_DEVICES
  } from '../../../constants/deviceActions';
-import { Device, RobotHoover, Oven } from '../../reducers/deviceReducer';
+import { RobotHoover, Oven } from '../../reducers/deviceReducer';
 
 
 export interface AddDeviceAction {
@@ -41,12 +41,10 @@ export const setDevices = (payload: Array<Oven | RobotHoover>): SetDevicesAction
 
 interface turnOffAllDevicesAction {
     type: typeof TURN_OFF_ALL_DEVICES
-    // payload: Device
 }
 
 export const turnOffAllDevices = (): turnOffAllDevicesAction => ({
     type: TURN_OFF_ALL_DEVICES
-    // payload
 })
 
 interface turnOnOffDeviceAction {
@@ -61,47 +59,43 @@ export const turnOnOffDevice = (id: number): turnOnOffDeviceAction => ({
 
 interface decreaseAction {
     type: typeof DECREASE,
-    payload: Device
+    payload: Oven
 }
 
-export const decrease = (payload: Device): decreaseAction => ({
+export const decrease = (payload: Oven): decreaseAction => ({
     type: DECREASE,
     payload
 })
 
 interface increaseAction {
     type: typeof INCREASE,
-    payload: Device
+    payload: Oven
 }
 
-export const increase = (payload: Device): increaseAction => ({
+export const increase = (payload: Oven): increaseAction => ({
     type: INCREASE,
     payload
 })
 
 interface setModeAction {
     type: typeof SET_MODE,
-    payload: Device
+    payload: Oven | RobotHoover
 }
 
-export const setMode = (payload: Device): setModeAction => ({
+export const setMode = (payload: Oven | RobotHoover): setModeAction => ({
     type: SET_MODE,
     payload
 })
 
 interface removeDeviceAction {
     type: typeof REMOVE_DEVICE,
-    payload: Device
+    id: number
 }
 
-export const removeDevice = (payload: Device): removeDeviceAction => ({
+export const removeDevice = (id: number): removeDeviceAction => ({
     type: REMOVE_DEVICE,
-    payload
+    id
 })
-
-
-
-
 
 export type deviceActions = AddDeviceAction 
 | RemoveAllDevicesAction

@@ -30,10 +30,12 @@ export interface Oven extends Device {
         step: number,
     },
     modes: string[]
+    currentMode: string
 }
 
 export interface RobotHoover extends Device {
-    modes: string[]
+    modes: string[],
+    currentMode: string
 }
 
 export const offAllDevices = (devices: Array<Oven | RobotHoover>) => {
@@ -45,19 +47,17 @@ export const offAllDevices = (devices: Array<Oven | RobotHoover>) => {
     })
 }
 
-// export const updateObjectInArray = (devices: Array<Oven | RobotHoover>, deviceId: number, objPropName: string, newObjProps: number | string | boolean) => {
-//     return devices.map(device => {
-//         if (device.id === deviceId) {
-//             return {
-//                 ...device,
-//                 [objPropName]: newObjProps
-//             }
-//         }
-//         return device;
-//     })
-// }
+export const findAndDelete = (devices: Array<Oven | RobotHoover>, deviceId: number) => {
+    const device = devices.find(device => device.id === deviceId);
+    if(device) {
+        const index = devices.indexOf(device);
+        devices.splice(index, 1);
+    }
+    return devices
+}
 
 export const toggleStatus = (devices: Array<Oven | RobotHoover>, deviceId: number) => {
+    console.log(deviceId)
     return devices.map(device => {
         if (device.id === deviceId) {
             return {
@@ -104,7 +104,10 @@ export const deviceReducer = (state = initialState, action: deviceActions): Devi
             return state
 
         case REMOVE_DEVICE:
-            return state
+            return {
+                ...state,
+                devices: findAndDelete(state.devices, action.id)
+            }
         
         default:
             return state;
