@@ -50,6 +50,10 @@ export const devicesAPI = {
 
     filter(type: string) {
         return instance.get<Array<Oven | RobotHoover>>(`?type=${type}`).then(response => response.data) 
+    },
+
+    search(subname: string) {
+        return instance.get<Array<Oven | RobotHoover>>(`?subname=${subname}`).then(response => response.data) 
     }
 
 }

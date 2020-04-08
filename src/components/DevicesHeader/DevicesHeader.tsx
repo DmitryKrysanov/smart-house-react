@@ -1,16 +1,14 @@
 import React from 'react';
 import SearchIcon from '@material-ui/icons/Search';
-import './DevicesHeader.scss';
-import { Dispatch } from '../../redux/store';
-import { connect } from 'react-redux';
+import style from './DevicesHeader.module.scss';
+import { devicesAPI } from '../../api/api';
+import { Oven, RobotHoover } from '../../redux/reducers/deviceReducer';
 
 interface Props {
-  onSearchState: (term: string) => void
+  loadDevices: (p: Array<Oven | RobotHoover>) => void
 }
 
-type ComponentProps = ReturnType<typeof mapDispatchToProps> & Props;
-
-class DevicesHeader extends React.Component<ComponentProps> {
+class DevicesHeader extends React.Component<Props> {
 
   state = {
     term: ''
@@ -22,18 +20,19 @@ class DevicesHeader extends React.Component<ComponentProps> {
     })
   }
 
-  public onSearchClick = () => {
-    this.props.onSearchState(this.state.term);
+  public onSearchClick = async () => {
+    const search: any = await devicesAPI.search(this.state.term);
+    this.props.loadDevices(search.data);
   }
 
 render() {
   return (
-    <header className='header'>
-      <div className='wrapper'>
+    <header className={style.header}>
+      <div className={style.wrapper}>
           <h6>Home</h6>
-          <div className="search">
-            <input type='text' className='search__input' placeholder='Search' onChange={this.onSearchChange}></input>
-            <button className='search__btn' onClick={this.onSearchClick} ><SearchIcon /></button>
+          <div className={style.search}>
+            <input type='text' className={style.search__input} placeholder='Search' onChange={this.onSearchChange}></input>
+            <button className={style.search__btn} onClick={this.onSearchClick} ><SearchIcon /></button>
           </div>
       </div>
     </header>
@@ -41,10 +40,4 @@ render() {
 }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  removeAllDevices: () => {
-      
-  }
-})
-
-export default connect(() => ({}), mapDispatchToProps)(DevicesHeader);
+export default DevicesHeader;

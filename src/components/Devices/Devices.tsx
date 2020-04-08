@@ -14,7 +14,6 @@ import { Link } from 'react-router-dom';
 import { devicesAPI } from '../../api/api';
 import { Loader } from '../Loader/Loader';
 
-
 interface Props {
     devices: Array<Oven | RobotHoover>,
     addResourse: (p: Oven | RobotHoover) => AddDeviceAction,
@@ -36,18 +35,13 @@ class Devices extends Component<Props> {
 
     state = {
         showModal: false,
-        term: '',
         isLoading: false
     }
 
     componentDidMount = async () => {
-
         this.setState({ isLoading: true });
-
         const devs: any = await devicesAPI.serverDevices();
         this.props.loadDevices(devs.data);
-     
-
         this.setState({ isLoading: false });
     };
 
@@ -57,28 +51,21 @@ class Devices extends Component<Props> {
         })
     }
 
-    onSearchState = (term: string) => {
-        this.setState({
-            term
-        })
-    }
-
-
     private devices = (): JSX.Element[] =>
     this.props.devices.map(device => (
-            <Fragment key={device.id} >
-                <Link to={`device/${device.id}`}>
-                    <Card  device={device} 
-                    deviceToggle={this.props.deviceToggle} />
-                </Link>
-            </Fragment>
-        ))
+        <Fragment key={device.id} >
+            <Link to={`device/${device.id}`}>
+                <Card  device={device} 
+                deviceToggle={this.props.deviceToggle} />
+            </Link>
+        </Fragment>
+    ))
 
     render() {
         const { showModal } = this.state;
         return (
             <div>
-                 <DevicesHeader onSearchState={this.onSearchState} />
+                 <DevicesHeader loadDevices={this.props.loadDevices} />
                 <div className={style.filter}> 
                     <Filter offDevices={this.props.offDevices} loadDevices={this.props.loadDevices} />
                 </div>
@@ -91,7 +78,6 @@ class Devices extends Component<Props> {
                     <AddDeviceContainer handleToggleDialog={this.handleToggleDialog} addDevice={this.props.addResourse} />,
                     document.getElementById('modal-root') as HTMLInputElement
                 ) : null}
-
                 <div className={style.collection}>
                     {
                         this.state.isLoading ?
@@ -104,6 +90,5 @@ class Devices extends Component<Props> {
         )
     }
 }
-
 
 export default Devices;
