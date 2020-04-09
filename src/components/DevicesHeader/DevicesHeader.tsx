@@ -28,11 +28,13 @@ class DevicesHeader extends React.Component<Props> {
 render() {
   return (
     <header className={style.header}>
-      <div className={style.wrapper}>
+      <div className='wrapper'>
+      <div className={style.header__inner}>
           <h6>Home</h6>
           <div className={style.search}>
             <input type='text' className={style.search__input} placeholder='Search' onChange={this.onSearchChange}></input>
             <button className={style.search__btn} onClick={this.onSearchClick} ><SearchIcon /></button>
+          </div>
           </div>
       </div>
     </header>
