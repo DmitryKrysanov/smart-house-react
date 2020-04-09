@@ -13,7 +13,7 @@ interface Props {
 
 export default class AddDeviceContainer extends Component<Props> {
 
-    state = {
+    public state = {
         content: 0
     }
 
@@ -29,41 +29,42 @@ export default class AddDeviceContainer extends Component<Props> {
         document.body.style.overflow = 'unset';
     }
 
-    handleKeyUp = (event: { keyCode: number; preventDefault: () => void; }) => {
+    private handleKeyUp = (event: { keyCode: number; preventDefault: () => void; }): void => {
         if (event.keyCode === 27) {
             event.preventDefault();
             this.props.handleToggleDialog();
         }
     };
 
-    handleOutsideClick = (event: { target: any }) => {
+    private handleOutsideClick = (event: { target: any }): void => {
         if (event.target.classList.contains(`${style.dialog}`)) {
             this.props.handleToggleDialog();
         }
     }
 
-    handleContent = (count: number): void => {
+    private handleContent = (count: number): void => {
         this.setState({
             content: count
         })
     }
 
-    public renderContent = (): JSX.Element | null => {
+    private renderContent = (): JSX.Element | null => {
+        const {addDevice, handleToggleDialog} = this.props;
         switch (this.state.content) {
             case 0:
                 return <SelectDevice 
-                handleToggleDialog={this.props.handleToggleDialog} 
+                handleToggleDialog={handleToggleDialog} 
                 handleContent={this.handleContent} />;
             case 1:
                 return <AddDeviceOven 
-                handleToggleDialog={this.props.handleToggleDialog} 
+                handleToggleDialog={handleToggleDialog} 
                 handleContent={this.handleContent} 
-                addDevice={this.props.addDevice} />;
+                addDevice={addDevice} />;
             case 2:
                 return <AddDeviceRobot 
-                handleToggleDialog={this.props.handleToggleDialog} 
+                handleToggleDialog={handleToggleDialog} 
                 handleContent={this.handleContent} 
-                addDevice={this.props.addDevice} />;
+                addDevice={addDevice} />;
             default:
                 return null;
         }

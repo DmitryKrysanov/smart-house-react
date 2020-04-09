@@ -40,7 +40,7 @@ interface State {
 
 class OvenContent extends Component<Props, State> {
 
-    state: State = {
+    public state: State = {
         device: {
             type: this.props.device.type,
             name: this.props.device.name,
@@ -53,13 +53,13 @@ class OvenContent extends Component<Props, State> {
         redirect: false
     }
 
-    public handleSubmit = async (e: { preventDefault: () => void; }): Promise<void> => {
-        e.preventDefault();
+    private handleSubmit = async (event: { preventDefault: () => void; }): Promise<void> => {
+        event.preventDefault();
         await devicesAPI.updateOven(this.state.device, this.props.device.id);
     }
 
-    public handleDelete = async (e: { preventDefault: () => void; }): Promise<void> => {
-        e.preventDefault();
+    private handleDelete = async (event: { preventDefault: () => void; }): Promise<void> => {
+        event.preventDefault();
         if (typeof this.props.device != 'undefined') {
             await devicesAPI.deleteDevice(this.props.device.id);
             this.props.removeDevice(this.props.device.id);
@@ -69,7 +69,7 @@ class OvenContent extends Component<Props, State> {
         }
     }
 
-    public handleTempChange = (name: string, value: number): void => {
+    private handleTempChange = (name: string, value: number): void => {
         this.setState({
             device: {
                 ...this.state.device,
@@ -99,7 +99,7 @@ class OvenContent extends Component<Props, State> {
         })
     }
 
-    private redirect = () => {
+    private redirect = (): void => {
         this.setState({
             redirect: true
         })
@@ -107,9 +107,7 @@ class OvenContent extends Component<Props, State> {
 
     render() {
 
-        console.log(this.state)
-
-        const { redirect } = this.state;
+        const {redirect} = this.state;
 
         if (redirect) {
             return <Redirect to='/home/devices'/>;

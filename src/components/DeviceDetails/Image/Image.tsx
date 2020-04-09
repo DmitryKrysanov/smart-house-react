@@ -6,11 +6,13 @@ interface Props {
 }
 
 const Image = (props: Props) => {
-        return (
-                <div className={style.device_details__image}>
-                    <img src={props.image} alt={props.image} />
-                </div>
-        );
+
+    const {image} = props;
+    return (
+        <div className={style.device_details__image}>
+            <img src={image} alt={image} />
+        </div>
+    );
 }
 
 export default Image;

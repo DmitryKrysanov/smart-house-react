@@ -22,7 +22,7 @@ interface State {
 
 class RobotHooverContent extends Component<Props, State> {
 
-    state: State = {
+    public state: State = {
         device: {
             type: this.props.device.type,
             name: this.props.device.name,
@@ -34,23 +34,25 @@ class RobotHooverContent extends Component<Props, State> {
         redirect: false
     }
 
-    public handleSubmit = async (e: { preventDefault: () => void; }) => {
+    private handleSubmit = async (e: { preventDefault: () => void; }): Promise<void> => {
         e.preventDefault();
-        await devicesAPI.updateRobotHoover(this.state.device, this.props.device.id);
+        const {id} = this.props.device;
+        await devicesAPI.updateRobotHoover(this.state.device, id);
     }
 
-    public handleDelete = async (e: { preventDefault: () => void; }) => {
+    private handleDelete = async (e: { preventDefault: () => void; }): Promise<void> => {
         e.preventDefault();
+        const {id} = this.props.device;
         if (typeof this.props.device != 'undefined') {
-            await devicesAPI.deleteDevice(this.props.device.id);
-            this.props.removeDevice(this.props.device.id);
+            await devicesAPI.deleteDevice(id);
+            this.props.removeDevice(id);
             this.redirect()
         } else {
             console.log('nothing to delete');
         }
     }
 
-    private handleToggle = () => {
+    private handleToggle = (): void => {
         this.setState({
             device: {
                 ...this.state.device,
@@ -59,7 +61,7 @@ class RobotHooverContent extends Component<Props, State> {
         })
     }
 
-    private handleCurrentMode = (currentMode: string) => {
+    private handleCurrentMode = (currentMode: string): void => {
         this.setState({
             device: {
                 ...this.state.device,
@@ -68,7 +70,7 @@ class RobotHooverContent extends Component<Props, State> {
         })
     }
 
-    private redirect = () => {
+    private redirect = (): void => {
         this.setState({
             redirect: true
         })
@@ -76,9 +78,7 @@ class RobotHooverContent extends Component<Props, State> {
 
     render() {
 
-        console.log(this.state)
-
-        const { redirect } = this.state;
+        const {redirect} = this.state;
 
         if (redirect) {
             return <Redirect to='/home/devices'/>;

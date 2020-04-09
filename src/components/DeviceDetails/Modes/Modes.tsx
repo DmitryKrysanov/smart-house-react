@@ -11,9 +11,13 @@ interface Props {
     handleCurrentMode: (currentMode: string) => void
 }
 
-class Modes extends Component<Props> {
+interface State {
+    currentMode: string
+}
 
-    state = {
+class Modes extends Component<Props, State> {
+
+    public state: State = {
         currentMode: this.props.currentMode
     }
 
@@ -23,14 +27,17 @@ class Modes extends Component<Props> {
         ))
     }
 
-    private handleCurrentMode = (event: { target: { value: any; }; }) => {
-            this.setState({
-                currentMode: event.target.value 
-            });
-            this.props.handleCurrentMode(this.state.currentMode);
-        }
+    private handleCurrentMode = (event: React.ChangeEvent<{ value: any }>): void => {
+        this.setState({
+            currentMode: event.target.value 
+        });
+        this.props.handleCurrentMode(event.target.value);
+    }
 
     render() {
+
+        const {currentMode} = this.state;
+        
         return (
             <Fragment>
                 <h6>Modes</h6>
@@ -38,7 +45,7 @@ class Modes extends Component<Props> {
                     <FormControl fullWidth={true}>
                         <InputLabel>Current Mode</InputLabel>
                         <Select
-                            value={this.state.currentMode}
+                            value={currentMode}
                             onChange={this.handleCurrentMode}
                         >
                             {this.modeItems()}
@@ -48,7 +55,6 @@ class Modes extends Component<Props> {
             </Fragment>
         );
     }
-
 }
 
 export default Modes;

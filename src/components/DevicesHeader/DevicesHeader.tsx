@@ -10,36 +10,38 @@ interface Props {
 
 class DevicesHeader extends React.Component<Props> {
 
-  state = {
+  public state = {
     term: ''
   }
 
-  public onSearchChange = (event: { currentTarget: { value: any; }; }) => {
+  private onSearchChange = (event: { currentTarget: { value: any; }; }): void => {
     this.setState({
       term: event.currentTarget.value
     })
   }
 
-  public onSearchClick = async () => {
+  private onSearchClick = async (): Promise<void> => {
     const search: any = await devicesAPI.search(this.state.term);
     this.props.loadDevices(search.data);
   }
 
-render() {
-  return (
-    <header className={style.header}>
-      <div className='wrapper'>
-      <div className={style.header__inner}>
-          <h6>Home</h6>
-          <div className={style.search}>
-            <input type='text' className={style.search__input} placeholder='Search' onChange={this.onSearchChange}></input>
-            <button className={style.search__btn} onClick={this.onSearchClick} ><SearchIcon /></button>
+  render() {
+    return (
+      <header className={style.header}>
+        <div className='wrapper'>
+          <div className={style.header__inner}>
+            <h6>Home</h6>
+            <div className={style.search}>
+              <input type='text' className={style.search__input} placeholder='Search' onChange={this.onSearchChange}></input>
+              <button className={style.search__btn} onClick={this.onSearchClick} >
+                <SearchIcon />
+              </button>
+            </div>
           </div>
-          </div>
-      </div>
-    </header>
-  );
-}
+        </div>
+      </header>
+    );
+  }
 }
 
 export default DevicesHeader;

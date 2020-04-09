@@ -7,7 +7,6 @@ import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
 import { devicesAPI } from '../../../api/api';
 
-
 interface State {
     type: string,
     name: string,
@@ -20,7 +19,7 @@ interface State {
 const initialState: State = {
     type: 'robot-hoover',
     name: '',
-    image: 'http://placehold.it/400px',
+    image: 'https://www.stleos.uq.edu.au/wp-content/uploads/2016/08/image-placeholder.png',
     status: false,
     modes: [],
     currentMode: ''
@@ -37,20 +36,20 @@ class AddDeviceRobot extends Component<Props, State> {
 
     private _form = React.createRef<HTMLFormElement>();
 
-    public handleStringInputChange = (event: { currentTarget: { name: string, value: string; }; }) => {
+    private handleStringInputChange = (event: { currentTarget: { name: string, value: string; }; }): void => {
         this.setState({
             ...this.state,
             [event.currentTarget.name]: event.currentTarget.value
         })
     }
 
-    public handleModeInputChange = (event: { currentTarget: { value: string; }; }) => {
+    private handleModeInputChange = (event: { currentTarget: { value: string; }; }): void => {
         this.setState({
             currentMode: event.currentTarget.value
         })
     }
 
-    public handleModeInputClick = (e: { preventDefault: () => void; }) => {
+    private handleModeInputClick = (e: { preventDefault: () => void; }): void => {
         e.preventDefault();
         this.setState({
             modes: [...this.state.modes, this.state.currentMode],
@@ -58,17 +57,15 @@ class AddDeviceRobot extends Component<Props, State> {
         })
     }
 
-    private onSubmit = async (e: { preventDefault: () => void; }) => {
-        const { type, name, image, status, modes, currentMode } = this.state;
+    private onSubmit = async (e: { preventDefault: () => void; }): Promise<void> => {
         e.preventDefault();
-
         const respRobot = await devicesAPI.postRobot(this.state);
         this.props.addDevice(respRobot);
         this.props.handleToggleDialog();
     }
 
 
-    private handleDelete = (mode: string) => {
+    private handleDelete = (mode: string): void => {
         const newModes = this.state.modes;
         const index: number = this.state.modes.indexOf(mode);
         newModes.splice(index, 1);
@@ -83,9 +80,12 @@ class AddDeviceRobot extends Component<Props, State> {
         ))
 
     render() {
+
+        const{name, currentMode} = this.state;
+
         return (
             <div className={style.add_device_dialog__inner}>
-                <h5>Add Device (Robot)</h5>
+                <h5>Add Device (Robot Hoover)</h5>
                 <form className={style.form} ref={this._form}>
                     <div className={style.general}>
                         <div className={style.row}>
@@ -93,7 +93,7 @@ class AddDeviceRobot extends Component<Props, State> {
                                 required
                                 fullWidth={true}
                                 type='text'
-                                value={this.state.name}
+                                value={name}
                                 name='name'
                                 label="Name"
                                 color='secondary'
@@ -118,7 +118,7 @@ class AddDeviceRobot extends Component<Props, State> {
                                 name='image'
                                 label='Mode'
                                 color='secondary'
-                                value={this.state.currentMode}
+                                value={currentMode}
                                 onChange={this.handleModeInputChange} />
                             <Button className={style.button} variant="outlined" color="secondary" onClick={this.handleModeInputClick}>+</Button>
                         </div>
@@ -134,7 +134,7 @@ class AddDeviceRobot extends Component<Props, State> {
                                 className={style.right}
                                 color="secondary"
                                 type='submit'
-                                disabled={!this.state.name}
+                                disabled={!name}
                                 onClick={this.onSubmit}>Add Device</Button>
                         </div>
                     </div>
@@ -143,6 +143,5 @@ class AddDeviceRobot extends Component<Props, State> {
         )
     }
 }
-
 
 export default AddDeviceRobot;

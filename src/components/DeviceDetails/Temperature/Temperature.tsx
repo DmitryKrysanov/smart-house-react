@@ -14,11 +14,11 @@ interface Props {
 
 class Temperature extends Component<Props> {
 
-    state = {
-        temp: {...this.props.temp}
+    public state = {
+        temp: { ...this.props.temp }
     }
 
-    public increase = () => {
+    private increase = (): void => {
         const { max, current, step } = this.state.temp;
         if (current !== max) {
             if ((current + step) >= max) {
@@ -28,7 +28,7 @@ class Temperature extends Component<Props> {
                         current: max
                     }
                 })
-                this.props.handleTempChange('current', max)
+                this.props.handleTempChange('current', max);
             } else {
                 this.setState({
                     temp: {
@@ -36,12 +36,12 @@ class Temperature extends Component<Props> {
                         current: current + step
                     }
                 })
-                this.props.handleTempChange('current', current + step)
+                this.props.handleTempChange('current', current + step);
             }
         }
     }
 
-    public decrease = () => {
+    private decrease = (): void => {
         const { min, current, step } = this.state.temp;
         if (current !== min) {
             if ((current - step) <= min) {
@@ -51,7 +51,7 @@ class Temperature extends Component<Props> {
                         current: min
                     }
                 })
-                this.props.handleTempChange('current', min)
+                this.props.handleTempChange('current', min);
             } else {
                 this.setState({
                     temp: {
@@ -59,33 +59,36 @@ class Temperature extends Component<Props> {
                         current: current - step
                     }
                 })
-                this.props.handleTempChange('current', current - step)
+                this.props.handleTempChange('current', current - step);
             }
         }
     }
 
     render() {
+
+        const { current } = this.state.temp;
+
         return (
             <Fragment>
-            <h6>Temperature</h6>
-            <div className={style.range}>
-                <h2>{this.state.temp.current}</h2>
-                <div className={style.range__buttons}>
-                    <Button 
-                    variant='outlined' 
-                    color='secondary' 
-                    onClick={this.decrease}
-                    > - </Button>
-                    <Button 
-                    variant='outlined' 
-                    color='secondary' 
-                    onClick={this.increase}
-                    > + </Button>
+                <h6>Temperature</h6>
+                <div className={style.range}>
+                    <h2>{current}</h2>
+                    <div className={style.range__buttons}>
+                        <Button
+                            variant='outlined'
+                            color='secondary'
+                            onClick={this.decrease}
+                        > - </Button>
+                        <Button
+                            variant='outlined'
+                            color='secondary'
+                            onClick={this.increase}
+                        > + </Button>
+                    </div>
                 </div>
-            </div>
-        </Fragment>
+            </Fragment>
         );
-}
+    }
 }
 
 export default Temperature;

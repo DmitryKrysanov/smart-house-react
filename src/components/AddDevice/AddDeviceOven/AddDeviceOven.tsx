@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { AddDeviceAction } from '../../../redux/actions/deviceActions/deviceActions';
-import { Device, Oven } from '../../../redux/reducers/deviceReducer';
+import { Oven } from '../../../redux/reducers/deviceReducer';
 import TextField from '@material-ui/core/TextField';
 import style from './AddDeviceOven.module.scss';
 import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
 import { devicesAPI } from '../../../api/api';
-
-
 
 interface State {
     type: string,
@@ -22,7 +20,7 @@ interface State {
 const initialState: State = {
     type: 'oven',
     name: '',
-    image: 'http://placehold.it/400px',
+    image: 'https://www.stleos.uq.edu.au/wp-content/uploads/2016/08/image-placeholder.png',
     status: false,
     temp: {
         min: 0,
@@ -45,14 +43,14 @@ class AddDeviceOven extends Component<Props, State> {
 
     private _form = React.createRef<HTMLFormElement>();
 
-    public handleStringInputChange = (event: { currentTarget: { name: string, value: string; }; }) => {
+    private handleStringInputChange = (event: { currentTarget: { name: string, value: string; }; }): void => {
         this.setState({
             ...this.state,
             [event.currentTarget.name]: event.currentTarget.value
         })
     }
 
-    public handleNumberInputChange = (event: { currentTarget: { name: string, value: string; }; }) => {
+    private handleNumberInputChange = (event: { currentTarget: { name: string, value: string; }; }): void => {
         this.setState({
             temp: {
                 ...this.state.temp,
@@ -61,31 +59,28 @@ class AddDeviceOven extends Component<Props, State> {
         })
     }
 
-    public handleModeInputChange = (event: { currentTarget: { value: string; }; }) => {
+    private handleModeInputChange = (event: { currentTarget: { value: string; }; }): void => {
         this.setState({
             currentMode: event.currentTarget.value
         })
     }
 
-    public handleModeInputClick = (e: { preventDefault: () => void; }) => {
-        e.preventDefault();
+    private handleModeInputClick = (event: { preventDefault: () => void; }): void => {
+        event.preventDefault();
         this.setState({
             modes: [...this.state.modes, this.state.currentMode],
             currentMode: ''
         })
     }
 
-    private onSubmit = async (e: { preventDefault: () => void; }) => {
-        const { type, name, image, status, temp, modes, currentMode } = this.state;
+    private onSubmit = async (e: { preventDefault: () => void; }): Promise<void> => {
         e.preventDefault();
-
         const respOven = await devicesAPI.postOven(this.state);
-        console.log(respOven);
         this.props.addDevice(respOven);
         this.props.handleToggleDialog();
     }
 
-    private handleDelete = (mode: string) => {
+    private handleDelete = (mode: string): void => {
         const newModes = this.state.modes;
         const index: number = this.state.modes.indexOf(mode);
         newModes.splice(index, 1);
@@ -98,7 +93,11 @@ class AddDeviceOven extends Component<Props, State> {
         this.state.modes.map((mode, index) => (
             <Chip key={index} className={style.chip__item} label={mode} onDelete={() => this.handleDelete(mode)} />
         ))
+
     render() {
+
+        const {name, currentMode} = this.state;
+        
         return (
             <div className={style.add_device_dialog__inner}>
                 <h5>Add Device (Oven)</h5>
@@ -109,7 +108,7 @@ class AddDeviceOven extends Component<Props, State> {
                                 required
                                 fullWidth={true}
                                 type='text'
-                                value={this.state.name}
+                                value={name}
                                 name='name'
                                 label="Name"
                                 color='secondary'
@@ -165,7 +164,7 @@ class AddDeviceOven extends Component<Props, State> {
                                 name='image'
                                 label='Mode'
                                 color='secondary'
-                                value={this.state.currentMode}
+                                value={currentMode}
                                 onChange={this.handleModeInputChange} />
                             <Button className={style.button} variant="outlined" color="secondary" onClick={this.handleModeInputClick}>+</Button>
                         </div>
@@ -181,7 +180,7 @@ class AddDeviceOven extends Component<Props, State> {
                                 className={style.right}
                                 color="secondary"
                                 type='submit'
-                                disabled={!this.state.name}
+                                disabled={!name}
                                 onClick={this.onSubmit}>Add Device</Button>
                         </div>
                     </div>
