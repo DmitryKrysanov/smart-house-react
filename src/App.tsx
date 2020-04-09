@@ -37,6 +37,8 @@ const App = (props: ComponentProps) => {
                 loadDevices={props.loadDevices}
                 showLoader={props.showLoader}
                 hideLoader={props.hideLoader}
+                setCurrentPage={props.setCurrentPage}
+
               />
             </Route>
             <Route path='/home/device/:deviceId'>

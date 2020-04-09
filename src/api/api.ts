@@ -26,8 +26,8 @@ export interface PostRobot {
 
 export const devicesAPI = {
 
-    serverDevices(page: number): Promise<Array<Oven | RobotHoover>> {
-        return instance.get<Array<Oven | RobotHoover>>(`?page=${page}`).then(response => response.data)
+    serverDevices(page: number): Promise<Array<Oven | RobotHoover>>  {
+        return instance.get<Array<Oven | RobotHoover>>(`?page=${page}&perPage=4`).then(response => response.data)
     },
 
     postOven(oven: PostOven): Promise<Oven> {
@@ -42,8 +42,8 @@ export const devicesAPI = {
         return instance.delete(`${id}`).then(response => response.data)
     },
 
-    filter(type: string): Promise<Array<Oven | RobotHoover>> {
-        return instance.get<Array<Oven | RobotHoover>>(type).then(response => response.data) 
+    filter(type: string): Promise<Array<Oven | RobotHoover>>  {
+        return instance.get<Array<Oven | RobotHoover>>(`?type=${type}&perPage=4`).then(response => response.data) 
     },
 
     search(subname: string): Promise<Array<Oven | RobotHoover>> {
@@ -51,10 +51,10 @@ export const devicesAPI = {
     },
 
     updateOven(oven: PostOven, id: number): Promise<Oven> {
-        return instance.put<Oven>(`/${id}`, oven).then(response => response.data)
+        return instance.put<Oven>(`${id}`, oven).then(response => response.data)
     },
 
     updateRobotHoover(robot: PostRobot, id: number): Promise<RobotHoover> {
-        return instance.put<RobotHoover>(`/${id}`, robot).then(response => response.data)
+        return instance.put<RobotHoover>(`${id}`, robot).then(response => response.data)
     }
 }
