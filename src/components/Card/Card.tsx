@@ -1,7 +1,6 @@
 import React from 'react';
 import style from './Card.module.scss';
 import { Oven, RobotHoover } from '../../redux/reducers/deviceReducer';
-import Switch from '@material-ui/core/Switch';
 
 interface Props {
     device: Oven | RobotHoover,
@@ -10,22 +9,19 @@ interface Props {
 
 const Card = (props: Props) => {
 
-    const { device } = props;
+    const { image, name, type} = props.device;
 
     return (
         <div>
             <div className={style.card} >
                 <div className={style.card__image}>
-                    <img src={device.image} alt={device.name} />
+                    <img src={image} alt={name} />
                 </div>
                 <div className={style.card__content}>
                     <div>
-                        <h5>{device.name}</h5>
-                        <p>{props.device.type}</p>
+                        <h5>{name}</h5>
+                        <p>{type}</p>
                     </div>
-                    {/* <Switch edge="end"
-                        onChange={() => { props.deviceToggle(props.device.id) }}
-                        checked={props.device.status} /> */}
                 </div>
             </div>
         </div>

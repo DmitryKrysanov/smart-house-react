@@ -1,12 +1,11 @@
 import axios from 'axios'
-import { Device, Oven, RobotHoover } from "../redux/reducers/deviceReducer";
+import { Oven, RobotHoover } from "../redux/reducers/deviceReducer";
 
 const instance = axios.create({
-    // baseURL: 'https://my-json-server.typicode.com/SvetaShmalko/json-server/devices'
     baseURL: 'http://localhost:3001/api/homes/1/devices'
 })
 
-interface PostOven {
+export interface PostOven {
     type: string,
     name: string,
     image: string,
@@ -16,7 +15,7 @@ interface PostOven {
     currentMode: string
 }
 
-interface PostRobot {
+export interface PostRobot {
     type: string,
     name: string,
     image: string,
@@ -25,46 +24,37 @@ interface PostRobot {
     currentMode: string
 }
 
-interface Filter {
-    type: string
-}
-
-interface Search {
-    subname: string
-}
-
-
 export const devicesAPI = {
 
-    serverDevices(page: number) {
+    serverDevices(page: number): Promise<Array<Oven | RobotHoover>> {
         return instance.get<Array<Oven | RobotHoover>>(`?page=${page}`).then(response => response.data)
     },
 
-    postOven(oven: PostOven) {
+    postOven(oven: PostOven): Promise<Oven> {
         return instance.post<Oven>('', oven).then(response => response.data)
     },
 
-    postRobot(robot: PostRobot) {
+    postRobot(robot: PostRobot): Promise<RobotHoover> {
         return instance.post<RobotHoover>('', robot).then(response => response.data)
     },
 
-    deleteDevice(id: number) {
+    deleteDevice(id: number): Promise<void> {
         return instance.delete(`${id}`).then(response => response.data)
     },
 
-    filter(type: string) {
+    filter(type: string): Promise<Array<Oven | RobotHoover>> {
         return instance.get<Array<Oven | RobotHoover>>(type).then(response => response.data) 
     },
 
-    search(subname: string) {
+    search(subname: string): Promise<Array<Oven | RobotHoover>> {
         return instance.get<Array<Oven | RobotHoover>>(`?subname=${subname}`).then(response => response.data) 
     },
 
-    updateOven(oven: PostOven, id: number) {
+    updateOven(oven: PostOven, id: number): Promise<Oven> {
         return instance.put<Oven>(`/${id}`, oven).then(response => response.data)
     },
 
-    updateRobotHoover(robot: PostRobot, id: number) {
+    updateRobotHoover(robot: PostRobot, id: number): Promise<RobotHoover> {
         return instance.put<RobotHoover>(`/${id}`, robot).then(response => response.data)
     }
 }
