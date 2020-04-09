@@ -37,7 +37,7 @@ interface Search {
 export const devicesAPI = {
 
     serverDevices(page: number) {
-        return instance.get<Array<Oven | RobotHoover>>(`?page=${page}`).then(response => response.data)
+        return instance.get<Array<Oven | RobotHoover>>(`?page=${page}&perPage=4`).then(response => response.data)
     },
 
     postOven(oven: PostOven) {
@@ -53,7 +53,7 @@ export const devicesAPI = {
     },
 
     filter(type: string) {
-        return instance.get<Array<Oven | RobotHoover>>(type).then(response => response.data) 
+        return instance.get<Array<Oven | RobotHoover>>(`?type=${type}&perPage=4`).then(response => response.data) 
     },
 
     search(subname: string) {
@@ -61,10 +61,10 @@ export const devicesAPI = {
     },
 
     updateOven(oven: PostOven, id: number) {
-        return instance.put<Oven>(`/${id}`, oven).then(response => response.data)
+        return instance.put<Oven>(`${id}`, oven).then(response => response.data)
     },
 
     updateRobotHoover(robot: PostRobot, id: number) {
-        return instance.put<RobotHoover>(`/${id}`, robot).then(response => response.data)
+        return instance.put<RobotHoover>(`${id}`, robot).then(response => response.data)
     }
 }
