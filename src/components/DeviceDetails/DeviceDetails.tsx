@@ -1,15 +1,8 @@
 import React from 'react';
-// import Button from '@material-ui/core/Button';
-// import DeleteIcon from '@material-ui/icons/Delete';
 import style from './DeviceDetails.module.scss'
 import DeviceDetailsHeader from '../DeviceDetailsHeader/DeviceDetailsHeader';
 import { Oven, RobotHoover } from '../../redux/reducers/deviceReducer';
 import { useParams } from 'react-router-dom';
-// import { devicesAPI } from '../../api/api';
-// import Modes from './Modes/Modes';
-// import Temperature from './Temperature/Temperature';
-// import Image from './Image/Image';
-// import GeneralInfo from './GeneralInfo/GeneralInfo';
 import RobotHooverContent from './RobotHooverContent/RobotHooverContent';
 import OvenContent from './OvenContent/OvenContent'
 
@@ -19,19 +12,15 @@ interface Props {
     removeDevice: (id: number) => void
 }
 
-interface MatchParams {
-
-}
-
 const DeviceDetails = (props: Props) => {
 
     const match: any = useParams();
     const deviceId: number = +match.deviceId;
     const device: Oven | RobotHoover | undefined = props.devices.find(({ id }) => id === deviceId);  // can be undefined!
 
-    const content = (device: Oven | RobotHoover | undefined) => {
+    const content = (device: Oven | RobotHoover | undefined): JSX.Element => {
         if (device === undefined) {
-            return <h4>Error</h4>
+            return <p>Something went wrong</p>
         } else {
             if (device.type === 'oven') {
                 const oven = device as Oven;

@@ -10,7 +10,7 @@ const DeviceDetailsHeader = () => {
         <header className={style.header}>
         <div className='wrapper'>
             <div className={style.header__inner}>
-                <Link to={'/home'}>
+                <Link to={'/home/devices'}>
                     <IconButton><ArrowBackIcon /></IconButton>
                 </Link>
             </div>

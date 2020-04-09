@@ -18,14 +18,14 @@ interface ConnectedProps {
 
 type ComponentProps = ConnectedProps & ReturnType<typeof mapDispatchToProps>;
 
-
 const App = (props: ComponentProps) => {
+
   return (
     <div>
       <div className='wrapper'>
         <div className='content'>
           <Switch >
-            <Route path='/home'>
+            <Route path='/home/devices'>
               <Devices
                 devices={props.devices}
                 totalPages={props.totalPages}
@@ -41,7 +41,7 @@ const App = (props: ComponentProps) => {
 
               />
             </Route>
-            <Route path='/device/:deviceId'>
+            <Route path='/home/device/:deviceId'>
               <DeviceDetails
                 devices={props.devices}
                 deviceToggle={props.deviceToggle}
