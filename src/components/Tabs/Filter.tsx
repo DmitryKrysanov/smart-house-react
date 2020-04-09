@@ -21,7 +21,7 @@ const Filter = (props: Props) => {
     if(newValue === 1) {
       type = 'oven'
     } if(newValue === 2) {
-      type = 'robot hoover'
+      type = 'robot-hoover'
     }
     const respOvens: any = await devicesAPI.filter(type);
     props.loadDevices(respOvens.data);

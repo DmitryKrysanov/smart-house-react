@@ -14,13 +14,29 @@ interface Props {
     removeDevice: (id: number) => void
 }
 
+interface PostRobot {
+    type: string,
+    name: string,
+    image: string,
+    status: boolean,
+    modes: string[],
+    currentMode: string
+}
+
 class RobotHooverContent extends Component<Props> {
 
-    state = {...this.props.device}
+    state: PostRobot = {
+        type: this.props.device.type,
+        name: this.props.device.name,
+        image: this.props.device.image,
+        status: this.props.device.status,
+        modes: this.props.device.modes,
+        currentMode: this.props.device.currentMode
+    }
 
     public handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        
+        await devicesAPI.updateRobotHoover(this.state, this.props.device.id);
     }
 
     public handleDelete = async (e: { preventDefault: () => void; }) => {
