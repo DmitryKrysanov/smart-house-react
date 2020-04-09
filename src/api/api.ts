@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Device, Oven, RobotHoover } from "../redux/reducers/deviceReducer";
+import { Oven, RobotHoover } from "../redux/reducers/deviceReducer";
 
 const instance = axios.create({
     // baseURL: 'https://my-json-server.typicode.com/SvetaShmalko/json-server/devices'

@@ -6,7 +6,7 @@ import Card from '../Card/Card'
 import AddIcon from '@material-ui/icons/Add';
 import AddDeviceContainer from '../AddDevice/AddDeviceContainer'
 import Filter from '../Tabs/Filter';
-import { AddDeviceAction, SetDevicesAction } from '../../redux/actions/deviceActions/deviceActions';
+import { AddDeviceAction, SetDevicesAction, SetCurrentPageAction } from '../../redux/actions/deviceActions/deviceActions';
 import DevicesHeader from '../DevicesHeader/DevicesHeader'
 import Fab from '@material-ui/core/Fab';
 import { Link } from 'react-router-dom';
@@ -24,7 +24,8 @@ interface Props {
     deviceToggle: (id: number) => void,
     loadDevices: (p: Array<Oven | RobotHoover>) => SetDevicesAction,
     showLoader: () => void,
-    hideLoader: () => void
+    hideLoader: () => void,
+    setCurrentPage: (p: number) => SetCurrentPageAction
 }
 
 interface Resp {
@@ -62,6 +63,8 @@ class Devices extends Component<Props> {
         const devs: any = await devicesAPI.serverDevices(number);
         this.props.loadDevices(devs.data);
         this.setState({ isLoading: false });
+        this.props.setCurrentPage(number);
+        this.setState({page: devs.page})
     }
 
     private devices = (): JSX.Element[] =>
