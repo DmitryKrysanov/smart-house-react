@@ -8,7 +8,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { devicesAPI } from '../../../api/api';
 import Button from '@material-ui/core/Button';
 import Temperature from '../Temperature/Temperature';
-import purple from "@material-ui/core/colors/purple";
 
 interface Props {
     device: Oven,
@@ -47,7 +46,7 @@ class OvenContent extends Component<Props> {
 
     public handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        await devicesAPI.updateDevice(this.state, this.props.device.id);
+        await devicesAPI.updateOven(this.state, this.props.device.id);
     }
 
     public handleDelete = async (e: { preventDefault: () => void; }) => {
@@ -82,7 +81,6 @@ class OvenContent extends Component<Props> {
     }
 
     render() {
-        console.log(this.state)
         return (
             <Fragment>
                 <Image image={this.state.image} />

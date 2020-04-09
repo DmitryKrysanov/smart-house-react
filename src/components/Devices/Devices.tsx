@@ -8,7 +8,6 @@ import AddDeviceContainer from '../AddDevice/AddDeviceContainer'
 import Filter from '../Tabs/Filter';
 import { AddDeviceAction, SetDevicesAction } from '../../redux/actions/deviceActions/deviceActions';
 import DevicesHeader from '../DevicesHeader/DevicesHeader'
-import Pagination from '../Pagination/Pagination';
 import Fab from '@material-ui/core/Fab';
 import { Link } from 'react-router-dom';
 import { devicesAPI } from '../../api/api';
@@ -94,6 +93,7 @@ class Devices extends Component<Props> {
             </Button>
         );
       });
+
         return (
             <div>
                  <DevicesHeader loadDevices={this.props.loadDevices} />
@@ -116,9 +116,11 @@ class Devices extends Component<Props> {
                     }
                     {this.devices()}
                 </div>
-                <div className={style.paginationButtons}>
-                {renderPageNumbers}
-                </div>
+                {pageNumbers.length <= 1 ? null : 
+                <div className={style.pagination_buttons}>
+                    {renderPageNumbers}
+                </div>}
+                
             </div>
         )
     }

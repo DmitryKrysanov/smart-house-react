@@ -3,15 +3,8 @@ import { ADD_DEVICE,
         SET_DEVICES, 
         TURN_OFF_ALL_DEVICES, 
         TURN_ON_OFF_DEVICE, 
-        DECREASE, 
-        INCREASE, 
-        SET_MODE, 
         REMOVE_DEVICE, 
-        REMOVE_ALL_DEVICES,
         SET_CURRENT_PAGE} from '../../constants/deviceActions';
-
-
-
 
 export interface DevicesState {
     devices: Array<Oven | RobotHoover>,
@@ -104,17 +97,15 @@ export const deviceReducer = (state = initialState, action: deviceActions): Devi
             }
         case SET_CURRENT_PAGE:
             return {
-                ...state, page: action.payload
+                ...state, 
+                page: action.payload
             }
 
-        case DECREASE:
-            return state
-
-        case INCREASE:
-            return state
-
-        case SET_MODE:
-            return state
+        // case UPDATE_DEVICE:
+        //     return {
+        //         ...state, 
+        //         devices: 
+        //     } 
 
         case REMOVE_DEVICE:
             return {
