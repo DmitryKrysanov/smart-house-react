@@ -1,13 +1,13 @@
 import React from 'react';
+import style from './Loader.module.scss';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export const Loader: React.FC = () => {
     return (
 
-        <div className="spinner-border text-danger" role="status">
+        <div className={style.loader} role="status">
+            <CircularProgress color="secondary" />
             <span className="sr-only">Loading...</span>
-            <img src="https://thumbs.gfycat.com/ColossalMeekCygnet-size_restricted.gif" alt='loading'/>
-
-
         </div>
     )
 }
