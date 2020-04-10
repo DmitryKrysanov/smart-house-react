@@ -99,14 +99,20 @@ class Devices extends Component<Props> {
 
         const renderPageNumbers = pageNumbers.map(number => {
             return (
-                <Button
-                    className={style.button}
-                 //   variant="outlined"
-                    color="secondary"
-                    key={number}
+                // <Button
+                //     className={style.button}
+                //  //   variant="outlined"
+                //     color="secondary"
+                //     key={number}
+                //     onClick={() => { this.onChangePage(number) }} >
+                //     {number}
+                // </Button>
+                <button className={number === this.props.page 
+                    ? `${style.pagination_btn} ${style.active}` 
+                    : style.pagination_btn} 
                     onClick={() => { this.onChangePage(number) }} >
-                    {number}
-                </Button>
+                        {number}
+                </button>
             );
         });
 
