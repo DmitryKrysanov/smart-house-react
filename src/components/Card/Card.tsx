@@ -22,6 +22,7 @@ const Card = (props: Props) => {
                         <h5>{name}</h5>
                         <p>{type}</p>
                     </div>
+                    <div className={props.device.status === true ? style.status_on : style.status_off}></div>
                 </div>
             </div>
         </div>
