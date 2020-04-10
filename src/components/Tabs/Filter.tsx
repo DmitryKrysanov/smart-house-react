@@ -39,7 +39,7 @@ const Filter = (props: Props) => {
             <Tab label="Oven" />
             <Tab label="Robot Hoover" />
       </Tabs>
-      <Button variant='outlined' color={'secondary'} onClick={props.offDevices}>Turn off all devices</Button>
+      {/* <Button variant='outlined' color={'secondary'} onClick={props.offDevices}>Turn off all devices</Button> */}
     </div>
   );
 }
