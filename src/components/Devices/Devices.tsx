@@ -101,7 +101,7 @@ class Devices extends Component<Props> {
             return (
                 <Button
                     className={style.button}
-                    variant="outlined"
+                 //   variant="outlined"
                     color="secondary"
                     key={number}
                     onClick={() => { this.onChangePage(number) }} >
