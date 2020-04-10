@@ -1,4 +1,4 @@
-import { deviceActions, setDevices } from './../actions/deviceActions/deviceActions';
+import { deviceActions } from './../actions/deviceActions/deviceActions';
 import { ADD_DEVICE, 
         SET_DEVICES, 
         TURN_OFF_ALL_DEVICES, 
