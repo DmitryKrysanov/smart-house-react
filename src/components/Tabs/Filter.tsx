@@ -2,15 +2,14 @@ import React from 'react';
 import style from './Filter.module.scss';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Button from '@material-ui/core/Button';
 import { devicesAPI } from '../../api/api';
 import { Oven, RobotHoover } from '../../redux/reducers/deviceReducer';
-import { SetDevicesAction } from '../../redux/actions/deviceActions/deviceActions';
+import { setDevices } from '../../redux/actions/deviceActions/deviceActions';
+import { Dispatch } from '../../redux/store';
+import { connect } from 'react-redux';
 
-interface Props {
-  offDevices: () => void,
-  loadDevices: (p: Array<Oven | RobotHoover>) => SetDevicesAction
-}
+type Props = ReturnType<typeof mapDispatchToProps>;
+
 const Filter = (props: Props) => {
 
     const [value, setValue] = React.useState(0);
@@ -39,9 +38,14 @@ const Filter = (props: Props) => {
             <Tab label="Oven" />
             <Tab label="Robot Hoover" />
       </Tabs>
-      {/* <Button variant='outlined' color={'secondary'} onClick={props.offDevices}>Turn off all devices</Button> */}
     </div>
   );
 }
 
-export default Filter;
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  loadDevices: (p: Array<Oven | RobotHoover>) => {
+      return dispatch(setDevices(p));
+  }
+})
+
+export default connect(null, mapDispatchToProps)(Filter);
