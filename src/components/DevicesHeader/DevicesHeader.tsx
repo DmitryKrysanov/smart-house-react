@@ -1,47 +1,18 @@
 import React from 'react';
-import SearchIcon from '@material-ui/icons/Search';
 import style from './DevicesHeader.module.scss';
-import { devicesAPI } from '../../api/api';
-import { Oven, RobotHoover } from '../../redux/reducers/deviceReducer';
+import Search from './Search';
 
-interface Props {
-  loadDevices: (p: Array<Oven | RobotHoover>) => void
-}
-
-class DevicesHeader extends React.Component<Props> {
-
-  public state = {
-    term: ''
-  }
-
-  private onSearchChange = (event: { currentTarget: { value: any; }; }): void => {
-    this.setState({
-      term: event.currentTarget.value
-    })
-  }
-
-  private onSearchClick = async (): Promise<void> => {
-    const search: any = await devicesAPI.search(this.state.term);
-    this.props.loadDevices(search.data);
-  }
-
-  render() {
+const DevicesHeader = () => {
     return (
       <header className={style.header}>
         <div className='wrapper'>
           <div className={style.header__inner}>
             <h6>Home</h6>
-            <div className={style.search}>
-              <input type='text' className={style.search__input} placeholder='Search' onChange={this.onSearchChange}></input>
-              <button className={style.search__btn} onClick={this.onSearchClick} >
-                <SearchIcon />
-              </button>
-            </div>
+            <Search />
           </div>
         </div>
       </header>
     );
   }
-}
 
 export default DevicesHeader;
