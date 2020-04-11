@@ -3,8 +3,7 @@ import style from './Card.module.scss';
 import { Oven, RobotHoover } from '../../redux/reducers/deviceReducer';
 
 interface Props {
-    device: Oven | RobotHoover,
-    deviceToggle: (id: number) => void
+    device: Oven | RobotHoover
 }
 
 const Card = (props: Props) => {
