@@ -5,7 +5,7 @@ import { RobotHoover, Oven, DevicesState } from '../../redux/reducers/deviceRedu
 import AddIcon from '@material-ui/icons/Add';
 import AddDeviceContainer from '../AddDevice/AddDeviceContainer'
 import Filter from '../Tabs/Filter';
-import { addDevice, turnOffAllDevices, turnOnOffDevice, setDevices, removeDevice, SetCurrentPage } from '../../redux/actions/deviceActions/deviceActions';
+import { addDevice, setDevices, SetCurrentPage } from '../../redux/actions/deviceActions/deviceActions';
 import DevicesHeader from '../DevicesHeader/DevicesHeader'
 import Fab from '@material-ui/core/Fab';
 import { devicesAPI } from '../../api/api';
@@ -15,6 +15,7 @@ import { showLoader, hideLoader } from '../../redux/actions/loaderActions/loader
 import { connect } from 'react-redux';
 import DevicesList from './DevicesList';
 import EmptyState from './EmptyState';
+import Pagination from './Pagination';
 
 interface ConnectedProps {
     devices: Array<Oven | RobotHoover>,
@@ -62,22 +63,6 @@ class Devices extends Component<ComponentProps> {
 
         const { showModal } = this.state;
 
-        const pageNumbers = [];
-        for (let i = 1; i <= this.state.totalPages; i++) {
-            pageNumbers.push(i);
-        }
-
-        const renderPageNumbers = pageNumbers.map(number => {
-            return (
-                <button className={number === this.props.page 
-                    ? `${style.pagination_btn} ${style.active}` 
-                    : style.pagination_btn} 
-                    onClick={() => { this.onChangePage(number) }} >
-                        {number}
-                </button>
-            );
-        });
-
         return (
             <div>
                 <DevicesHeader />
@@ -103,10 +88,10 @@ class Devices extends Component<ComponentProps> {
                             }
                             <DevicesList devices={this.props.devices} />
                         </div>
-                        {pageNumbers.length <= 1 ? null :
                             <div className={style.pagination_buttons}>
-                                {renderPageNumbers}
-                            </div>}
+                                <Pagination totalPages={this.state.totalPages}
+                                page={this.props.page} onChangePage={this.onChangePage}  />
+                            </div>
                     </Fragment>}
             </div>
         )
