@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Oven, RobotHoover } from "../redux/reducers/deviceReducer";
 
 const instance = axios.create({
-    baseURL: 'http://localhost:3001/api/homes/1/devices'
+    baseURL: 'http://localhost:3001/api/v1/homes/1/devices'
 })
 
 export interface PostOven {
@@ -26,7 +26,7 @@ export interface PostRobot {
 
 export const devicesAPI = {
 
-    serverDevices(page: number): Promise<Array<Oven | RobotHoover>>  {
+    serverDevices(page: number): Promise<Array<Oven | RobotHoover>> {
         return instance.get<Array<Oven | RobotHoover>>(`?page=${page}&perPage=4`).then(response => response.data)
     },
 
@@ -43,11 +43,11 @@ export const devicesAPI = {
     },
 
     filter(type: string): Promise<Array<Oven | RobotHoover>> {
-        return instance.get<Array<Oven | RobotHoover>>(`${type}&perPage=4`).then(response => response.data) 
+        return instance.get<Array<Oven | RobotHoover>>(`${type}&perPage=4`).then(response => response.data)
     },
 
     search(subname: string): Promise<Array<Oven | RobotHoover>> {
-        return instance.get<Array<Oven | RobotHoover>>(`?subname=${subname}`).then(response => response.data) 
+        return instance.get<Array<Oven | RobotHoover>>(`?subname=${subname}`).then(response => response.data)
     },
 
     updateOven(oven: PostOven, id: number): Promise<Oven> {
