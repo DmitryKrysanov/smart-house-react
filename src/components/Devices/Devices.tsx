@@ -16,6 +16,10 @@ import { connect } from 'react-redux';
 import DevicesList from './DevicesList';
 import EmptyState from './EmptyState';
 import Pagination from './Pagination';
+import { OvenFilter } from './OvenFilter';
+import { RobotFilter } from './RobotFilter';
+import { Switch, Route } from 'react-router-dom';
+import { routes } from '../../routes';
 
 interface ConnectedProps {
   devices: Array<Oven | RobotHoover>,
@@ -67,7 +71,7 @@ class Devices extends Component<ComponentProps> {
       <div>
         <DevicesHeader />
         <div className={style.filter}>
-          {/* <Filter /> */}
+          <Filter />
         </div>
         <div className={style.fab}>
           <Fab color="secondary" aria-label="add" onClick={this.handleToggleDialog}>
@@ -86,7 +90,20 @@ class Devices extends Component<ComponentProps> {
                 this.state.isLoading ?
                   <Loader /> : null
               }
-              <DevicesList devices={this.props.devices} />
+              <Switch>
+                <Route exact path={routes.allDevices}>
+                  <DevicesList devices={this.props.devices} />
+                  {/* <div>all devices</div> */}
+                </Route>
+                <Route path={routes.ovens}>
+                  {/* <OvenFilter /> */}
+                  <DevicesList devices={this.props.devices} />
+                </Route>
+                <Route path={routes.robots}>
+                  {/* <RobotFilter /> */}
+                  <DevicesList devices={this.props.devices} />
+                </Route>
+              </Switch>
             </div>
             <div className={style.pagination_buttons}>
               <Pagination totalPages={this.state.totalPages}

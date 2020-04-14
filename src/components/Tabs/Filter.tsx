@@ -7,7 +7,7 @@ import { Oven, RobotHoover } from '../../redux/reducers/deviceReducer';
 import { setDevices } from '../../redux/actions/deviceActions/deviceActions';
 import { Dispatch } from '../../redux/store';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { routes } from '../../routes';
 
 type Props = ReturnType<typeof mapDispatchToProps>;
@@ -36,17 +36,11 @@ const Filter = (props: Props) => {
         indicatorColor="secondary"
         textColor="secondary"
       >
-        <Link to={routes.allDevices}>
-          {/* <button>All</button> */}
-          <Tab label="All" />
-        </Link>
-        <Link to={routes.ovens}>
-          <Tab label="Oven" />
-          {/* <button>Oven</button> */}
-        </Link>
-        <Link to={routes.robots}>
-          <Tab label="Robot Hoover" />
-        </Link>
+
+        <Tab label="All" component={NavLink} to={routes.allDevices} />
+        <Tab label="Oven" component={NavLink} to={routes.ovens} />
+        <Tab label="Robot" component={NavLink} to={routes.robots} />
+
       </Tabs>
     </div>
   );

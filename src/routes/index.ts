@@ -1,6 +1,6 @@
 export const routes = {
-    allDevices: '/home/devices/all',
+    allDevices: '/home/devices',
     ovens: '/home/devices/ovens',
     robots: '/home/devices/robots',
-    deviceDetails: '/home/devices/:deviceId'
+    deviceDetails: '/home/device/:deviceId'
 }
