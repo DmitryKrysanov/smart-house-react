@@ -11,7 +11,7 @@ interface Props {
 const DevicesList = (props: Props) => {
     const devices = props.devices.map(device => (
         <Fragment key={device.id}>
-            <Link to={`device/${device.id}`}>
+            <Link to={`/home/devices/${device.id}`}>
                 <Card device={device} />
             </Link>
         </Fragment>));

@@ -67,7 +67,7 @@ class Devices extends Component<ComponentProps> {
       <div>
         <DevicesHeader />
         <div className={style.filter}>
-          <Filter />
+          {/* <Filter /> */}
         </div>
         <div className={style.fab}>
           <Fab color="secondary" aria-label="add" onClick={this.handleToggleDialog}>

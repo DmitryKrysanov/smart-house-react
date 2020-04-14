@@ -7,19 +7,21 @@ import { Oven, RobotHoover } from '../../redux/reducers/deviceReducer';
 import { setDevices } from '../../redux/actions/deviceActions/deviceActions';
 import { Dispatch } from '../../redux/store';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { routes } from '../../routes';
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
 const Filter = (props: Props) => {
 
-    const [value, setValue] = React.useState(0);
-  
+  const [value, setValue] = React.useState(0);
+
   const handleChange = async (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
     let type = ''
-    if(newValue === 1) {
+    if (newValue === 1) {
       type = '?type=oven'
-    } if(newValue === 2) {
+    } if (newValue === 2) {
       type = '?type=robot-hoover'
     }
     const respOvens: any = await devicesAPI.filter(type);
@@ -29,14 +31,22 @@ const Filter = (props: Props) => {
   return (
     <div className={style.filter}>
       <Tabs
-          value={value}
-          onChange={handleChange}
-          indicatorColor="secondary"
-          textColor="secondary"
-          >
-            <Tab label="All" />
-            <Tab label="Oven" />
-            <Tab label="Robot Hoover" />
+        value={value}
+        onChange={handleChange}
+        indicatorColor="secondary"
+        textColor="secondary"
+      >
+        <Link to={routes.allDevices}>
+          {/* <button>All</button> */}
+          <Tab label="All" />
+        </Link>
+        <Link to={routes.ovens}>
+          <Tab label="Oven" />
+          {/* <button>Oven</button> */}
+        </Link>
+        <Link to={routes.robots}>
+          <Tab label="Robot Hoover" />
+        </Link>
       </Tabs>
     </div>
   );
@@ -44,7 +54,7 @@ const Filter = (props: Props) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadDevices: (p: Array<Oven | RobotHoover>) => {
-      return dispatch(setDevices(p));
+    return dispatch(setDevices(p));
   }
 })
 
