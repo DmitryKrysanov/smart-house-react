@@ -18,13 +18,7 @@ const Filter = (props: Props) => {
 
   const handleChange = async (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
-    let type = ''
-    if (newValue === 1) {
-      type = '&type=oven'
-    } if (newValue === 2) {
-      type = '&type=robot-hoover'
-    }
-    const respOvens: any = await devicesAPI.filter(type);
+    const respOvens: any = await devicesAPI.filter(`${newValue}`);
     props.loadDevices(respOvens.data);
   };
 
@@ -37,9 +31,9 @@ const Filter = (props: Props) => {
         textColor="secondary"
       >
 
-        <Tab label="All" component={NavLink} to={routes.allDevices} />
-        <Tab label="Oven" component={NavLink} to={routes.ovens} />
-        <Tab label="Robot" component={NavLink} to={routes.robots} />
+        <Tab value={''} label="All" component={NavLink} to={routes.allDevices} />
+        <Tab value={'&type=Oven'} label="Oven" component={NavLink} to={routes.ovens} />
+        <Tab value={'&type=Robot-hoover'} label="Robot" component={NavLink} to={routes.robots} />
 
       </Tabs>
     </div>
