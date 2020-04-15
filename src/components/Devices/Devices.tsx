@@ -18,8 +18,10 @@ import EmptyState from './EmptyState';
 import Pagination from './Pagination';
 import { OvenFilter } from './OvenFilter';
 import { RobotFilter } from './RobotFilter';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Link } from 'react-router-dom';
 import { routes } from '../../routes';
+import { IconButton } from '@material-ui/core';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 interface ConnectedProps {
   devices: Array<Oven | RobotHoover>,
@@ -40,13 +42,14 @@ class Devices extends Component<ComponentProps> {
     totalPages: 0
   }
 
-  async componentDidMount() {
-    this.setState({ isLoading: true });
-    const devs: any = await devicesAPI.serverDevices(1);
-    this.props.loadDevices(devs.data);
-    this.setState({ isLoading: false });
-    this.setState({ totalPages: devs.totalPages })
-  };
+  // async componentDidMount() {
+  //   this.setState({ isLoading: true });
+  //   const devs: any = await devicesAPI.serverDevices(1);
+  //   this.props.loadDevices(devs.data);
+  //   this.setState({ isLoading: false });
+  //   this.setState({ totalPages: devs.totalPages });
+  //   console.log(this.state.totalPages);
+  // };
 
   private handleToggleDialog = (): void => {
     this.setState({
@@ -93,27 +96,25 @@ class Devices extends Component<ComponentProps> {
 
               <Switch>
                 <Route exact path={routes.allDevices}>
-                  <DevicesList
-                    devices={this.props.devices}
-                    totalPages={this.props.totalPages}
-                    page={this.props.page}
-                  />
+                  <DevicesList />
                 </Route>
 
                 <Route path={routes.ovens}>
-                  <DevicesList
-                    devices={this.props.devices}
-                    totalPages={this.props.totalPages}
-                    page={this.props.page}
-                  />
+                  <DevicesList />
                 </Route>
 
                 <Route path={routes.robots}>
-                  <DevicesList
-                    devices={this.props.devices}
-                    totalPages={this.state.totalPages}
-                    page={this.state.page}
-                  />
+                  <DevicesList />
+                </Route>
+
+                <Route path='/home/devices/:deviceId'>
+                  <div>
+                    <Link to={routes.allDevices}>
+                      <IconButton> <ArrowBackIcon /> </IconButton>
+                    </Link>
+                    <br />
+                Details of some device...
+              </div>
                 </Route>
               </Switch>
             </div>

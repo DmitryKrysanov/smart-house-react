@@ -14,11 +14,11 @@ type Props = ReturnType<typeof mapDispatchToProps>;
 
 const Filter = (props: Props) => {
 
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState('');
 
-  const handleChange = async (event: React.ChangeEvent<{}>, newValue: number) => {
-    setValue(newValue);
-    const respOvens: any = await devicesAPI.filter(`${newValue}`);
+  const handleChange = async (event: React.ChangeEvent<{}>, value: string) => {
+    setValue(value);
+    const respOvens: any = await devicesAPI.filter(`${value}`);
     props.loadDevices(respOvens.data);
   };
 

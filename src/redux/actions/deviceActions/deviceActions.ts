@@ -1,12 +1,22 @@
-import { ADD_DEVICE, 
+import {
+    ADD_DEVICE,
     TURN_OFF_ALL_DEVICES,
-    TURN_ON_OFF_DEVICE, 
+    TURN_ON_OFF_DEVICE,
     UPDATE_DEVICE,
     REMOVE_DEVICE,
     SET_DEVICES,
-    SET_CURRENT_PAGE
- } from '../../../constants/deviceActions';
+    SET_CURRENT_PAGE,
+    FETCH_DEVICES
+} from '../../../constants/deviceActions';
 import { RobotHoover, Oven } from '../../reducers/deviceReducer';
+
+export interface FetchDevicesAction {
+    type: typeof FETCH_DEVICES
+}
+
+export const fetchDevices = (): FetchDevicesAction => ({
+    type: FETCH_DEVICES
+})
 
 export interface SetCurrentPageAction {
     type: typeof SET_CURRENT_PAGE,
@@ -61,7 +71,7 @@ interface updateDeviceAction {
     payload: Oven | RobotHoover
 }
 
-export const updateDevice = (payload:  Oven | RobotHoover): updateDeviceAction => ({
+export const updateDevice = (payload: Oven | RobotHoover): updateDeviceAction => ({
     type: UPDATE_DEVICE,
     payload
 })
@@ -76,10 +86,11 @@ export const removeDevice = (id: number): removeDeviceAction => ({
     id
 })
 
-export type deviceActions = AddDeviceAction 
-| turnOffAllDevicesAction
-| turnOnOffDeviceAction
-| updateDeviceAction
-| removeDeviceAction
-| SetDevicesAction
-| SetCurrentPageAction;
+export type deviceActions = AddDeviceAction
+    | turnOffAllDevicesAction
+    | turnOnOffDeviceAction
+    | updateDeviceAction
+    | removeDeviceAction
+    | SetDevicesAction
+    | SetCurrentPageAction
+    | FetchDevicesAction;
