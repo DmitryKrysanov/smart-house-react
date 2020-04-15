@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { devicesAPI } from '../../api/api';
 import style from './Pagination.module.scss';
+import { render } from '@testing-library/react';
 
 interface Props {
     totalPages: number,
@@ -27,9 +28,10 @@ const Pagination = (props: Props) => {
 
     return (
         <div>
-            {pageNumbers.length <= 1 ? null : renderPageNumbers}
+            {/* {pageNumbers.length <= 1 ? null : renderPageNumbers} */}
+            {renderPageNumbers}
         </div>
-        
+
     )
 
 }

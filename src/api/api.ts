@@ -27,7 +27,7 @@ export interface PostRobot {
 export const devicesAPI = {
 
     serverDevices(page: number): Promise<Array<Oven | RobotHoover>> {
-        return instance.get<Array<Oven | RobotHoover>>(`?page=${page}&perPage=4`).then(response => response.data)
+        return instance.get<Array<Oven | RobotHoover>>(`?page=${page}&perPage=100`).then(response => response.data)
     },
 
     postOven(oven: PostOven): Promise<Oven> {
@@ -43,7 +43,7 @@ export const devicesAPI = {
     },
 
     filter(type: string): Promise<Array<Oven | RobotHoover>> {
-        return instance.get<Array<Oven | RobotHoover>>(`${type}&perPage=4`).then(response => response.data)
+        return instance.get<Array<Oven | RobotHoover>>(`?perPage=10${type}`).then(response => response.data)
     },
 
     search(subname: string): Promise<Array<Oven | RobotHoover>> {

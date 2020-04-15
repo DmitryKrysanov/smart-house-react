@@ -36,8 +36,8 @@ class Devices extends Component<ComponentProps> {
   public state = {
     showModal: false,
     isLoading: false,
-    currentPage: 1,
-    totalPages: 1
+    page: 0,
+    totalPages: 0
   }
 
   async componentDidMount() {
@@ -54,14 +54,14 @@ class Devices extends Component<ComponentProps> {
     })
   }
 
-  private onChangePage = async (number: number): Promise<void> => {
-    this.setState({ isLoading: true });
-    const devs: any = await devicesAPI.serverDevices(number);
-    this.props.loadDevices(devs.data);
-    this.setState({ isLoading: false });
-    this.props.setCurrentPage(number);
-    this.setState({ page: devs.page })
-  }
+  // private onChangePage = async (number: number): Promise<void> => {
+  //   this.setState({ isLoading: true });
+  //   const devs: any = await devicesAPI.serverDevices(number);
+  //   this.props.loadDevices(devs.data);
+  //   this.setState({ isLoading: false });
+  //   this.props.setCurrentPage(number);
+  //   this.setState({ page: devs.page })
+  // }
 
   render() {
 
@@ -90,25 +90,37 @@ class Devices extends Component<ComponentProps> {
                 this.state.isLoading ?
                   <Loader /> : null
               }
+
               <Switch>
                 <Route exact path={routes.allDevices}>
-                  <DevicesList devices={this.props.devices} />
-                  {/* <div>all devices</div> */}
+                  <DevicesList
+                    devices={this.props.devices}
+                    totalPages={this.props.totalPages}
+                    page={this.props.page}
+                  />
                 </Route>
+
                 <Route path={routes.ovens}>
-                  {/* <OvenFilter /> */}
-                  <DevicesList devices={this.props.devices} />
+                  <DevicesList
+                    devices={this.props.devices}
+                    totalPages={this.props.totalPages}
+                    page={this.props.page}
+                  />
                 </Route>
+
                 <Route path={routes.robots}>
-                  {/* <RobotFilter /> */}
-                  <DevicesList devices={this.props.devices} />
+                  <DevicesList
+                    devices={this.props.devices}
+                    totalPages={this.state.totalPages}
+                    page={this.state.page}
+                  />
                 </Route>
               </Switch>
             </div>
-            <div className={style.pagination_buttons}>
+            {/* <div className={style.pagination_buttons}>
               <Pagination totalPages={this.state.totalPages}
                 page={this.props.page} onChangePage={this.onChangePage} />
-            </div>
+            </div> */}
           </Fragment>}
       </div>
     )
