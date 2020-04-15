@@ -1,6 +1,6 @@
 import { takeEvery, call, put } from "redux-saga/effects";
-import { FETCH_DEVICES } from "../constants/deviceActions";
-import { setDevices } from "../redux/actions/deviceActions/deviceActions";
+import { FETCH_DEVICES } from "../../constants/deviceActions";
+import { setDevices } from "../actions/deviceActions/deviceActions";
 
 const fetchData = () => {
     return fetch('http://localhost:3001/api/v1/homes/1/devices?page=1&perPage=10')
