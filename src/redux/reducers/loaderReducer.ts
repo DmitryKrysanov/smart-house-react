@@ -12,9 +12,9 @@ const initialState: LoaderState = {
 export const loaderReducer = (state = initialState, action: loaderActions): LoaderState => {
     switch(action.type) {
         case SHOW_LOADER:
-            return {...state, isLoad: true}
+            return {isLoad: true}
         case HIDE_LOADER:
-            return {...state, isLoad: false}
+            return {isLoad: false}
         default:
             return state;
     }
