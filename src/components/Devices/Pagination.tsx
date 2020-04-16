@@ -1,26 +1,48 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { devicesAPI } from '../../api/api';
 import style from './Pagination.module.scss';
 import { render } from '@testing-library/react';
+import { Dispatch } from '../../redux/store';
+import { DevicesState, Oven, RobotHoover } from '../../redux/reducers/deviceReducer';
+import { setDevices, SetCurrentPage } from '../../redux/actions/deviceActions/deviceActions';
+import { connect } from 'react-redux';
 
-interface Props {
+
+interface ConnectedProps {
     totalPages: number,
     page: number,
-    onChangePage: (number: number) => void
+    perPage: number,
+    devicesType: string,
+    totalItems: number
 }
-const Pagination = (props: Props) => {
+
+type ComponentProps = ConnectedProps & ReturnType<typeof mapDispatchToProps>;
+
+const Pagination = (props: ComponentProps) => {
+
+    const [page, setPage] = useState(1);
 
     const pageNumbers: number[] = [];
-    for (let i = 1; i <= props.totalPages; i++) {
+    for (let i = 1; i <= Math.ceil(props.totalItems / 3); i++) {
         pageNumbers.push(i);
     }
+
+    const onChangePage = async (number: number): Promise<void> => {
+        setPage(number);
+        //  const devs: any = await devicesAPI.serverDevices(number);
+        const devs: any = await devicesAPI.filter(number, props.devicesType);
+        props.loadDevices(devs.data);
+    }
+
+    console.log(props.devicesType);
+    console.log(props.totalItems);
 
     const renderPageNumbers = pageNumbers.map(number => {
         return (
             <button className={number === props.page
                 ? `${style.pagination_btn} ${style.active}`
                 : style.pagination_btn}
-                onClick={() => { props.onChangePage(number) }} >
+                onClick={() => { onChangePage(number) }} >
                 {number}
             </button>
         );
@@ -28,13 +50,30 @@ const Pagination = (props: Props) => {
 
     return (
         <div>
-            {pageNumbers.length <= 1 ? null : renderPageNumbers}
-            {/* {renderPageNumbers} */}
+            {/* {pageNumbers.length <= 1 ? null : renderPageNumbers} */}
+            {renderPageNumbers}
         </div>
-
     )
-
 }
 
-export default Pagination;
+const mapStateToProps = (state: { deviceReducer: DevicesState }): ConnectedProps => {
+    return ({
+        totalPages: state.deviceReducer.totalPages,
+        page: state.deviceReducer.page,
+        perPage: state.deviceReducer.perPage,
+        devicesType: state.deviceReducer.devicesType,
+        totalItems: state.deviceReducer.totalItems
+    });
+}
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+    loadDevices: (p: Array<Oven | RobotHoover>) => {
+        return dispatch(setDevices(p));
+    },
+    setCurrentPage: (p: number) => {
+        return dispatch(SetCurrentPage(p))
+    }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Pagination);
 

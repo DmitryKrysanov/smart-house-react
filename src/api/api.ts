@@ -42,8 +42,8 @@ export const devicesAPI = {
         return instance.delete(`${id}`).then(response => response.data)
     },
 
-    filter(type: string, page: number): Promise<Array<Oven | RobotHoover>> {
-        return instance.get<Array<Oven | RobotHoover>>(`?page=${page}${type}`).then(response => response.data)
+    filter(page: number, type: string): Promise<Array<Oven | RobotHoover>> {
+        return instance.get<Array<Oven | RobotHoover>>(`?page=${page}${type}&perPage=3`).then(response => response.data)
     },
 
     search(subname: string): Promise<Array<Oven | RobotHoover>> {

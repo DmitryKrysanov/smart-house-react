@@ -1,11 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import style from './Devices.module.scss';
-import { RobotHoover, Oven } from '../../redux/reducers/deviceReducer'
+import { RobotHoover, Oven, DevicesState } from '../../redux/reducers/deviceReducer'
 import AddIcon from '@material-ui/icons/Add';
 import AddDeviceContainer from '../AddDevice/AddDeviceContainer'
 import Filter from '../Tabs/Filter';
-import { addDevice } from '../../redux/actions/deviceActions/deviceActions';
+import { addDevice, setDevices, SetCurrentPage, fetchDevices } from '../../redux/actions/deviceActions/deviceActions';
 import DevicesHeader from '../DevicesHeader/DevicesHeader'
 import Fab from '@material-ui/core/Fab';
 import { Loader } from '../Loader/Loader';
@@ -17,8 +17,17 @@ import { routes } from '../../routes';
 import { IconButton } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
+interface ConnectedProps {
+  devices: Array<Oven | RobotHoover>,
+  totalPages: number,
+  page: number,
+  perPage: number,
+  devicesType: string,
+  totalItems: number
+}
 
-class Devices extends Component<ReturnType<typeof mapDispatchToProps>> {
+type ComponentProps = ConnectedProps & ReturnType<typeof mapDispatchToProps>;
+class Devices extends Component<ComponentProps> {
 
   public state = {
     showModal: false,
@@ -60,18 +69,18 @@ class Devices extends Component<ReturnType<typeof mapDispatchToProps>> {
 
             <Switch>
               <Route exact path={routes.allDevices}>
-                <DevicesList />
+                <DevicesList devices={this.props.devices} />
               </Route>
 
               <Route path={routes.ovens}>
-                <DevicesList />
+                <DevicesList devices={this.props.devices} />
               </Route>
 
               <Route path={routes.robots}>
-                <DevicesList />
+                <DevicesList devices={this.props.devices} />
               </Route>
 
-              <Route path='/home/devices/:deviceId'>
+              {/* <Route path='/home/devices/:deviceId'>
                 <div>
                   <Link to={routes.allDevices}>
                     <IconButton> <ArrowBackIcon /> </IconButton>
@@ -79,7 +88,7 @@ class Devices extends Component<ReturnType<typeof mapDispatchToProps>> {
                   <br />
                 Details of some device...
               </div>
-              </Route>
+              </Route> */}
 
             </Switch>
           </div>
@@ -89,10 +98,30 @@ class Devices extends Component<ReturnType<typeof mapDispatchToProps>> {
   }
 }
 
+const mapStateToProps = (state: { deviceReducer: DevicesState }): ConnectedProps => {
+  return ({
+    totalPages: state.deviceReducer.totalPages,
+    page: state.deviceReducer.page,
+    perPage: state.deviceReducer.perPage,
+    devices: state.deviceReducer.devices,
+    devicesType: state.deviceReducer.devicesType,
+    totalItems: state.deviceReducer.totalItems
+  });
+}
+
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   addResourse: (p: Oven | RobotHoover) => {
     return dispatch(addDevice(p))
+  },
+  loadDevices: (p: Array<Oven | RobotHoover>) => {
+    return dispatch(setDevices(p));
+  },
+  setCurrentPage: (p: number) => {
+    return dispatch(SetCurrentPage(p))
+  },
+  fetchingDevices: () => {
+    return dispatch(fetchDevices());
   }
 });
 
-export default connect(() => ({}), mapDispatchToProps)(Devices);
+export default connect(mapStateToProps, mapDispatchToProps)(Devices);
