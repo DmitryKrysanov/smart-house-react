@@ -7,3 +7,6 @@ export const REMOVE_DEVICE = "REMOVE_DEVICE";
 export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 
 export const FETCH_DEVICES = "FETCH_DEVICES";
+
+export const SET_DEVICES_TYPE = "SET_DEVICES_TYPE"
+export const SET_TOTAL_ITEMS = "SET_TOTAL_ITEMS";

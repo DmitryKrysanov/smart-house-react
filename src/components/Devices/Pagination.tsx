@@ -28,8 +28,8 @@ const Pagination = (props: Props) => {
 
     return (
         <div>
-            {/* {pageNumbers.length <= 1 ? null : renderPageNumbers} */}
-            {renderPageNumbers}
+            {pageNumbers.length <= 1 ? null : renderPageNumbers}
+            {/* {renderPageNumbers} */}
         </div>
 
     )

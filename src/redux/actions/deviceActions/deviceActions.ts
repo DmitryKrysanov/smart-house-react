@@ -6,9 +6,31 @@ import {
     REMOVE_DEVICE,
     SET_DEVICES,
     SET_CURRENT_PAGE,
-    FETCH_DEVICES
+    FETCH_DEVICES,
+    SET_DEVICES_TYPE,
+    SET_TOTAL_ITEMS
 } from '../../../constants/deviceActions';
 import { RobotHoover, Oven } from '../../reducers/deviceReducer';
+
+export interface SetTotalItemsAction {
+    type: typeof SET_TOTAL_ITEMS,
+    payload: number
+}
+
+export const setTotalItems = (payload: number): SetTotalItemsAction => ({
+    type: SET_TOTAL_ITEMS,
+    payload
+})
+
+export interface SetDevicesTypeAction {
+    type: typeof SET_DEVICES_TYPE,
+    payload: string
+}
+
+export const setDevicesType = (payload: string): SetDevicesTypeAction => ({
+    type: SET_DEVICES_TYPE,
+    payload
+})
 
 export interface FetchDevicesAction {
     type: typeof FETCH_DEVICES
@@ -93,4 +115,6 @@ export type deviceActions = AddDeviceAction
     | removeDeviceAction
     | SetDevicesAction
     | SetCurrentPageAction
-    | FetchDevicesAction;
+    | FetchDevicesAction
+    | SetDevicesTypeAction
+    | SetTotalItemsAction;

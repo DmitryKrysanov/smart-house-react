@@ -14,7 +14,9 @@ interface ConnectedProps {
     devices: Array<Oven | RobotHoover>,
     totalPages: number,
     page: number,
-    perPage: number
+    perPage: number,
+    devicesType: string,
+    totalItems: number
 }
 
 type ComponentProps = ConnectedProps & ReturnType<typeof mapDispatchToProps>;
@@ -22,11 +24,16 @@ type ComponentProps = ConnectedProps & ReturnType<typeof mapDispatchToProps>;
 const DevicesList = (props: ComponentProps) => {
 
     const [page, setPage] = useState(2);
-    const [totalPages, setTotalPages] = useState(0);
+    const [totalItems, setTotalItems] = useState(0);
+    setTotalItems(props.totalItems);
+
+    console.log(props.devicesType);
+    console.log("count of this type devices", props.totalItems);
 
     const onChangePage = async (number: number): Promise<void> => {
         setPage(number);
-        const devs: any = await devicesAPI.serverDevices(number);
+        //  const devs: any = await devicesAPI.serverDevices(number);
+        const devs: any = await devicesAPI.filter(props.devicesType, number);
         props.loadDevices(devs.data);
     }
 
@@ -46,10 +53,10 @@ const DevicesList = (props: ComponentProps) => {
     return (
         <div className={style.collection}>
             {renderDevices}
-            {/* <div className={style.pagination_buttons}>
+            <div className={style.pagination_buttons}>
                 <Pagination totalPages={props.totalPages}
                     page={props.page} onChangePage={onChangePage} />
-            </div> */}
+            </div>
 
         </div>
     )
@@ -60,7 +67,9 @@ const mapStateToProps = (state: { deviceReducer: DevicesState }): ConnectedProps
         totalPages: state.deviceReducer.totalPages,
         page: state.deviceReducer.page,
         perPage: state.deviceReducer.perPage,
-        devices: state.deviceReducer.devices
+        devices: state.deviceReducer.devices,
+        devicesType: state.deviceReducer.devicesType,
+        totalItems: state.deviceReducer.totalItems
     });
 }
 

@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import style from './Filter.module.scss';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { devicesAPI } from '../../api/api';
 import { Oven, RobotHoover } from '../../redux/reducers/deviceReducer';
-import { setDevices } from '../../redux/actions/deviceActions/deviceActions';
+import { setDevices, setDevicesType, setTotalItems } from '../../redux/actions/deviceActions/deviceActions';
 import { Dispatch } from '../../redux/store';
 import { connect } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
@@ -14,12 +14,15 @@ type Props = ReturnType<typeof mapDispatchToProps>;
 
 const Filter = (props: Props) => {
 
-  const [value, setValue] = React.useState('');
+  const [value, setValue] = useState('');
+  const [devicesType, setDevicesType] = useState('');
 
   const handleChange = async (event: React.ChangeEvent<{}>, value: string) => {
     setValue(value);
-    const respOvens: any = await devicesAPI.filter(`${value}`);
+    props.setDevicesType(value);
+    const respOvens: any = await devicesAPI.filter(`${value}`, 1);
     props.loadDevices(respOvens.data);
+    props.setTotalItems(respOvens.totalItems);
   };
 
   return (
@@ -43,6 +46,12 @@ const Filter = (props: Props) => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadDevices: (p: Array<Oven | RobotHoover>) => {
     return dispatch(setDevices(p));
+  },
+  setDevicesType: (p: string) => {
+    return dispatch(setDevicesType(p))
+  },
+  setTotalItems: (p: number) => {
+    return dispatch(setTotalItems(p))
   }
 })
 
