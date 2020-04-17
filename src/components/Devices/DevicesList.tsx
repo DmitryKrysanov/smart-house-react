@@ -20,12 +20,17 @@ const DevicesList = (props: Props) => {
         </Fragment>));
 
     return (
-        <div className={style.collection}>
-            {renderDevices}
+        <>
+
+            <div className={style.collection}>
+                {renderDevices}
+            </div>
+
             <div className={style.pagination_buttons}>
                 <Pagination />
             </div>
-        </div>
+
+        </>
     )
 }
 

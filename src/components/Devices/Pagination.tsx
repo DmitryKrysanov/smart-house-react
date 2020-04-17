@@ -33,7 +33,7 @@ const Pagination = (props: ComponentProps) => {
 
     const renderPageNumbers = pageNumbers.map(number => {
         return (
-            <button className={number === props.page
+            <button key={number} className={number === props.page
                 ? `${style.pagination_btn} ${style.active}`
                 : style.pagination_btn}
                 onClick={() => { onChangePage(number) }} >
