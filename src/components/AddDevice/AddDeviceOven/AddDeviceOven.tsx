@@ -5,19 +5,9 @@ import TextField from '@material-ui/core/TextField';
 import style from './AddDeviceOven.module.scss';
 import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
-import { devicesAPI } from '../../../api/api';
+import { devicesAPI, PostOven } from '../../../api/api';
 
-interface State {
-    type: string,
-    name: string,
-    image: string,
-    status: boolean,
-    temp: {},
-    modes: string[],
-    currentMode: string
-}
-
-const initialState: State = {
+const initialState: PostOven = {
     type: 'oven',
     name: '',
     image: 'https://www.stleos.uq.edu.au/wp-content/uploads/2016/08/image-placeholder.png',
@@ -38,8 +28,8 @@ interface Props {
     handleContent: (count: number) => void
 }
 
-class AddDeviceOven extends Component<Props, State> {
-    public state: State = initialState;
+class AddDeviceOven extends Component<Props, PostOven> {
+    public state: PostOven = initialState;
 
     private _form = React.createRef<HTMLFormElement>();
 

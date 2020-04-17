@@ -1,18 +1,21 @@
 import React from 'react';
 import style from './DeviceDetails.module.scss'
 import DeviceDetailsHeader from '../DeviceDetailsHeader/DeviceDetailsHeader';
-import { Oven, RobotHoover } from '../../redux/reducers/deviceReducer';
+import { Oven, RobotHoover, DevicesState } from '../../redux/reducers/deviceReducer';
 import { useParams } from 'react-router-dom';
 import RobotHooverContent from './RobotHooverContent/RobotHooverContent';
 import OvenContent from './OvenContent/OvenContent'
+import { connect } from 'react-redux';
+import { Dispatch } from '../../redux/store';
+import { turnOnOffDevice, removeDevice } from '../../redux/actions/deviceActions/deviceActions';
 
-interface Props {
+interface ConnectedProps {
     devices: Array<Oven | RobotHoover>
-    deviceToggle: (id: number) => void,
-    removeDevice: (id: number) => void
 }
 
-const DeviceDetails = (props: Props) => {
+type ComponentProps = ConnectedProps & ReturnType<typeof mapDispatchToProps>;
+
+const DeviceDetails = (props: ComponentProps) => {
 
     const match: any = useParams();
     const deviceId: number = +match.deviceId;
@@ -25,18 +28,18 @@ const DeviceDetails = (props: Props) => {
             if (device.type === 'oven') {
                 const oven = device as Oven;
                 return (
-                    <OvenContent 
-                    device={oven} 
-                    deviceToggle={props.deviceToggle} 
-                    removeDevice={props.removeDevice} />
+                    <OvenContent
+                        device={oven}
+                        deviceToggle={props.deviceToggle}
+                        removeDevice={props.removeDevice} />
                 )
             } else {
                 const robotHoover = device as RobotHoover;
                 return (
-                    <RobotHooverContent 
-                    device={robotHoover} 
-                    deviceToggle={props.deviceToggle} 
-                    removeDevice={props.removeDevice} />
+                    <RobotHooverContent
+                        device={robotHoover}
+                        deviceToggle={props.deviceToggle}
+                        removeDevice={props.removeDevice} />
                 )
             }
         }
@@ -52,4 +55,19 @@ const DeviceDetails = (props: Props) => {
     )
 }
 
-export default DeviceDetails;
+const mapStateToProps = (state: { deviceReducer: DevicesState }): ConnectedProps => {
+    return ({
+        devices: state.deviceReducer.devices
+    });
+}
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+    deviceToggle: (id: number) => {
+        return dispatch(turnOnOffDevice(id));
+    },
+    removeDevice: (id: number) => {
+        return dispatch(removeDevice(id));
+    }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(DeviceDetails);

@@ -5,12 +5,19 @@ const instance = axios.create({
     baseURL: 'http://localhost:3001/api/v1/homes/1/devices'
 })
 
+interface Temp {
+    min: number,
+    max: number,
+    current: number,
+    step: number
+}
+
 export interface PostOven {
     type: string,
     name: string,
     image: string,
     status: boolean,
-    temp: {},
+    temp: Temp,
     modes: string[],
     currentMode: string
 }

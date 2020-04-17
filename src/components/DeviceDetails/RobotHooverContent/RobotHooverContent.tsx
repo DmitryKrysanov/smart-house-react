@@ -81,7 +81,7 @@ class RobotHooverContent extends Component<Props, State> {
         const {redirect} = this.state;
 
         if (redirect) {
-            return <Redirect to='/home/devices'/>;
+            return <Redirect to='/home/devices/all'/>;
         }
 
         const {type, image, name, status, modes, currentMode} = this.state.device;

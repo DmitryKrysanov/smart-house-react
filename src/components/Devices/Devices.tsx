@@ -5,20 +5,18 @@ import { RobotHoover, Oven, DevicesState } from '../../redux/reducers/deviceRedu
 import AddIcon from '@material-ui/icons/Add';
 import AddDeviceContainer from '../AddDevice/AddDeviceContainer'
 import Filter from '../Tabs/Filter';
-import { addDevice, setDevices, SetCurrentPage, fetchDevices } from '../../redux/actions/deviceActions/deviceActions';
+import { addDevice } from '../../redux/actions/deviceActions/deviceActions';
 import DevicesHeader from '../DevicesHeader/DevicesHeader'
 import Fab from '@material-ui/core/Fab';
 import { Loader } from '../Loader/Loader';
 import { Dispatch } from '../../redux/store';
 import { connect } from 'react-redux';
 import DevicesList from './DevicesList';
-import { Switch, Route, Link } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import { routes } from '../../routes';
-import { IconButton } from '@material-ui/core';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 interface ConnectedProps {
-  devices: Array<Oven | RobotHoover>
+  devices: Array<Oven | RobotHoover>,
 }
 
 type ComponentProps = ConnectedProps & ReturnType<typeof mapDispatchToProps>;
@@ -74,17 +72,6 @@ class Devices extends Component<ComponentProps> {
               <Route path={routes.robots}>
                 <DevicesList devices={this.props.devices} />
               </Route>
-
-              {/* <Route path='/home/devices/:deviceId'>
-                <div>
-                  <Link to={routes.allDevices}>
-                    <IconButton> <ArrowBackIcon /> </IconButton>
-                  </Link>
-                  <br />
-                Details of some device...
-              </div>
-              </Route> */}
-
             </Switch>
           </div>
         </Fragment>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import style from './Filter.module.scss';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -16,12 +16,19 @@ const Filter = (props: Props) => {
 
   const [value, setValue] = useState('');
 
-  const handleChange = async (event: React.ChangeEvent<{}>, value: string) => {
-    setValue(value);
+  const loadAllDevices = async () => {
     props.setDevicesType(value);
     const respOvens: any = await devicesAPI.filter(1, value);
     props.loadDevices(respOvens.data);
     props.setTotalItems(respOvens.totalItems);
+  }
+ 
+  useEffect(() => {
+    loadAllDevices();
+  })
+
+  const handleChange = async (event: React.ChangeEvent<{}>, value: string) => {
+    setValue(value);
   };
 
   return (

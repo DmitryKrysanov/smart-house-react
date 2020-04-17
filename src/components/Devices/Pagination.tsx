@@ -1,7 +1,7 @@
 import React, { Component, useState } from 'react';
 import { devicesAPI } from '../../api/api';
 import style from './Pagination.module.scss';
-import { render } from '@testing-library/react';
+// import { render } from '@testing-library/react';
 import { Dispatch } from '../../redux/store';
 import { DevicesState, Oven, RobotHoover } from '../../redux/reducers/deviceReducer';
 import { setDevices, SetCurrentPage } from '../../redux/actions/deviceActions/deviceActions';
@@ -44,8 +44,7 @@ const Pagination = (props: ComponentProps) => {
 
     return (
         <div>
-            {/* {pageNumbers.length <= 1 ? null : renderPageNumbers} */}
-            {renderPageNumbers}
+            {pageNumbers.length <= 1 ? null : renderPageNumbers}
         </div>
     )
 }
