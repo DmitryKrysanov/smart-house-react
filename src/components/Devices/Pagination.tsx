@@ -20,22 +20,16 @@ type ComponentProps = ConnectedProps & ReturnType<typeof mapDispatchToProps>;
 
 const Pagination = (props: ComponentProps) => {
 
-    const [page, setPage] = useState(1);
-
     const pageNumbers: number[] = [];
-    for (let i = 1; i <= Math.ceil(props.totalItems / 3); i++) {
+    for (let i = 1; i <= Math.ceil(props.totalItems / 4); i++) {
         pageNumbers.push(i);
     }
 
     const onChangePage = async (number: number): Promise<void> => {
-        setPage(number);
-        //  const devs: any = await devicesAPI.serverDevices(number);
-        const devs: any = await devicesAPI.filter(number, props.devicesType);
+        props.setCurrentPage(number);
+        const devs: any = await devicesAPI.filter(props.page, props.devicesType);
         props.loadDevices(devs.data);
     }
-
-    console.log(props.devicesType);
-    console.log(props.totalItems);
 
     const renderPageNumbers = pageNumbers.map(number => {
         return (

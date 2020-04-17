@@ -18,12 +18,7 @@ import { IconButton } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 interface ConnectedProps {
-  devices: Array<Oven | RobotHoover>,
-  totalPages: number,
-  page: number,
-  perPage: number,
-  devicesType: string,
-  totalItems: number
+  devices: Array<Oven | RobotHoover>
 }
 
 type ComponentProps = ConnectedProps & ReturnType<typeof mapDispatchToProps>;
@@ -100,27 +95,13 @@ class Devices extends Component<ComponentProps> {
 
 const mapStateToProps = (state: { deviceReducer: DevicesState }): ConnectedProps => {
   return ({
-    totalPages: state.deviceReducer.totalPages,
-    page: state.deviceReducer.page,
-    perPage: state.deviceReducer.perPage,
-    devices: state.deviceReducer.devices,
-    devicesType: state.deviceReducer.devicesType,
-    totalItems: state.deviceReducer.totalItems
+    devices: state.deviceReducer.devices
   });
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   addResourse: (p: Oven | RobotHoover) => {
     return dispatch(addDevice(p))
-  },
-  loadDevices: (p: Array<Oven | RobotHoover>) => {
-    return dispatch(setDevices(p));
-  },
-  setCurrentPage: (p: number) => {
-    return dispatch(SetCurrentPage(p))
-  },
-  fetchingDevices: () => {
-    return dispatch(fetchDevices());
   }
 });
 
