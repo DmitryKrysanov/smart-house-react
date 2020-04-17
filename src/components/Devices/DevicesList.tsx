@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Card from '../Card/Card';
 import style from './DevicesList.module.scss';
 import Pagination from './Pagination';
+import EmptyState from './EmptyState';
 
 
 interface Props {
@@ -21,16 +22,19 @@ const DevicesList = (props: Props) => {
 
     return (
         <>
+            {props.devices.length === 0 ?
+                <EmptyState /> :
+                <>
+                    <div className={style.collection}>
+                        {renderDevices}
+                    </div>
 
-            <div className={style.collection}>
-                {renderDevices}
-            </div>
-
-            <div className={style.pagination_buttons}>
-                <Pagination />
-            </div>
-
+                    <div className={style.pagination_buttons}>
+                        <Pagination />
+                    </div>
+                </>}
         </>
+
     )
 }
 

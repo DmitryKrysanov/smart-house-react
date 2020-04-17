@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AddDeviceAction } from '../../../redux/actions/deviceActions/deviceActions';
+import { AddDeviceAction, FetchDevicesAction } from '../../../redux/actions/deviceActions/deviceActions';
 import { Oven } from '../../../redux/reducers/deviceReducer';
 import TextField from '@material-ui/core/TextField';
 import style from './AddDeviceOven.module.scss';
@@ -25,7 +25,8 @@ const initialState: PostOven = {
 interface Props {
     handleToggleDialog: () => void,
     addDevice: (p: Oven) => AddDeviceAction,
-    handleContent: (count: number) => void
+    handleContent: (count: number) => void,
+    getAllDevices: () => FetchDevicesAction
 }
 
 class AddDeviceOven extends Component<Props, PostOven> {
@@ -67,6 +68,7 @@ class AddDeviceOven extends Component<Props, PostOven> {
         e.preventDefault();
         const respOven = await devicesAPI.postOven(this.state);
         this.props.addDevice(respOven);
+        this.props.getAllDevices();
         this.props.handleToggleDialog();
     }
 
@@ -86,8 +88,8 @@ class AddDeviceOven extends Component<Props, PostOven> {
 
     render() {
 
-        const {name, currentMode} = this.state;
-        
+        const { name, currentMode } = this.state;
+
         return (
             <div className={style.add_device_dialog__inner}>
                 <h5>Add Device (Oven)</h5>

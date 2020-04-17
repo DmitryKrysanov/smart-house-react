@@ -3,8 +3,8 @@ import { FETCH_DEVICES } from "../../constants/deviceActions";
 import { setDevices } from "../actions/deviceActions/deviceActions";
 import { showLoader, hideLoader } from "../actions/loaderActions/loaderActions";
 
-const fetchData = () => {
-    return fetch('http://localhost:3001/api/v1/homes/1/devices?page=1&perPage=10')
+export const fetchData = () => {
+    return fetch('http://localhost:3001/api/v1/homes/1/devices?page=1&perPage=4')
         .then(response => response.json())
         .then(json => json.data)
 }

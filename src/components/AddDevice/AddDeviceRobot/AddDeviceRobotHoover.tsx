@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AddDeviceAction } from '../../../redux/actions/deviceActions/deviceActions';
+import { AddDeviceAction, FetchDevicesAction } from '../../../redux/actions/deviceActions/deviceActions';
 import { RobotHoover } from '../../../redux/reducers/deviceReducer';
 import TextField from '@material-ui/core/TextField';
 import style from './AddDeviceRobotHoover.module.scss';
@@ -19,7 +19,8 @@ const initialState: PostRobot = {
 interface Props {
     handleToggleDialog: () => void,
     addDevice: (p: RobotHoover) => AddDeviceAction,
-    handleContent: (count: number) => void
+    handleContent: (count: number) => void,
+    getAllDevices: () => FetchDevicesAction
 }
 
 class AddDeviceRobot extends Component<Props, PostRobot> {
