@@ -43,7 +43,7 @@ export const devicesAPI = {
     },
 
     filter(page: number, type: string): Promise<Array<Oven | RobotHoover>> {
-        return instance.get<Array<Oven | RobotHoover>>(`?page=${page}${type}&perPage=3`).then(response => response.data)
+        return instance.get<Array<Oven | RobotHoover>>(`?page=${page}${type}&perPage=4`).then(response => response.data)
     },
 
     search(subname: string): Promise<Array<Oven | RobotHoover>> {
