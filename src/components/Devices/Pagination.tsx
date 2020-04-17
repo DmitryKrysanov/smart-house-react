@@ -44,8 +44,7 @@ const Pagination = (props: ComponentProps) => {
 
     return (
         <div>
-            {/* {pageNumbers.length <= 1 ? null : renderPageNumbers} */}
-            {renderPageNumbers}
+            {pageNumbers.length <= 1 ? null : renderPageNumbers}
         </div>
     )
 }
