@@ -27,7 +27,7 @@ const Pagination = (props: ComponentProps) => {
 
     const onChangePage = async (number: number): Promise<void> => {
         props.setCurrentPage(number);
-        const devs: any = await devicesAPI.filter(props.page, props.devicesType);
+        const devs: any = await devicesAPI.filter(number, props.devicesType);
         props.loadDevices(devs.data);
     }
 
