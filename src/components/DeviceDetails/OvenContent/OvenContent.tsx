@@ -5,7 +5,7 @@ import Image from '../Image/Image';
 import GeneralInfo from '../GeneralInfo/GeneralInfo';
 import Modes from '../Modes/Modes';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { devicesAPI } from '../../../api/api';
+import { devicesAPI, PostOven } from '../../../api/api';
 import Button from '@material-ui/core/Button';
 import Temperature from '../Temperature/Temperature';
 import { Redirect } from 'react-router-dom';
@@ -14,23 +14,6 @@ interface Props {
     device: Oven,
     deviceToggle: (id: number) => void,
     removeDevice: (id: number) => void
-}
-
-interface Temp {
-    min: number,
-    max: number,
-    current: number,
-    step: number
-}
-
-interface PostOven {
-    type: string,
-    name: string,
-    image: string,
-    status: boolean,
-    temp: Temp,
-    modes: string[],
-    currentMode: string
 }
 
 interface State {
@@ -110,7 +93,7 @@ class OvenContent extends Component<Props, State> {
         const {redirect} = this.state;
 
         if (redirect) {
-            return <Redirect to='/home/devices'/>;
+            return <Redirect to='/home/devices/all'/>;
         }
 
         const {type, image, name, status, temp, modes, currentMode} = this.state.device;

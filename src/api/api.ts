@@ -5,12 +5,19 @@ const instance = axios.create({
     baseURL: 'http://localhost:3001/api/v1/homes/1/devices'
 })
 
+interface Temp {
+    min: number,
+    max: number,
+    current: number,
+    step: number
+}
+
 export interface PostOven {
     type: string,
     name: string,
     image: string,
     status: boolean,
-    temp: {},
+    temp: Temp,
     modes: string[],
     currentMode: string
 }
@@ -43,7 +50,7 @@ export const devicesAPI = {
     },
 
     filter(page: number, type: string): Promise<Array<Oven | RobotHoover>> {
-        return instance.get<Array<Oven | RobotHoover>>(`?page=${page}${type}&perPage=3`).then(response => response.data)
+        return instance.get<Array<Oven | RobotHoover>>(`?page=${page}${type}&perPage=4`).then(response => response.data)
     },
 
     search(subname: string): Promise<Array<Oven | RobotHoover>> {

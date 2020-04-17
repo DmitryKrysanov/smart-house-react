@@ -62,7 +62,6 @@ export const findAndDelete = (devices: Array<Oven | RobotHoover>, deviceId: numb
 }
 
 export const toggleStatus = (devices: Array<Oven | RobotHoover>, deviceId: number) => {
-    console.log(deviceId)
     return devices.map(device => {
         if (device.id === deviceId) {
             return {

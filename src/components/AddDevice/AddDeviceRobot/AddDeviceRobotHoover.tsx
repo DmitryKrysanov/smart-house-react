@@ -5,18 +5,9 @@ import TextField from '@material-ui/core/TextField';
 import style from './AddDeviceRobotHoover.module.scss';
 import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
-import { devicesAPI } from '../../../api/api';
+import { devicesAPI, PostRobot } from '../../../api/api';
 
-interface State {
-    type: string,
-    name: string,
-    image: string,
-    status: boolean,
-    modes: string[],
-    currentMode: string
-}
-
-const initialState: State = {
+const initialState: PostRobot = {
     type: 'robot-hoover',
     name: '',
     image: 'https://www.stleos.uq.edu.au/wp-content/uploads/2016/08/image-placeholder.png',
@@ -31,8 +22,8 @@ interface Props {
     handleContent: (count: number) => void
 }
 
-class AddDeviceRobot extends Component<Props, State> {
-    public state: State = initialState;
+class AddDeviceRobot extends Component<Props, PostRobot> {
+    public state: PostRobot = initialState;
 
     private _form = React.createRef<HTMLFormElement>();
 

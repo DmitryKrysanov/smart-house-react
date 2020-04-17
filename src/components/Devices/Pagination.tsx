@@ -1,7 +1,7 @@
 import React, { Component, useState } from 'react';
 import { devicesAPI } from '../../api/api';
 import style from './Pagination.module.scss';
-import { render } from '@testing-library/react';
+// import { render } from '@testing-library/react';
 import { Dispatch } from '../../redux/store';
 import { DevicesState, Oven, RobotHoover } from '../../redux/reducers/deviceReducer';
 import { setDevices, SetCurrentPage } from '../../redux/actions/deviceActions/deviceActions';
@@ -9,9 +9,9 @@ import { connect } from 'react-redux';
 
 
 interface ConnectedProps {
-    totalPages: number,
+    // totalPages: number,
     page: number,
-    perPage: number,
+    // perPage: number,
     devicesType: string,
     totalItems: number
 }
@@ -20,26 +20,27 @@ type ComponentProps = ConnectedProps & ReturnType<typeof mapDispatchToProps>;
 
 const Pagination = (props: ComponentProps) => {
 
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(props.page);
 
     const pageNumbers: number[] = [];
-    for (let i = 1; i <= Math.ceil(props.totalItems / 3); i++) {
+    for (let i = 1; i <= Math.ceil(props.totalItems / 4); i++) {
         pageNumbers.push(i);
     }
 
     const onChangePage = async (number: number): Promise<void> => {
         setPage(number);
         //  const devs: any = await devicesAPI.serverDevices(number);
-        const devs: any = await devicesAPI.filter(number, props.devicesType);
+        const devs: any = await devicesAPI.filter(page, props.devicesType);
         props.loadDevices(devs.data);
     }
 
-    console.log(props.devicesType);
-    console.log(props.totalItems);
+    // console.log(props.devicesType);
+    // console.log(props.totalItems);
+    // console.log(props, page);
 
     const renderPageNumbers = pageNumbers.map(number => {
         return (
-            <button className={number === props.page
+            <button className={number === page
                 ? `${style.pagination_btn} ${style.active}`
                 : style.pagination_btn}
                 onClick={() => { onChangePage(number) }} >
@@ -58,7 +59,7 @@ const Pagination = (props: ComponentProps) => {
 
 const mapStateToProps = (state: { deviceReducer: DevicesState }): ConnectedProps => {
     return ({
-        totalPages: state.deviceReducer.totalPages,
+        // totalPages: state.deviceReducer.totalPages,
         page: state.deviceReducer.page,
         perPage: state.deviceReducer.perPage,
         devicesType: state.deviceReducer.devicesType,

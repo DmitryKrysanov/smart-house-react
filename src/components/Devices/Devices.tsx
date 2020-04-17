@@ -14,8 +14,6 @@ import { connect } from 'react-redux';
 import DevicesList from './DevicesList';
 import { Switch, Route, Link } from 'react-router-dom';
 import { routes } from '../../routes';
-import { IconButton } from '@material-ui/core';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 interface ConnectedProps {
   devices: Array<Oven | RobotHoover>,
@@ -41,6 +39,8 @@ class Devices extends Component<ComponentProps> {
   }
 
   render() {
+
+    // console.log(this.props.devices)
 
     const { showModal } = this.state;
 
