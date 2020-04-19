@@ -1,0 +1,10 @@
+.modes {
+    height: 100px;
+    .row {
+        margin-bottom: .5rem;
+        display: flex;
+        .button {
+            margin-left: 16px;
+        }
+    }
+}

@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import style from './AddDeviceOven.module.scss';
 import Button from '@material-ui/core/Button';
 import { devicesAPI, PostOven } from '../../../api/api';
-import Chips from './Chips';
+import AddModes from './AddModes';
 
 interface State {
     device: PostOven,
@@ -65,22 +65,11 @@ class AddDeviceOven extends Component<Props, State> {
         })
     }
 
-    private handleModeInputChange = (event: { currentTarget: { value: string; }; }): void => {
+    private handleModeAdd = (mode: string): void => {
         this.setState({
             device: {
                 ...this.state.device,
-                currentMode: event.currentTarget.value
-            }
-        })
-    }
-
-    private handleModeInputClick = (event: { preventDefault: () => void; }): void => {
-        event.preventDefault();
-        this.setState({
-            device: {
-                ...this.state.device,
-                modes: [...this.state.device.modes, this.state.device.currentMode],
-                currentMode: ''
+                modes: [...this.state.device.modes, mode]
             }
         })
     }
@@ -92,9 +81,10 @@ class AddDeviceOven extends Component<Props, State> {
         this.props.handleToggleDialog();
     }
 
-    private handleDelete = (mode: string): void => {
-        const newModes = this.state.device.modes;
-        const index: number = this.state.device.modes.indexOf(mode);
+    private handleModeDelete = (mode: string): void => {
+        const { modes } = this.state.device;
+        const newModes = modes;
+        const index: number = modes.indexOf(mode);
         newModes.splice(index, 1);
         this.setState({
             device: {
@@ -126,7 +116,7 @@ class AddDeviceOven extends Component<Props, State> {
 
     render() {
 
-        const { name, currentMode } = this.state.device;
+        const { name, modes } = this.state.device;
 
         return (
             <div className={style.add_device_dialog__inner}>
@@ -188,23 +178,10 @@ class AddDeviceOven extends Component<Props, State> {
                             color='secondary'
                             onChange={this.handleNumberInputChange} />
                     </div>
-                    <h6>Modes</h6>
-                    <div className={style.modes}>
-                        <div className={style.row}>
-                            <TextField
-                                fullWidth={true}
-                                type='text'
-                                name='image'
-                                label='Mode'
-                                color='secondary'
-                                value={currentMode}
-                                onChange={this.handleModeInputChange} />
-                            <Button className={style.button} variant="outlined" color="secondary" onClick={this.handleModeInputClick}>+</Button>
-                        </div>
-                        <div className={style.chips}>
-                            <Chips modes={this.state.device.modes} handleDelete={this.handleDelete} />
-                        </div>
-                    </div>
+                    <AddModes 
+                    modes={modes}
+                    handleModeAdd={this.handleModeAdd} 
+                    handleModeDelete={this.handleModeDelete} />
                     <div className={style.action_buttons}>
                         <Button color="secondary" onClick={() => this.props.handleContent(0)}>Back</Button>
                         <div>
