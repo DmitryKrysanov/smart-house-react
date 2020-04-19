@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import { AddDeviceAction } from '../../../redux/actions/deviceActions/deviceActions';
 import { RobotHoover } from '../../../redux/reducers/deviceReducer';
-import TextField from '@material-ui/core/TextField';
 import style from './AddDeviceRobotHoover.module.scss';
 import Button from '@material-ui/core/Button';
 import { devicesAPI, PostRobot } from '../../../api/api';
-import AddModes from '../AddDeviceOven/AddModes';
+import AddModes from '../AddModes';
+import NameTextfield from '../NameTextfield';
+import ImageTextfield from '../ImageTextfield';
 
 interface State {
     device: PostRobot,
     errors: {
-        nameError: boolean
+        isError: boolean
     }
 }
 
@@ -31,18 +32,28 @@ class AddDeviceRobot extends Component<Props, State> {
             currentMode: ''
         },
         errors: {
-            nameError: false
+            isError: false
         }
     }
 
     private _form = React.createRef<HTMLFormElement>();
 
-    private handleStringInputChange = (event: { currentTarget: { name: string, value: string; }; }): void => {
+    private setName = (name: string): void => {
         this.setState({
             ...this.state,
             device: {
                 ...this.state.device,
-                [event.currentTarget.name]: event.currentTarget.value
+                name: name
+            }
+        })
+    }
+
+    private setImageURL = (url: string): void => {
+        this.setState({
+            ...this.state,
+            device: {
+                ...this.state.device,
+                image: url
             }
         })
     }
@@ -55,14 +66,6 @@ class AddDeviceRobot extends Component<Props, State> {
             }
         })
     }
-
-    private onSubmit = async (e: { preventDefault: () => void; }): Promise<void> => {
-        e.preventDefault();
-        const respRobot = await devicesAPI.postRobot(this.state.device);
-        this.props.addDevice(respRobot);
-        this.props.handleToggleDialog();
-    }
-
 
     private handleModeDelete = (mode: string): void => {
         const { modes } = this.state.device;
@@ -77,24 +80,20 @@ class AddDeviceRobot extends Component<Props, State> {
         })
     }
 
-    validateName = () => {
-        if (this.state.device.name.length < 3) {
-            this.setState({
-                ...this.state,
-                errors: {
-                    ...this.state.errors,
-                    nameError: true
-                }
-            })
-        } else {
-            this.setState({
-                ...this.state,
-                errors: {
-                    ...this.state.errors,
-                    nameError: false
-                }
-            })
-        }
+    handleIsError = (error: boolean) => {
+        this.setState({
+            errors: {
+                ...this.state.device,
+                isError: error
+            }
+        })
+    }
+
+    private onSubmit = async (event: { preventDefault: () => void; }): Promise<void> => {
+        event.preventDefault();
+        const respRobot = await devicesAPI.postRobot(this.state.device);
+        this.props.addDevice(respRobot);
+        this.props.handleToggleDialog();
     }
 
     render() {
@@ -107,33 +106,22 @@ class AddDeviceRobot extends Component<Props, State> {
                 <form className={style.form} ref={this._form}>
                     <div className={style.general}>
                         <div className={style.row}>
-                        <TextField
-                                required
-                                fullWidth={true}
-                                type='text'
-                                value={name}
-                                name='name'
-                                label="Name"
-                                color='secondary'
-                                helperText={this.state.errors.nameError ? 'wrong name' : ''}
-                                onBlur={this.validateName}
-                                error={this.state.errors.nameError}
-                                onChange={this.handleStringInputChange} />
+                        <NameTextfield setName={this.setName} 
+                            handleIsError={this.handleIsError} 
+                            isError={this.state.errors.isError} />
                         </div>
                         <div className={style.row}>
-                            <TextField
-                                fullWidth={true}
-                                type='text'
-                                name='image'
-                                label='Image'
-                                color='secondary'
-                                onChange={this.handleStringInputChange} />
+                        <ImageTextfield setImageURL={this.setImageURL} 
+                                handleIsError={this.handleIsError} 
+                                isError={this.state.errors.isError} />
                         </div>
                     </div>
-                    <AddModes 
-                    modes={modes}
-                    handleModeAdd={this.handleModeAdd} 
-                    handleModeDelete={this.handleModeDelete} />
+                    <div className={style.row}>
+                        <AddModes 
+                        modes={modes}
+                        handleModeAdd={this.handleModeAdd} 
+                        handleModeDelete={this.handleModeDelete} />
+                    </div>
                     <div className={style.action_buttons}>
                         <Button color="secondary" onClick={() => this.props.handleContent(0)}>Back</Button>
                         <div>
@@ -142,7 +130,7 @@ class AddDeviceRobot extends Component<Props, State> {
                                 className={style.right}
                                 color="secondary"
                                 type='submit'
-                                disabled={!name}
+                                disabled={!name || this.state.errors.isError}
                                 onClick={this.onSubmit}>Add Device</Button>
                         </div>
                     </div>

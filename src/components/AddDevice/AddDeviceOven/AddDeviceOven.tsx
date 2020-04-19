@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import { AddDeviceAction } from '../../../redux/actions/deviceActions/deviceActions';
 import { Oven } from '../../../redux/reducers/deviceReducer';
-import TextField from '@material-ui/core/TextField';
 import style from './AddDeviceOven.module.scss';
 import Button from '@material-ui/core/Button';
-import { devicesAPI, PostOven } from '../../../api/api';
-import AddModes from './AddModes';
+import { devicesAPI, PostOven, Temp } from '../../../api/api';
+import AddModes from '../AddModes';
+import NameTextfield from '../NameTextfield';
+import ImageTextfield from '../ImageTextfield';
+import AddTemp from '../AddTemp';
 
 interface State {
     device: PostOven,
     errors: {
-        nameError: boolean
+        isError: boolean
     }
 }
 
@@ -37,30 +39,38 @@ class AddDeviceOven extends Component<Props, State> {
             currentMode: ''
         },
         errors: {
-            nameError: false
+            isError: false
         }
     }
 
     private _form = React.createRef<HTMLFormElement>();
 
-    private handleStringInputChange = (event: { currentTarget: { name: string, value: string; }; }): void => {
+    private setName = (name: string): void => {
         this.setState({
             ...this.state,
             device: {
                 ...this.state.device,
-                [event.currentTarget.name]: event.currentTarget.value
+                name: name
             }
         })
     }
 
-    private handleNumberInputChange = (event: { currentTarget: { name: string, value: string; }; }): void => {
+    private setImageURL = (url: string): void => {
         this.setState({
+            ...this.state,
             device: {
                 ...this.state.device,
-                temp: {
-                    ...this.state.device.temp,
-                    [event.currentTarget.name]: +event.currentTarget.value
-                }
+                image: url
+            }
+        })
+    }
+
+    private setTemp = (temp: Temp): void => {
+        this.setState({
+            ...this.state,
+            device: {
+                ...this.state.device,
+                temp: temp
             }
         })
     }
@@ -72,13 +82,6 @@ class AddDeviceOven extends Component<Props, State> {
                 modes: [...this.state.device.modes, mode]
             }
         })
-    }
-
-    private onSubmit = async (e: { preventDefault: () => void; }): Promise<void> => {
-        e.preventDefault();
-        const respOven = await devicesAPI.postOven(this.state.device);
-        this.props.addDevice(respOven);
-        this.props.handleToggleDialog();
     }
 
     private handleModeDelete = (mode: string): void => {
@@ -94,24 +97,20 @@ class AddDeviceOven extends Component<Props, State> {
         })
     }
 
-    validateName = () => {
-        if (this.state.device.name.length < 3) {
-            this.setState({
-                ...this.state,
-                errors: {
-                    ...this.state.errors,
-                    nameError: true
-                }
-            })
-        } else {
-            this.setState({
-                ...this.state,
-                errors: {
-                    ...this.state.errors,
-                    nameError: false
-                }
-            })
-        }
+    handleIsError = (error: boolean) => {
+        this.setState({
+            errors: {
+                ...this.state.device,
+                isError: error
+            }
+        })
+    }
+
+    private onSubmit = async (event: { preventDefault: () => void; }): Promise<void> => {
+        event.preventDefault();
+        const respOven = await devicesAPI.postOven(this.state.device);
+        this.props.addDevice(respOven);
+        this.props.handleToggleDialog();
     }
 
     render() {
@@ -124,64 +123,26 @@ class AddDeviceOven extends Component<Props, State> {
                 <form className={style.form} ref={this._form}>
                     <div className={style.general}>
                         <div className={style.row}>
-                            <TextField
-                                required
-                                fullWidth={true}
-                                type='text'
-                                value={name}
-                                name='name'
-                                label="Name"
-                                color='secondary'
-                                helperText={this.state.errors.nameError ? 'wrong name' : ''}
-                                onBlur={this.validateName}
-                                error={this.state.errors.nameError}
-                                onChange={this.handleStringInputChange} />
+                            <NameTextfield setName={this.setName}
+                                handleIsError={this.handleIsError}
+                                isError={this.state.errors.isError} />
+
                         </div>
                         <div className={style.row}>
-                            <TextField
-                                fullWidth={true}
-                                type='text'
-                                name='image'
-                                label='Image'
-                                color='secondary'
-                                onChange={this.handleStringInputChange} />
+                            <ImageTextfield setImageURL={this.setImageURL}
+                                handleIsError={this.handleIsError}
+                                isError={this.state.errors.isError} />
                         </div>
                     </div>
-                    <h6>Temperature, <sup>0</sup>C</h6>
-                    <div className={`${style.row} ${style.items}`}>
-                        <TextField
-                            type='number'
-                            placeholder='0'
-                            name='min'
-                            label="Min"
-                            color='secondary'
-                            onChange={this.handleNumberInputChange} />
-                        <TextField
-                            type='number'
-                            placeholder='0'
-                            name='max'
-                            label="Max"
-                            color='secondary'
-                            onChange={this.handleNumberInputChange} />
-                        <TextField
-                            type='number'
-                            placeholder='0'
-                            name='current'
-                            label="Current"
-                            color='secondary'
-                            onChange={this.handleNumberInputChange} />
-                        <TextField
-                            type='number'
-                            placeholder='0'
-                            name='step'
-                            label="Step"
-                            color='secondary'
-                            onChange={this.handleNumberInputChange} />
+                    <div className={style.row}>
+                        <AddTemp temp={this.state.device.temp} setTemp={this.setTemp} />
                     </div>
-                    <AddModes 
-                    modes={modes}
-                    handleModeAdd={this.handleModeAdd} 
-                    handleModeDelete={this.handleModeDelete} />
+                    <div className={style.row}>
+                        <AddModes
+                            modes={modes}
+                            handleModeAdd={this.handleModeAdd}
+                            handleModeDelete={this.handleModeDelete} />
+                    </div>
                     <div className={style.action_buttons}>
                         <Button color="secondary" onClick={() => this.props.handleContent(0)}>Back</Button>
                         <div>
@@ -190,7 +151,7 @@ class AddDeviceOven extends Component<Props, State> {
                                 className={style.right}
                                 color="secondary"
                                 type='submit'
-                                disabled={!name}
+                                disabled={!name || this.state.errors.isError}
                                 onClick={this.onSubmit}>Add Device</Button>
                         </div>
                     </div>

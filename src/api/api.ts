@@ -5,7 +5,7 @@ const instance = axios.create({
     baseURL: 'http://localhost:3001/api/v1/homes/1/devices'
 })
 
-interface Temp {
+export interface Temp {
     min: number,
     max: number,
     current: number,
