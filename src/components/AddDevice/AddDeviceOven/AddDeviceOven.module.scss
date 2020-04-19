@@ -28,24 +28,6 @@
     margin-bottom: 24px;
 }
 
-.modes {
-    .row {
-        display: flex;
-        .button {
-            margin-left: 16px;
-        }
-    }
-}
-
-.chips {
-    height: 52px;
-    display: flex;
-}
-
-.chip__item {
-    margin-right: 8px;
-}
-
 .action_buttons {
     display: flex;
     justify-content: space-between;
