@@ -3,23 +3,15 @@ import { AddDeviceAction } from '../../../redux/actions/deviceActions/deviceActi
 import { Oven } from '../../../redux/reducers/deviceReducer';
 import TextField from '@material-ui/core/TextField';
 import style from './AddDeviceOven.module.scss';
-import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
 import { devicesAPI, PostOven } from '../../../api/api';
+import Chips from './Chips';
 
-const initialState: PostOven = {
-    type: 'oven',
-    name: '',
-    image: 'https://www.stleos.uq.edu.au/wp-content/uploads/2016/08/image-placeholder.png',
-    status: false,
-    temp: {
-        min: 0,
-        max: 0,
-        current: 0,
-        step: 0,
-    },
-    modes: [],
-    currentMode: ''
+interface State {
+    device: PostOven,
+    errors: {
+        nameError: boolean
+    }
 }
 
 interface Props {
@@ -28,66 +20,114 @@ interface Props {
     handleContent: (count: number) => void
 }
 
-class AddDeviceOven extends Component<Props, PostOven> {
-    public state: PostOven = initialState;
+class AddDeviceOven extends Component<Props, State> {
+    public state: State = {
+        device: {
+            type: 'oven',
+            name: '',
+            image: 'https://www.stleos.uq.edu.au/wp-content/uploads/2016/08/image-placeholder.png',
+            status: false,
+            temp: {
+                min: 0,
+                max: 0,
+                current: 0,
+                step: 0,
+            },
+            modes: [],
+            currentMode: ''
+        },
+        errors: {
+            nameError: false
+        }
+    }
 
     private _form = React.createRef<HTMLFormElement>();
 
     private handleStringInputChange = (event: { currentTarget: { name: string, value: string; }; }): void => {
         this.setState({
             ...this.state,
-            [event.currentTarget.name]: event.currentTarget.value
+            device: {
+                ...this.state.device,
+                [event.currentTarget.name]: event.currentTarget.value
+            }
         })
     }
 
     private handleNumberInputChange = (event: { currentTarget: { name: string, value: string; }; }): void => {
         this.setState({
-            temp: {
-                ...this.state.temp,
-                [event.currentTarget.name]: +event.currentTarget.value
+            device: {
+                ...this.state.device,
+                temp: {
+                    ...this.state.device.temp,
+                    [event.currentTarget.name]: +event.currentTarget.value
+                }
             }
         })
     }
 
     private handleModeInputChange = (event: { currentTarget: { value: string; }; }): void => {
         this.setState({
-            currentMode: event.currentTarget.value
+            device: {
+                ...this.state.device,
+                currentMode: event.currentTarget.value
+            }
         })
     }
 
     private handleModeInputClick = (event: { preventDefault: () => void; }): void => {
         event.preventDefault();
         this.setState({
-            modes: [...this.state.modes, this.state.currentMode],
-            currentMode: ''
+            device: {
+                ...this.state.device,
+                modes: [...this.state.device.modes, this.state.device.currentMode],
+                currentMode: ''
+            }
         })
     }
 
     private onSubmit = async (e: { preventDefault: () => void; }): Promise<void> => {
         e.preventDefault();
-        const respOven = await devicesAPI.postOven(this.state);
+        const respOven = await devicesAPI.postOven(this.state.device);
         this.props.addDevice(respOven);
         this.props.handleToggleDialog();
     }
 
     private handleDelete = (mode: string): void => {
-        const newModes = this.state.modes;
-        const index: number = this.state.modes.indexOf(mode);
+        const newModes = this.state.device.modes;
+        const index: number = this.state.device.modes.indexOf(mode);
         newModes.splice(index, 1);
         this.setState({
-            modes: newModes
+            device: {
+                ...this.state.device,
+                modes: newModes
+            }
         })
     }
 
-    private chips = (): JSX.Element[] =>
-        this.state.modes.map((mode, index) => (
-            <Chip key={index} className={style.chip__item} label={mode} onDelete={() => this.handleDelete(mode)} />
-        ))
+    validateName = () => {
+        if (this.state.device.name.length < 3) {
+            this.setState({
+                ...this.state,
+                errors: {
+                    ...this.state.errors,
+                    nameError: true
+                }
+            })
+        } else {
+            this.setState({
+                ...this.state,
+                errors: {
+                    ...this.state.errors,
+                    nameError: false
+                }
+            })
+        }
+    }
 
     render() {
 
-        const {name, currentMode} = this.state;
-        
+        const { name, currentMode } = this.state.device;
+
         return (
             <div className={style.add_device_dialog__inner}>
                 <h5>Add Device (Oven)</h5>
@@ -102,6 +142,9 @@ class AddDeviceOven extends Component<Props, PostOven> {
                                 name='name'
                                 label="Name"
                                 color='secondary'
+                                helperText={this.state.errors.nameError ? 'wrong name' : ''}
+                                onBlur={this.validateName}
+                                error={this.state.errors.nameError}
                                 onChange={this.handleStringInputChange} />
                         </div>
                         <div className={style.row}>
@@ -159,7 +202,7 @@ class AddDeviceOven extends Component<Props, PostOven> {
                             <Button className={style.button} variant="outlined" color="secondary" onClick={this.handleModeInputClick}>+</Button>
                         </div>
                         <div className={style.chips}>
-                            {this.chips()}
+                            <Chips modes={this.state.device.modes} handleDelete={this.handleDelete} />
                         </div>
                     </div>
                     <div className={style.action_buttons}>
