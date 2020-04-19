@@ -4,7 +4,7 @@ import AddDeviceRobot from './AddDeviceRobot/AddDeviceRobotHoover';
 import style from './AddDeviceContainer.module.scss';
 import { Oven, RobotHoover } from '../../redux/reducers/deviceReducer'
 import { AddDeviceAction } from '../../redux/actions/deviceActions/deviceActions'
-import SelectDevice from '../SelectDevice/SelectDevice';
+import SelectDevice from './SelectDevice';
 
 interface Props {
     handleToggleDialog: () => void,
