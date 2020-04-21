@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import ReactDOM from 'react-dom';
 import style from './Devices.module.scss';
 import { RobotHoover, Oven, DevicesState } from '../../redux/reducers/deviceReducer'
@@ -12,7 +12,7 @@ import { Loader } from '../Loader/Loader';
 import { Dispatch } from '../../redux/store';
 import { connect } from 'react-redux';
 import DevicesList from './DevicesList';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import { routes } from '../../routes';
 
 interface ConnectedProps {
@@ -20,23 +20,15 @@ interface ConnectedProps {
 }
 
 type ComponentProps = ConnectedProps & ReturnType<typeof mapDispatchToProps>;
-class Devices extends Component<ComponentProps> {
+const Devices = (props: ComponentProps) => {
 
-  public state = {
-    showModal: false,
-    isLoading: false
+  const [showModal, setShowModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  let { path, url } = useRouteMatch();
+
+  const handleToggleDialog = (): void => {
+    setShowModal(!showModal)
   }
-
-  private handleToggleDialog = (): void => {
-    this.setState({
-      showModal: !this.state.showModal
-    })
-  }
-
-  render() {
-
-    const { showModal } = this.state;
-
     return (
       <div>
         <DevicesHeader />
@@ -44,33 +36,33 @@ class Devices extends Component<ComponentProps> {
           <Filter />
         </div>
         <div className={style.fab}>
-          <Fab color="secondary" aria-label="add" onClick={this.handleToggleDialog}>
+          <Fab color="secondary" aria-label="add" onClick={handleToggleDialog}>
             <AddIcon color='inherit' />
           </Fab>
         </div>
         {showModal ? ReactDOM.createPortal(
-          <AddDeviceContainer handleToggleDialog={this.handleToggleDialog} addDevice={this.props.addResourse} />,
+          <AddDeviceContainer handleToggleDialog={handleToggleDialog} addDevice={props.addResourse} />,
           document.getElementById('modal-root') as HTMLInputElement
         ) : null}
 
         <Fragment>
           <div>
             {
-              this.state.isLoading ?
+              isLoading ?
                 <Loader /> : null
             }
 
             <Switch>
-              <Route exact path={routes.allDevices}>
-                <DevicesList devices={this.props.devices} />
+              <Route path={routes.allDevices}>
+                <DevicesList devices={props.devices} />
               </Route>
 
               <Route path={routes.ovens}>
-                <DevicesList devices={this.props.devices} />
+                <DevicesList devices={props.devices} />
               </Route>
 
               <Route path={routes.robots}>
-                <DevicesList devices={this.props.devices} />
+                <DevicesList devices={props.devices} />
               </Route>
             </Switch>
           </div>
@@ -78,7 +70,6 @@ class Devices extends Component<ComponentProps> {
       </div>
     )
   }
-}
 
 const mapStateToProps = (state: { deviceReducer: DevicesState }): ConnectedProps => {
   return ({
