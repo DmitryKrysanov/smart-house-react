@@ -10,7 +10,7 @@ import SelectDevice from './SelectDevice';
 interface Props {
     handleToggleDialog: () => void,
     addDevice: (p: Oven | RobotHoover) => AddDeviceAction,
-    getAllDevices: () => FetchDevicesAction
+    //  getAllDevices: () => FetchDevicesAction
 }
 
 export default class AddDeviceContainer extends Component<Props> {
@@ -51,7 +51,7 @@ export default class AddDeviceContainer extends Component<Props> {
     }
 
     private renderContent = (): JSX.Element | null => {
-        const { addDevice, getAllDevices, handleToggleDialog } = this.props;
+        const { addDevice, handleToggleDialog } = this.props;
         switch (this.state.content) {
             case 0:
                 return <SelectDevice
@@ -62,14 +62,14 @@ export default class AddDeviceContainer extends Component<Props> {
                     handleToggleDialog={handleToggleDialog}
                     handleContent={this.handleContent}
                     addDevice={addDevice}
-                    getAllDevices={getAllDevices}
+                //  getAllDevices={getAllDevices}
                 />;
             case 2:
                 return <AddDeviceRobot
                     handleToggleDialog={handleToggleDialog}
                     handleContent={this.handleContent}
                     addDevice={addDevice}
-                    getAllDevices={getAllDevices}
+                //  getAllDevices={getAllDevices}
                 />;
             default:
                 return null;
