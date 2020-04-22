@@ -7,12 +7,12 @@ import { Oven, RobotHoover } from '../../redux/reducers/deviceReducer';
 import { setDevices, setDevicesType, setTotalItems } from '../../redux/actions/deviceActions/deviceActions';
 import { Dispatch } from '../../redux/store';
 import { connect } from 'react-redux';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, withRouter, RouteComponentProps } from 'react-router-dom';
 import { routes } from '../../routes';
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
-const Filter = (props: Props) => {
+const Filter = (props: Props & RouteComponentProps) => {
 
   const [value, setValue] = useState('');
 
@@ -22,7 +22,7 @@ const Filter = (props: Props) => {
     props.loadDevices(respOvens.data);
     props.setTotalItems(respOvens.totalItems);
   }
- 
+
   useEffect(() => {
     loadAllDevices();
   })
@@ -40,9 +40,9 @@ const Filter = (props: Props) => {
         textColor="secondary"
       >
 
-        <Tab value={''} label="All" component={NavLink} to={routes.allDevices} />
-        <Tab value={'&type=Oven'} label="Oven" component={NavLink} to={routes.ovens} />
-        <Tab value={'&type=Robot-hoover'} label="Robot" component={NavLink} to={routes.robots} />
+        <Tab value={''} label="All" component={NavLink} to={`${props.match.url}/all`} />
+        <Tab value={'&type=Oven'} label="Oven" component={NavLink} to={`${props.match.url}/ovens`} />
+        <Tab value={'&type=Robot-hoover'} label="Robot" component={NavLink} to={`${props.match.url}/robots`} />
 
       </Tabs>
     </div>
@@ -61,4 +61,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   }
 })
 
-export default connect(null, mapDispatchToProps)(Filter);
+const filterWithConnect = connect(null, mapDispatchToProps)(Filter);
+
+export default withRouter(filterWithConnect);
+//export default connect(null, mapDispatchToProps)(Filter);

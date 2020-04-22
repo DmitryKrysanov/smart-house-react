@@ -19,7 +19,7 @@ const App = () => {
               <DevicesHeader />
               <Devices />
             </Route>
-            <Route path='/home/device/:deviceId'>
+            <Route path={`${routes.home}/:deviceId`}>
               <DeviceDetails />
             </Route>
           </Switch>

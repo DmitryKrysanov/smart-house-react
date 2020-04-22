@@ -17,6 +17,7 @@ import { routes } from '../../routes';
 
 interface ConnectedProps {
   devices: Array<Oven | RobotHoover>,
+  currentType: string
 }
 
 type ComponentProps = ConnectedProps & ReturnType<typeof mapDispatchToProps>;
@@ -29,51 +30,52 @@ const Devices = (props: ComponentProps) => {
   const handleToggleDialog = (): void => {
     setShowModal(!showModal)
   }
-    return (
-      <div>
-        <DevicesHeader />
-        <div className={style.filter}>
-          <Filter />
-        </div>
-        <div className={style.fab}>
-          <Fab color="secondary" aria-label="add" onClick={handleToggleDialog}>
-            <AddIcon color='inherit' />
-          </Fab>
-        </div>
-        {showModal ? ReactDOM.createPortal(
-          <AddDeviceContainer handleToggleDialog={handleToggleDialog} addDevice={props.addResourse} />,
-          document.getElementById('modal-root') as HTMLInputElement
-        ) : null}
-
-        <Fragment>
-          <div>
-            {
-              isLoading ?
-                <Loader /> : null
-            }
-
-            <Switch>
-              <Route path={routes.allDevices}>
-                <DevicesList devices={props.devices} />
-              </Route>
-
-              <Route path={routes.ovens}>
-                <DevicesList devices={props.devices} />
-              </Route>
-
-              <Route path={routes.robots}>
-                <DevicesList devices={props.devices} />
-              </Route>
-            </Switch>
-          </div>
-        </Fragment>
+  return (
+    <div>
+      <DevicesHeader />
+      <div className={style.filter}>
+        <Filter />
       </div>
-    )
-  }
+      <div className={style.fab}>
+        <Fab color="secondary" aria-label="add" onClick={handleToggleDialog}>
+          <AddIcon color='inherit' />
+        </Fab>
+      </div>
+      {showModal ? ReactDOM.createPortal(
+        <AddDeviceContainer handleToggleDialog={handleToggleDialog} addDevice={props.addResourse} />,
+        document.getElementById('modal-root') as HTMLInputElement
+      ) : null}
+
+      <Fragment>
+        <div>
+          {
+            isLoading ?
+              <Loader /> : null
+          }
+
+          <Switch>
+            <Route path={routes.allDevices}>
+              <DevicesList devices={props.devices} />
+            </Route>
+
+            <Route path={routes.ovens}>
+              <DevicesList devices={props.devices} />
+            </Route>
+
+            <Route path={routes.robots}>
+              <DevicesList devices={props.devices} />
+            </Route>
+          </Switch>
+        </div>
+      </Fragment>
+    </div>
+  )
+}
 
 const mapStateToProps = (state: { deviceReducer: DevicesState }): ConnectedProps => {
   return ({
-    devices: state.deviceReducer.devices
+    devices: state.deviceReducer.devices,
+    currentType: state.deviceReducer.devicesType
   });
 }
 

@@ -108,10 +108,6 @@ class AddDeviceOven extends Component<Props, State> {
                 ...this.state.errors,
                 isNameError: error
             }
-            //  ...this.state.device,
-            //  isError: error
-
-
         })
     }
 
@@ -128,6 +124,7 @@ class AddDeviceOven extends Component<Props, State> {
         event.preventDefault();
         const respOven = await devicesAPI.postOven(this.state.device);
         this.props.addDevice(respOven);
+        
         this.props.handleToggleDialog();
     }
 
