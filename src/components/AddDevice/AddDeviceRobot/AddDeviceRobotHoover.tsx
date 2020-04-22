@@ -25,7 +25,7 @@ interface Props {
 class AddDeviceRobot extends Component<Props, State> {
     public state: State = {
         device: {
-            type: 'oven',
+            type: 'robot-hoover',
             name: '',
             image: 'https://www.stleos.uq.edu.au/wp-content/uploads/2016/08/image-placeholder.png',
             status: false,
@@ -92,6 +92,7 @@ class AddDeviceRobot extends Component<Props, State> {
 
     private onSubmit = async (event: { preventDefault: () => void; }): Promise<void> => {
         event.preventDefault();
+        console.log(this.state);
         const respRobot = await devicesAPI.postRobot(this.state.device);
         this.props.addDevice(respRobot);
         this.props.handleToggleDialog();
@@ -99,7 +100,7 @@ class AddDeviceRobot extends Component<Props, State> {
 
     render() {
 
-        const{name, modes} = this.state.device;
+        const { name, modes } = this.state.device;
 
         return (
             <div className={style.add_device_dialog__inner}>
@@ -107,21 +108,21 @@ class AddDeviceRobot extends Component<Props, State> {
                 <form className={style.form} ref={this._form}>
                     <div className={style.general}>
                         <div className={style.row}>
-                        <NameTextfield setName={this.setName} 
-                            handleIsError={this.handleIsError} 
-                            isError={this.state.errors.isError} />
+                            <NameTextfield setName={this.setName}
+                                handleIsError={this.handleIsError}
+                                isError={this.state.errors.isError} />
                         </div>
                         <div className={style.row}>
-                        <ImageTextfield setImageURL={this.setImageURL} 
-                                handleIsError={this.handleIsError} 
+                            <ImageTextfield setImageURL={this.setImageURL}
+                                handleIsError={this.handleIsError}
                                 isError={this.state.errors.isError} />
                         </div>
                     </div>
                     <div className={style.row}>
-                        <AddModes 
-                        modes={modes}
-                        handleModeAdd={this.handleModeAdd} 
-                        handleModeDelete={this.handleModeDelete} />
+                        <AddModes
+                            modes={modes}
+                            handleModeAdd={this.handleModeAdd}
+                            handleModeDelete={this.handleModeDelete} />
                     </div>
                     <div className={style.action_buttons}>
                         <Button color="secondary" onClick={() => this.props.handleContent(0)}>Back</Button>
