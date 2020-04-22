@@ -15,7 +15,9 @@ const AddModes = (props: Props) => {
     const [mode, setMode] = useState('');
 
     const handleModeInputChange = (event: { currentTarget: { value: string; }; }): void => {
-        setMode(event.currentTarget.value)
+        if (event.currentTarget.value.trim() !== "") {
+            setMode(event.currentTarget.value)
+        }
     }
 
     const handleAddModeClick = () => {
@@ -24,33 +26,33 @@ const AddModes = (props: Props) => {
     }
 
 
-        return (
-            <Fragment>
-                <h6>Modes</h6>
-                <div className={style.modes}>
-                    <div className={style.row}>
-                        <TextField
-                            fullWidth={true}
-                            type='text'
-                            name='image'
-                            label='Mode'
-                            color='secondary'
-                            value={mode}
-                            onChange={handleModeInputChange} />
-                        <Button className={style.button} 
-                            variant="outlined" 
-                            color="secondary" 
-                            disabled={mode.length === 0 ? true : false}
-                            onClick={handleAddModeClick}>
-                                +
+    return (
+        <Fragment>
+            <h6>Modes</h6>
+            <div className={style.modes}>
+                <div className={style.row}>
+                    <TextField
+                        fullWidth={true}
+                        type='text'
+                        name='image'
+                        label='Mode'
+                        color='secondary'
+                        value={mode}
+                        onChange={handleModeInputChange} />
+                    <Button className={style.button}
+                        variant="outlined"
+                        color="secondary"
+                        disabled={mode.length === 0 ? true : false}
+                        onClick={handleAddModeClick}>
+                        +
                         </Button>
-                    </div>
-                    <div className={style.chips}>
-                        <Chips modes={props.modes} handleModeDelete={props.handleModeDelete} />
-                    </div>
                 </div>
-            </Fragment>
-        );
-    }
+                <div className={style.chips}>
+                    <Chips modes={props.modes} handleModeDelete={props.handleModeDelete} />
+                </div>
+            </div>
+        </Fragment>
+    );
+}
 
 export default AddModes;
