@@ -3,23 +3,23 @@ import TextField from '@material-ui/core/TextField';
 
 interface Props {
     setName: (name: string) => void,
-    handleIsError: (error: boolean) => void,
-    isError: boolean
+    handleIsNameError: (error: boolean) => void,
+    isNameError: boolean
 }
 
 const NameTextfield = (props: Props) => {
     const [name, setName] = useState('');
 
-    const handleNameChange = (event: { currentTarget: { value: string; };} ) => {
+    const handleNameChange = (event: { currentTarget: { value: string; }; }) => {
         setName(event.currentTarget.value)
     }
 
     const validateName = () => {
         if (name.length < 2) {
-            props.handleIsError(true)
+            props.handleIsNameError(true)
         } else {
             props.setName(name)
-            props.handleIsError(false)
+            props.handleIsNameError(false)
         }
     }
 
@@ -32,9 +32,9 @@ const NameTextfield = (props: Props) => {
             name='name'
             label="Name"
             color='secondary'
-            helperText={props.isError ? 'Wrong device name' : ''}
+            helperText={props.isNameError ? 'Wrong device name' : ''}
             onBlur={validateName}
-            error={props.isError}
+            error={props.isNameError}
             onChange={handleNameChange} />
     );
 }
