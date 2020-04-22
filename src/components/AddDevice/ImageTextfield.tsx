@@ -21,13 +21,13 @@ const ImageField = (props: Props) => {
         const end1 = '.png';
         const end2 = '.jpg';
 
-        if ((imageURL.includes(start1) || imageURL.includes(start2))
-            && (imageURL.includes(end1) || imageURL.includes(end2))) {
-            props.setImageURL(imageURL)
-            props.handleIsImageError(false)
-        } else {
-            props.handleIsImageError(true)
-        }
+        if (imageURL.length !== 0) {
+            if ((imageURL.includes(start1) || imageURL.includes(start2))
+                && (imageURL.includes(end1) || imageURL.includes(end2))) {
+                props.setImageURL(imageURL)
+                props.handleIsImageError(false)
+            } else props.handleIsImageError(true)
+        } else props.handleIsImageError(false)
     }
 
     return (
