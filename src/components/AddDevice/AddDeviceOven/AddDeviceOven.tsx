@@ -20,7 +20,7 @@ interface Props {
     handleToggleDialog: () => void,
     addDevice: (p: Oven) => AddDeviceAction,
     handleContent: (count: number) => void,
-    getAllDevices: () => FetchDevicesAction
+  //  getAllDevices: () => FetchDevicesAction
 }
 
 class AddDeviceOven extends Component<Props, State> {

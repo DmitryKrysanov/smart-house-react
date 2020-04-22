@@ -19,7 +19,7 @@ interface Props {
     handleToggleDialog: () => void,
     addDevice: (p: RobotHoover) => AddDeviceAction,
     handleContent: (count: number) => void,
-    getAllDevices: () => FetchDevicesAction
+  //  getAllDevices: () => FetchDevicesAction
 }
 
 class AddDeviceRobot extends Component<Props, State> {
