@@ -16,30 +16,34 @@ const ImageField = (props: Props) => {
     }
 
     const validateImageURL = () => {
-        //props.setImageURL(imageURL)
-        if (imageURL.length < 5) {
-            props.handleIsImageError(true)
-        } else {
-        props.setImageURL(imageURL)
+        const start1 = 'https://';
+        const start2 = 'http://';
+        const end1 = '.png';
+        const end2 = '.jpg';
+
+        if ((imageURL.includes(start1) || imageURL.includes(start2))
+            && (imageURL.includes(end1) || imageURL.includes(end2))) {
+            props.setImageURL(imageURL)
             props.handleIsImageError(false)
+        } else {
+            props.handleIsImageError(true)
         }
-}
+    }
 
+    return (
+        <TextField
+            fullWidth={true}
+            type='text'
 
-
-return (
-    <TextField
-        fullWidth={true}
-        type='text'
-        value={imageURL}
-        name='imageURL'
-        label="Image URL"
-        color='secondary'
-        helperText={props.isImageError ? 'Incorrent image link' : ''}
-        onBlur={validateImageURL}
-        error={props.isImageError}
-        onChange={handleImageURLChange} />
-);
+            value={imageURL}
+            name='imageURL'
+            label="Image URL"
+            color='secondary'
+            helperText={props.isImageError ? 'Incorrent image link' : ''}
+            onBlur={validateImageURL}
+            error={props.isImageError}
+            onChange={handleImageURLChange} />
+    );
 }
 
 export default ImageField;
