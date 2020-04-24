@@ -1,22 +1,23 @@
 import React from 'react';
 import style from './DeviceDetailsHeader.module.scss';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import { Link } from 'react-router-dom';
+import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
+import { routes } from '../../routes';
 
 
-const DeviceDetailsHeader = () => {
+const DeviceDetailsHeader = (props: RouteComponentProps) => {
     return (
         <header className={style.header}>
-        <div className='wrapper'>
-            <div className={style.header__inner}>
-                <Link to={'/home/devices'}>
-                    <IconButton><ArrowBackIcon /></IconButton>
-                </Link>
+            <div className='wrapper'>
+                <div className={style.header__inner}>
+                    <Link to={`${routes.allDevices}`}>
+                        <IconButton><ArrowBackIcon /></IconButton>
+                    </Link>
+                </div>
             </div>
-        </div>
-      </header>
+        </header>
     );
 }
 
-export default DeviceDetailsHeader;
+export default withRouter(DeviceDetailsHeader);

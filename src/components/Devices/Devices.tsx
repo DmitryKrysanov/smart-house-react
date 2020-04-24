@@ -54,18 +54,11 @@ const Devices = (props: ComponentProps) => {
           }
 
           <Switch>
-            <Route path={routes.allDevices}>
-              <DevicesList devices={props.devices} />
-            </Route>
-
-            <Route path={routes.ovens}>
-              <DevicesList devices={props.devices} />
-            </Route>
-
-            <Route path={routes.robots}>
+            <Route path='/home/devices/:deviceType'>
               <DevicesList devices={props.devices} />
             </Route>
           </Switch>
+
         </div>
       </Fragment>
     </div>

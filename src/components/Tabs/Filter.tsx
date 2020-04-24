@@ -10,15 +10,22 @@ import { connect } from 'react-redux';
 import { Link, NavLink, withRouter, RouteComponentProps } from 'react-router-dom';
 import { routes } from '../../routes';
 
-type Props = ReturnType<typeof mapDispatchToProps>;
+type Props = RouteComponentProps<{ deviceType: string }> & ReturnType<typeof mapDispatchToProps>
 
-const Filter = (props: Props & RouteComponentProps) => {
+const Filter: React.FC<Props> = (props) => {
 
   const [value, setValue] = useState('');
 
+  console.log(props.match.params.deviceType);
+
+  let type = '';
+
+  (props.match.params.deviceType !== 'all') ?
+    type = `${props.match.params.deviceType}` : type = '';
+
   const loadAllDevices = async () => {
-    props.setDevicesType(value);
-    const respOvens: any = await devicesAPI.filter(1, value);
+    props.setDevicesType(type);
+    const respOvens: any = await devicesAPI.filter(1, type);
     props.loadDevices(respOvens.data);
     props.setTotalItems(respOvens.totalItems);
   }
@@ -26,6 +33,7 @@ const Filter = (props: Props & RouteComponentProps) => {
   useEffect(() => {
     loadAllDevices();
   })
+
 
   const handleChange = async (event: React.ChangeEvent<{}>, value: string) => {
     setValue(value);
@@ -40,9 +48,9 @@ const Filter = (props: Props & RouteComponentProps) => {
         textColor="secondary"
       >
 
-        <Tab value={''} label="All" component={NavLink} to={`${props.match.url}/all`} />
-        <Tab value={'&type=Oven'} label="Oven" component={NavLink} to={`${props.match.url}/ovens`} />
-        <Tab value={'&type=Robot-hoover'} label="Robot" component={NavLink} to={`${props.match.url}/robots`} />
+        <Tab value={''} label="All" component={NavLink} to='/home/devices/all' />
+        <Tab value={'&type=Oven'} label="Oven" component={NavLink} to='/home/devices/&type=Oven' />
+        <Tab value={'&type=Robot-hoover'} label="Robot" component={NavLink} to='/home/devices/&type=Robot-hoover' />
 
       </Tabs>
     </div>
@@ -61,7 +69,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   }
 })
 
-const filterWithConnect = connect(null, mapDispatchToProps)(Filter);
+const filterWithRouter = withRouter(Filter);
 
-export default withRouter(filterWithConnect);
+export default connect(null, mapDispatchToProps)(filterWithRouter);
 //export default connect(null, mapDispatchToProps)(Filter);

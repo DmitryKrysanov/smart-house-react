@@ -16,7 +16,7 @@ const DevicesList = (props: Props & RouteComponentProps) => {
 
     const renderDevices = props.devices.map(device => (
         <Fragment key={device.id}>
-            <Link to={`${routes.home}/${device.id}`}>
+            <Link to={`/home/device/${device.id}`}>
                 <Card device={device} />
             </Link>
         </Fragment>));
