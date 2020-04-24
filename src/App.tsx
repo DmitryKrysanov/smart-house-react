@@ -10,13 +10,11 @@ const App = () => {
 
   return (
     <div>
-      {/* <DevicesHeader /> */}
       <div className='wrapper'>
         <div className='content'>
 
           <Switch >
-            <Route path={routes.home}>
-              <DevicesHeader />
+            <Route path='/home/devices/:deviceType' >
               <Devices />
             </Route>
             <Route path='/home/device/:deviceId'>

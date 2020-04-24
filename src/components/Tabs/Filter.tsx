@@ -7,22 +7,29 @@ import { Oven, RobotHoover } from '../../redux/reducers/deviceReducer';
 import { setDevices, setDevicesType, setTotalItems } from '../../redux/actions/deviceActions/deviceActions';
 import { Dispatch } from '../../redux/store';
 import { connect } from 'react-redux';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, withRouter, RouteComponentProps } from 'react-router-dom';
 import { routes } from '../../routes';
 
-type Props = ReturnType<typeof mapDispatchToProps>;
+type Props = RouteComponentProps<{ deviceType: string }> & ReturnType<typeof mapDispatchToProps>
 
-const Filter = (props: Props) => {
+const Filter: React.FC<Props> = (props) => {
 
   const [value, setValue] = useState('');
 
+  console.log(props.match.params.deviceType);
+
+  let type = '';
+
+  (props.match.params.deviceType !== 'all') ?
+    type = `${props.match.params.deviceType}` : type = '';
+
   const loadAllDevices = async () => {
-    props.setDevicesType(value);
-    const respOvens: any = await devicesAPI.filter(1, value);
+    props.setDevicesType(type);
+    const respOvens: any = await devicesAPI.filter(1, type);
     props.loadDevices(respOvens.data);
     props.setTotalItems(respOvens.totalItems);
   }
- 
+
   useEffect(() => {
     loadAllDevices();
   })
@@ -34,15 +41,15 @@ const Filter = (props: Props) => {
   return (
     <div className={style.filter}>
       <Tabs
-        value={value}
+        value={type}
         onChange={handleChange}
         indicatorColor="secondary"
         textColor="secondary"
       >
 
-        <Tab value={''} label="All" component={NavLink} to={routes.allDevices} />
-        <Tab value={'&type=Oven'} label="Oven" component={NavLink} to={routes.ovens} />
-        <Tab value={'&type=Robot-hoover'} label="Robot" component={NavLink} to={routes.robots} />
+        <Tab value={''} label="All" component={NavLink} to='/home/devices/all' />
+        <Tab value={'&type=Oven'} label="Oven" component={NavLink} to='/home/devices/&type=Oven' />
+        <Tab value={'&type=Robot-hoover'} label="Robot" component={NavLink} to='/home/devices/&type=Robot-hoover' />
 
       </Tabs>
     </div>
@@ -61,4 +68,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   }
 })
 
-export default connect(null, mapDispatchToProps)(Filter);
+const filterWithRouter = withRouter(Filter);
+
+export default connect(null, mapDispatchToProps)(filterWithRouter);
+//export default connect(null, mapDispatchToProps)(Filter);

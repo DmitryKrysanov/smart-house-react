@@ -11,7 +11,8 @@ import ImageTextfield from '../ImageTextfield';
 interface State {
     device: PostRobot,
     errors: {
-        isError: boolean
+        isNameError: boolean,
+        isImageError: boolean
     }
 }
 
@@ -19,7 +20,7 @@ interface Props {
     handleToggleDialog: () => void,
     addDevice: (p: RobotHoover) => AddDeviceAction,
     handleContent: (count: number) => void,
-  //  getAllDevices: () => FetchDevicesAction
+    //  getAllDevices: () => FetchDevicesAction
 }
 
 class AddDeviceRobot extends Component<Props, State> {
@@ -33,7 +34,9 @@ class AddDeviceRobot extends Component<Props, State> {
             currentMode: ''
         },
         errors: {
-            isError: false
+            // isError: boolean
+            isNameError: false,
+            isImageError: false
         }
     }
 
@@ -81,11 +84,32 @@ class AddDeviceRobot extends Component<Props, State> {
         })
     }
 
-    handleIsError = (error: boolean) => {
+    // handleIsError = (error: boolean) => {
+    //     this.setState({
+    //         errors: {
+    //             ...this.state.device,
+
+    //         }
+    //     })
+    // }
+    handleIsNameError = (error: boolean) => {
         this.setState({
             errors: {
-                ...this.state.device,
-                isError: error
+                ...this.state.errors,
+                isNameError: error
+            }
+            //  ...this.state.device,
+            //  isError: error
+
+
+        })
+    }
+
+    handleIsImageError = (error: boolean) => {
+        this.setState({
+            errors: {
+                ...this.state.errors,
+                isImageError: error
             }
         })
     }
@@ -109,13 +133,13 @@ class AddDeviceRobot extends Component<Props, State> {
                     <div className={style.general}>
                         <div className={style.row}>
                             <NameTextfield setName={this.setName}
-                                handleIsError={this.handleIsError}
-                                isError={this.state.errors.isError} />
+                                handleIsNameError={this.handleIsNameError}
+                                isNameError={this.state.errors.isNameError} />
                         </div>
                         <div className={style.row}>
                             <ImageTextfield setImageURL={this.setImageURL}
-                                handleIsError={this.handleIsError}
-                                isError={this.state.errors.isError} />
+                                handleIsImageError={this.handleIsImageError}
+                                isImageError={this.state.errors.isImageError} />
                         </div>
                     </div>
                     <div className={style.row}>
@@ -132,7 +156,7 @@ class AddDeviceRobot extends Component<Props, State> {
                                 className={style.right}
                                 color="secondary"
                                 type='submit'
-                                disabled={!name || this.state.errors.isError}
+                                disabled={!name || this.state.errors.isImageError || this.state.errors.isNameError}
                                 onClick={this.onSubmit}>Add Device</Button>
                         </div>
                     </div>

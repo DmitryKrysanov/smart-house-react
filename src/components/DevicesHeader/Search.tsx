@@ -24,6 +24,7 @@ class Search extends Component<Props> {
     private onSearchClick = async (): Promise<void> => {
         const search: any = await devicesAPI.search(this.state.term);
         this.props.loadDevices(search.data);
+        this.setState({ term: '' });
     }
 
     render() {

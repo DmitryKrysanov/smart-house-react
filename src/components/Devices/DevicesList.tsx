@@ -1,17 +1,18 @@
 import React, { Fragment } from 'react';
 import { Oven, RobotHoover } from '../../redux/reducers/deviceReducer';
-import { Link } from 'react-router-dom';
+import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 import Card from '../Card/Card';
 import style from './DevicesList.module.scss';
 import Pagination from './Pagination';
 import EmptyState from './EmptyState';
+import { routes } from '../../routes';
 
 
 interface Props {
     devices: Array<Oven | RobotHoover>
 }
 
-const DevicesList = (props: Props) => {
+const DevicesList = (props: Props & RouteComponentProps) => {
 
     const renderDevices = props.devices.map(device => (
         <Fragment key={device.id}>
@@ -38,4 +39,4 @@ const DevicesList = (props: Props) => {
     )
 }
 
-export default DevicesList;
+export default withRouter(DevicesList);

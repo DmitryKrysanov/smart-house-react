@@ -12,7 +12,9 @@ import AddTemp from '../AddTemp';
 interface State {
     device: PostOven,
     errors: {
-        isError: boolean
+        // isError: boolean
+        isNameError: boolean,
+        isImageError: boolean
     }
 }
 
@@ -20,7 +22,7 @@ interface Props {
     handleToggleDialog: () => void,
     addDevice: (p: Oven) => AddDeviceAction,
     handleContent: (count: number) => void,
-  //  getAllDevices: () => FetchDevicesAction
+    //  getAllDevices: () => FetchDevicesAction
 }
 
 class AddDeviceOven extends Component<Props, State> {
@@ -40,7 +42,9 @@ class AddDeviceOven extends Component<Props, State> {
             currentMode: ''
         },
         errors: {
-            isError: false
+            //   isError: false,
+            isNameError: false,
+            isImageError: false
         }
     }
 
@@ -98,11 +102,20 @@ class AddDeviceOven extends Component<Props, State> {
         })
     }
 
-    handleIsError = (error: boolean) => {
+    handleIsNameError = (error: boolean) => {
         this.setState({
             errors: {
-                ...this.state.device,
-                isError: error
+                ...this.state.errors,
+                isNameError: error
+            }
+        })
+    }
+
+    handleIsImageError = (error: boolean) => {
+        this.setState({
+            errors: {
+                ...this.state.errors,
+                isImageError: error
             }
         })
     }
@@ -111,6 +124,7 @@ class AddDeviceOven extends Component<Props, State> {
         event.preventDefault();
         const respOven = await devicesAPI.postOven(this.state.device);
         this.props.addDevice(respOven);
+        
         this.props.handleToggleDialog();
     }
 
@@ -125,14 +139,14 @@ class AddDeviceOven extends Component<Props, State> {
                     <div className={style.general}>
                         <div className={style.row}>
                             <NameTextfield setName={this.setName}
-                                handleIsError={this.handleIsError}
-                                isError={this.state.errors.isError} />
+                                handleIsNameError={this.handleIsNameError}
+                                isNameError={this.state.errors.isNameError} />
 
                         </div>
                         <div className={style.row}>
                             <ImageTextfield setImageURL={this.setImageURL}
-                                handleIsError={this.handleIsError}
-                                isError={this.state.errors.isError} />
+                                handleIsImageError={this.handleIsImageError}
+                                isImageError={this.state.errors.isImageError} />
                         </div>
                     </div>
                     <div className={style.row}>
@@ -152,7 +166,7 @@ class AddDeviceOven extends Component<Props, State> {
                                 className={style.right}
                                 color="secondary"
                                 type='submit'
-                                disabled={!name || this.state.errors.isError}
+                                disabled={!name || this.state.errors.isImageError || this.state.errors.isImageError}
                                 onClick={this.onSubmit}>Add Device</Button>
                         </div>
                     </div>
