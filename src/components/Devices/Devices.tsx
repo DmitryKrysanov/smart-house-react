@@ -16,11 +16,12 @@ import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import { routes } from '../../routes';
 
 interface ConnectedProps {
-  devices: Array<Oven | RobotHoover>,
-  currentType: string
+  devices: Array<Oven | RobotHoover>
+  // currentType: string
 }
 
 type ComponentProps = ConnectedProps & ReturnType<typeof mapDispatchToProps>;
+
 const Devices = (props: ComponentProps) => {
 
   const [showModal, setShowModal] = useState(false);
@@ -67,8 +68,8 @@ const Devices = (props: ComponentProps) => {
 
 const mapStateToProps = (state: { deviceReducer: DevicesState }): ConnectedProps => {
   return ({
-    devices: state.deviceReducer.devices,
-    currentType: state.deviceReducer.devicesType
+    devices: state.deviceReducer.devices
+    //  currentType: state.deviceReducer.devicesType
   });
 }
 

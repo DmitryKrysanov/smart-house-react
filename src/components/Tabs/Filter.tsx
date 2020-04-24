@@ -34,7 +34,6 @@ const Filter: React.FC<Props> = (props) => {
     loadAllDevices();
   })
 
-
   const handleChange = async (event: React.ChangeEvent<{}>, value: string) => {
     setValue(value);
   };
@@ -42,7 +41,7 @@ const Filter: React.FC<Props> = (props) => {
   return (
     <div className={style.filter}>
       <Tabs
-        value={value}
+        value={type}
         onChange={handleChange}
         indicatorColor="secondary"
         textColor="secondary"
