@@ -1,5 +1,5 @@
 import { takeEvery, call, put } from "redux-saga/effects";
-import { FETCH_DEVICES, ADD_SAGA_DEVICE } from "../../constants/deviceActions";
+import { FETCH_DEVICES } from "../../constants/deviceActions";
 import { setDevices } from "../actions/deviceActions/deviceActions";
 import { showLoader, hideLoader } from "../actions/loaderActions/loaderActions";
 

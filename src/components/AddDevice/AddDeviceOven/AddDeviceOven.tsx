@@ -30,7 +30,7 @@ class AddDeviceOven extends Component<Props, State> {
     public state: State = {
         device: {
             category: 'oven',
-            name: '',
+            name: 'Oven',
             image: 'https://www.stleos.uq.edu.au/wp-content/uploads/2016/08/image-placeholder.png',
             status: false,
             temp: {
