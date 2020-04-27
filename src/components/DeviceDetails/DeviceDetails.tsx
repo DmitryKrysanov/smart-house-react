@@ -25,7 +25,7 @@ const DeviceDetails = (props: ComponentProps) => {
         if (device === undefined) {
             return <p>Something went wrong</p>
         } else {
-            if (device.type === 'oven') {
+            if (device.category === 'oven') {
                 const oven = device as Oven;
                 return (
                     <OvenContent

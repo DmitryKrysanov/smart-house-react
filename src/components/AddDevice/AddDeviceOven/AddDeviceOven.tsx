@@ -29,7 +29,7 @@ interface Props {
 class AddDeviceOven extends Component<Props, State> {
     public state: State = {
         device: {
-            type: 'oven',
+            category: 'oven',
             name: '',
             image: 'https://www.stleos.uq.edu.au/wp-content/uploads/2016/08/image-placeholder.png',
             status: false,

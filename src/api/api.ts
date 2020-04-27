@@ -13,7 +13,7 @@ export interface Temp {
 }
 
 export interface PostOven {
-    type: string,
+    category: string,
     name: string,
     image: string,
     status: boolean,
@@ -23,7 +23,7 @@ export interface PostOven {
 }
 
 export interface PostRobot {
-    type: string,
+    category: string,
     name: string,
     image: string,
     status: boolean,

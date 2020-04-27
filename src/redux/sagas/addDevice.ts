@@ -1,26 +1,27 @@
 import { takeEvery, call, put } from "redux-saga/effects";
 import { ADD_SAGA_DEVICE } from "../../constants/deviceActions";
 import { Oven } from "../reducers/deviceReducer";
-import { devicesAPI, PostOven } from "../../api/api";
 import { fetchData } from "./fetchDevices";
 import { setDevices } from "../actions/deviceActions/deviceActions";
+import { PostOven } from "../../api/api";
 
-export const addNewOven = (device: PostOven): Promise<Oven> => {
-    return devicesAPI.postOven(device);
-}
+// export const addNewOven = (device: PostOven): Promise<Oven> => {
+//     return devicesAPI.postOven(device);
+// }
 
-const fetchNewOven: any = async (device: PostOven) => await fetch('http://localhost:3001/api/v1/homes/1/devices', {
+const fetchNewOven = async (device: PostOven) => await fetch('http://localhost:3001/api/v1/homes/1/devices', {
     method: "POST",
     body: JSON.stringify(device)
 });
 //////////////// Add new device (Oven) //////////////
-function* workAddDevice() {
+function* workAddDevice(device: PostOven) {
     try {
-        yield call(fetchNewOven);
+        yield console.log(device.name);
+        yield call(fetchNewOven, device);
         const newData = yield call(fetchData);
         yield put(setDevices(newData));
     } catch {
-
+        console.log("again.....");
     }
 }
 

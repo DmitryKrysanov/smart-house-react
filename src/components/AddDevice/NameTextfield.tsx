@@ -25,7 +25,7 @@ const NameTextfield = (props: Props) => {
 
     return (
         <TextField
-            required
+            //  required
             fullWidth={true}
             type='text'
             value={name}
