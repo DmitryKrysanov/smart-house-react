@@ -5,7 +5,7 @@ import { RobotHoover, Oven, DevicesState } from '../../redux/reducers/deviceRedu
 import AddIcon from '@material-ui/icons/Add';
 import AddDeviceContainer from '../AddDevice/AddDeviceContainer'
 import Filter from '../Tabs/Filter';
-import { addDevice, fetchDevices } from '../../redux/actions/deviceActions/deviceActions';
+import { addDevice, fetchDevices, addSagaOven } from '../../redux/actions/deviceActions/deviceActions';
 import DevicesHeader from '../DevicesHeader/DevicesHeader'
 import Fab from '@material-ui/core/Fab';
 import { Loader } from '../Loader/Loader';
@@ -14,6 +14,7 @@ import { connect } from 'react-redux';
 import DevicesList from './DevicesList';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import { routes } from '../../routes';
+import { PostOven } from '../../api/api';
 
 interface ConnectedProps {
   devices: Array<Oven | RobotHoover>
@@ -43,7 +44,11 @@ const Devices = (props: ComponentProps) => {
         </Fab>
       </div>
       {showModal ? ReactDOM.createPortal(
-        <AddDeviceContainer handleToggleDialog={handleToggleDialog} addDevice={props.addResourse} />,
+        <AddDeviceContainer
+          handleToggleDialog={handleToggleDialog}
+          addDevice={props.addResourse}
+          addSagaOven={props.addSagaOven}
+        />,
         document.getElementById('modal-root') as HTMLInputElement
       ) : null}
 
@@ -79,6 +84,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   },
   getAllDevices: () => {
     return dispatch(fetchDevices());
+  },
+  addSagaOven: (p: PostOven) => {
+    return dispatch(addSagaOven(p));
   }
 });
 

@@ -3,14 +3,16 @@ import AddDeviceOven from './AddDeviceOven/AddDeviceOven';
 import AddDeviceRobot from './AddDeviceRobot/AddDeviceRobotHoover';
 import style from './AddDeviceContainer.module.scss';
 import { Oven, RobotHoover } from '../../redux/reducers/deviceReducer'
-import { AddDeviceAction, FetchDevicesAction } from '../../redux/actions/deviceActions/deviceActions'
+import { AddDeviceAction, FetchDevicesAction, AddSagaOvenAction } from '../../redux/actions/deviceActions/deviceActions'
 import SelectDevice from './SelectDevice';
+import { PostOven } from '../../api/api';
 
 
 interface Props {
     handleToggleDialog: () => void,
     addDevice: (p: Oven | RobotHoover) => AddDeviceAction,
-    //  getAllDevices: () => FetchDevicesAction
+    //  getAllDevices: () => FetchDevicesAction,
+    addSagaOven: (p: PostOven) => AddSagaOvenAction
 }
 
 export default class AddDeviceContainer extends Component<Props> {
@@ -51,7 +53,7 @@ export default class AddDeviceContainer extends Component<Props> {
     }
 
     private renderContent = (): JSX.Element | null => {
-        const { addDevice, handleToggleDialog } = this.props;
+        const { addDevice, handleToggleDialog, addSagaOven } = this.props;
         switch (this.state.content) {
             case 0:
                 return <SelectDevice
@@ -62,7 +64,8 @@ export default class AddDeviceContainer extends Component<Props> {
                     handleToggleDialog={handleToggleDialog}
                     handleContent={this.handleContent}
                     addDevice={addDevice}
-                //  getAllDevices={getAllDevices}
+                    //  getAllDevices={getAllDevices}
+                    addSagaOven={addSagaOven}
                 />;
             case 2:
                 return <AddDeviceRobot

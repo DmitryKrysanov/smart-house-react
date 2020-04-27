@@ -10,3 +10,5 @@ export const FETCH_DEVICES = "FETCH_DEVICES";
 
 export const SET_DEVICES_TYPE = "SET_DEVICES_TYPE"
 export const SET_TOTAL_ITEMS = "SET_TOTAL_ITEMS";
+
+export const ADD_SAGA_DEVICE = "ADD_SAGA_DEVICE";

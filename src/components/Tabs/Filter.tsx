@@ -4,7 +4,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { devicesAPI } from '../../api/api';
 import { Oven, RobotHoover } from '../../redux/reducers/deviceReducer';
-import { setDevices, setDevicesType, setTotalItems } from '../../redux/actions/deviceActions/deviceActions';
+import { setDevices, setDevicesType, setTotalItems, fetchDevices } from '../../redux/actions/deviceActions/deviceActions';
 import { Dispatch } from '../../redux/store';
 import { connect } from 'react-redux';
 import { Link, NavLink, withRouter, RouteComponentProps } from 'react-router-dom';
@@ -28,11 +28,13 @@ const Filter: React.FC<Props> = (props) => {
     const respOvens: any = await devicesAPI.filter(1, type);
     props.loadDevices(respOvens.data);
     props.setTotalItems(respOvens.totalItems);
+
+    //  const allDevices = await props.getAllDevices();
   }
 
   useEffect(() => {
-    loadAllDevices();
-  })
+    loadAllDevices()
+  }, [type]);
 
   const handleChange = async (event: React.ChangeEvent<{}>, value: string) => {
     setValue(value);
@@ -65,6 +67,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   },
   setTotalItems: (p: number) => {
     return dispatch(setTotalItems(p))
+  },
+  getAllDevices: () => {
+    return dispatch(fetchDevices());
   }
 })
 
