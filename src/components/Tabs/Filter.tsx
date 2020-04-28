@@ -4,7 +4,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { devicesAPI } from '../../api/api';
 import { Oven, RobotHoover } from '../../redux/reducers/deviceReducer';
-import { setDevices, setDevicesType, setTotalItems, fetchDevices } from '../../redux/actions/deviceActions/deviceActions';
+import { setDevices, setDevicesType, setTotalItems, fetchDevices, filterSagaDevices } from '../../redux/actions/deviceActions/deviceActions';
 import { Dispatch } from '../../redux/store';
 import { connect } from 'react-redux';
 import { Link, NavLink, withRouter, RouteComponentProps } from 'react-router-dom';
@@ -25,11 +25,10 @@ const Filter: React.FC<Props> = (props) => {
 
   const loadAllDevices = async () => {
     props.setDevicesType(type);
-    const respOvens: any = await devicesAPI.filter(1, type);
-    props.loadDevices(respOvens.data);
-    props.setTotalItems(respOvens.totalItems);
-
-    //  const allDevices = await props.getAllDevices();
+    props.filterSagaDevices({ page: 1, type: type });
+    // const respOvens: any = await devicesAPI.filter(1, type);
+    // props.loadDevices(respOvens.data);
+    // props.setTotalItems(respOvens.totalItems);
   }
 
   useEffect(() => {
@@ -39,6 +38,7 @@ const Filter: React.FC<Props> = (props) => {
   const handleChange = async (event: React.ChangeEvent<{}>, value: string) => {
     setValue(value);
   };
+
 
   return (
     <div className={style.filter}>
@@ -59,16 +59,19 @@ const Filter: React.FC<Props> = (props) => {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadDevices: (p: Array<Oven | RobotHoover>) => {
-    return dispatch(setDevices(p));
-  },
+  // loadDevices: (p: Array<Oven | RobotHoover>) => {
+  //   return dispatch(setDevices(p));
+  // },
   setDevicesType: (p: string) => {
     return dispatch(setDevicesType(p))
   },
-  setTotalItems: (p: number) => {
-    return dispatch(setTotalItems(p))
+  filterSagaDevices: (p: { page: number, type: string }) => {
+    return dispatch(filterSagaDevices(p))
   }
-  // getAllDevices: () => {
+  // setTotalItems: (p: number) => {
+  //   return dispatch(setTotalItems(p))
+  // }
+  // // getAllDevices: () => {
   //   return dispatch(fetchDevices());
   // }
 })
