@@ -25,7 +25,7 @@ class OvenContent extends Component<Props, State> {
 
     public state: State = {
         device: {
-            type: this.props.device.type,
+            category: this.props.device.category,
             name: this.props.device.name,
             image: this.props.device.image,
             status: this.props.device.status,
@@ -77,7 +77,7 @@ class OvenContent extends Component<Props, State> {
         this.setState({
             device: {
                 ...this.state.device,
-            currentMode: currentMode
+                currentMode: currentMode
             }
         })
     }
@@ -90,31 +90,31 @@ class OvenContent extends Component<Props, State> {
 
     render() {
 
-        const {redirect} = this.state;
+        const { redirect } = this.state;
 
         if (redirect) {
-            return <Redirect to='/home/devices/all'/>;
+            return <Redirect to='/home/devices/all' />;
         }
 
-        const {type, image, name, status, temp, modes, currentMode} = this.state.device;
+        const { category, image, name, status, temp, modes, currentMode } = this.state.device;
 
         return (
             <Fragment>
                 <Image image={image} />
                 <div className={style.device_details__content}>
-                    <GeneralInfo type={type}
+                    <GeneralInfo type={category}
                         name={name}
                         status={status}
                         handleToggle={this.handleToggle} />
                     <Temperature temp={temp} handleTempChange={this.handleTempChange} />
                     <Modes modes={modes} currentMode={currentMode} handleCurrentMode={this.handleCurrentMode} />
                     <div className={style.row}>
-                            <Button
-                                variant='outlined'
-                                color='primary'
-                                onClick={this.handleDelete}>
-                                <DeleteIcon />
-                            </Button>
+                        <Button
+                            variant='outlined'
+                            color='primary'
+                            onClick={this.handleDelete}>
+                            <DeleteIcon />
+                        </Button>
                         <Button
                             variant='outlined'
                             color='secondary'

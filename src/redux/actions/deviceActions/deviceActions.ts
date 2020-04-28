@@ -8,9 +8,13 @@ import {
     SET_CURRENT_PAGE,
     FETCH_DEVICES,
     SET_DEVICES_TYPE,
-    SET_TOTAL_ITEMS
+    SET_TOTAL_ITEMS,
+    ADD_SAGA_OVEN,
+    ADD_SAGA_ROBOT,
+    FILTER_DEVICES
 } from '../../../constants/deviceActions';
 import { RobotHoover, Oven } from '../../reducers/deviceReducer';
+import { PostOven, PostRobot } from '../../../api/api';
 
 export interface SetTotalItemsAction {
     type: typeof SET_TOTAL_ITEMS,
@@ -38,6 +42,39 @@ export interface FetchDevicesAction {
 
 export const fetchDevices = (): FetchDevicesAction => ({
     type: FETCH_DEVICES
+})
+
+export interface FilterDevicesAction {
+    type: typeof FILTER_DEVICES
+    payload: {
+        page: number,
+        type: string
+    }
+}
+
+export const filterSagaDevices = (payload: { page: number, type: string }): FilterDevicesAction => ({
+    type: FILTER_DEVICES,
+    payload
+})
+
+export interface AddSagaOvenAction {
+    type: typeof ADD_SAGA_OVEN,
+    payload: PostOven
+}
+
+export const addSagaOven = (payload: PostOven): AddSagaOvenAction => ({
+    type: ADD_SAGA_OVEN,
+    payload
+})
+
+export interface AddSagaRobotAction {
+    type: typeof ADD_SAGA_ROBOT,
+    payload: PostRobot
+}
+
+export const addSagaRobot = (payload: PostRobot): AddSagaRobotAction => ({
+    type: ADD_SAGA_ROBOT,
+    payload
 })
 
 export interface SetCurrentPageAction {
@@ -117,4 +154,7 @@ export type deviceActions = AddDeviceAction
     | SetCurrentPageAction
     | FetchDevicesAction
     | SetDevicesTypeAction
-    | SetTotalItemsAction;
+    | SetTotalItemsAction
+    | AddSagaOvenAction
+    | AddSagaRobotAction
+    | FilterDevicesAction;

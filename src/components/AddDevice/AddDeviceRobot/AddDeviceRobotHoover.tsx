@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AddDeviceAction, FetchDevicesAction } from '../../../redux/actions/deviceActions/deviceActions';
+import { AddDeviceAction, FetchDevicesAction, AddSagaRobotAction } from '../../../redux/actions/deviceActions/deviceActions';
 import { RobotHoover } from '../../../redux/reducers/deviceReducer';
 import style from './AddDeviceRobotHoover.module.scss';
 import Button from '@material-ui/core/Button';
@@ -20,14 +20,14 @@ interface Props {
     handleToggleDialog: () => void,
     addDevice: (p: RobotHoover) => AddDeviceAction,
     handleContent: (count: number) => void,
-    //  getAllDevices: () => FetchDevicesAction
+    addSagaRobot: (p: PostRobot) => AddSagaRobotAction
 }
 
 class AddDeviceRobot extends Component<Props, State> {
     public state: State = {
         device: {
-            type: 'robot-hoover',
-            name: '',
+            category: 'robot-hoover',
+            name: 'Robot',
             image: 'https://www.stleos.uq.edu.au/wp-content/uploads/2016/08/image-placeholder.png',
             status: false,
             modes: [],
@@ -116,9 +116,10 @@ class AddDeviceRobot extends Component<Props, State> {
 
     private onSubmit = async (event: { preventDefault: () => void; }): Promise<void> => {
         event.preventDefault();
-        console.log(this.state);
-        const respRobot = await devicesAPI.postRobot(this.state.device);
-        this.props.addDevice(respRobot);
+        console.log(this.state.device);
+        this.props.addSagaRobot(this.state.device);
+        // const respRobot = await devicesAPI.postRobot(this.state.device);
+        // this.props.addDevice(respRobot);
         this.props.handleToggleDialog();
     }
 

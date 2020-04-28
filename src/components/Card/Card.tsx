@@ -8,7 +8,7 @@ interface Props {
 
 const Card = (props: Props) => {
 
-    const { image, name, type} = props.device;
+    const { image, name, category } = props.device;
 
     return (
         <div>
@@ -19,7 +19,7 @@ const Card = (props: Props) => {
                 <div className={style.card__content}>
                     <div>
                         <h5>{name}</h5>
-                        <p>{type}</p>
+                        <p>{category}</p>
                     </div>
                     <div className={props.device.status === true ? style.status_on : style.status_off}></div>
                 </div>

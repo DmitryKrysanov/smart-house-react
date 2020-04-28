@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AddDeviceAction, FetchDevicesAction } from '../../../redux/actions/deviceActions/deviceActions';
+import { AddDeviceAction, FetchDevicesAction, AddSagaOvenAction } from '../../../redux/actions/deviceActions/deviceActions';
 import { Oven } from '../../../redux/reducers/deviceReducer';
 import style from './AddDeviceOven.module.scss';
 import Button from '@material-ui/core/Button';
@@ -22,14 +22,14 @@ interface Props {
     handleToggleDialog: () => void,
     addDevice: (p: Oven) => AddDeviceAction,
     handleContent: (count: number) => void,
-    //  getAllDevices: () => FetchDevicesAction
+    addSagaOven: (p: PostOven) => AddSagaOvenAction
 }
 
 class AddDeviceOven extends Component<Props, State> {
     public state: State = {
         device: {
-            type: 'oven',
-            name: '',
+            category: 'oven',
+            name: 'Oven',
             image: 'https://www.stleos.uq.edu.au/wp-content/uploads/2016/08/image-placeholder.png',
             status: false,
             temp: {
@@ -122,9 +122,11 @@ class AddDeviceOven extends Component<Props, State> {
 
     private onSubmit = async (event: { preventDefault: () => void; }): Promise<void> => {
         event.preventDefault();
-        const respOven = await devicesAPI.postOven(this.state.device);
-        this.props.addDevice(respOven);
-        
+        //наши старый метод
+        // const respOven = await devicesAPI.postOven(this.state.device);
+        // this.props.addDevice(respOven);
+        console.log(this.state.device);
+        this.props.addSagaOven(this.state.device); //метод саги
         this.props.handleToggleDialog();
     }
 

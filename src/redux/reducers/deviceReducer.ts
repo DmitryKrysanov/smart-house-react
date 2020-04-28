@@ -20,7 +20,7 @@ export interface DevicesState {
 }
 
 export interface Device {
-    type: string,
+    category: string,
     name: string,
     id: number,
     image: string,

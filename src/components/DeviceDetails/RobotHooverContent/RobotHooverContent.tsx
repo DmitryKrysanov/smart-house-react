@@ -24,7 +24,7 @@ class RobotHooverContent extends Component<Props, State> {
 
     public state: State = {
         device: {
-            type: this.props.device.type,
+            category: this.props.device.category,
             name: this.props.device.name,
             image: this.props.device.image,
             status: this.props.device.status,
@@ -36,13 +36,13 @@ class RobotHooverContent extends Component<Props, State> {
 
     private handleSubmit = async (e: { preventDefault: () => void; }): Promise<void> => {
         e.preventDefault();
-        const {id} = this.props.device;
+        const { id } = this.props.device;
         await devicesAPI.updateRobotHoover(this.state.device, id);
     }
 
     private handleDelete = async (e: { preventDefault: () => void; }): Promise<void> => {
         e.preventDefault();
-        const {id} = this.props.device;
+        const { id } = this.props.device;
         if (typeof this.props.device != 'undefined') {
             await devicesAPI.deleteDevice(id);
             this.props.removeDevice(id);
@@ -65,7 +65,7 @@ class RobotHooverContent extends Component<Props, State> {
         this.setState({
             device: {
                 ...this.state.device,
-            currentMode: currentMode
+                currentMode: currentMode
             }
         })
     }
@@ -78,22 +78,22 @@ class RobotHooverContent extends Component<Props, State> {
 
     render() {
 
-        const {redirect} = this.state;
+        const { redirect } = this.state;
 
         if (redirect) {
-            return <Redirect to='/home/devices/all'/>;
+            return <Redirect to='/home/devices/all' />;
         }
 
-        const {type, image, name, status, modes, currentMode} = this.state.device;
+        const { category, image, name, status, modes, currentMode } = this.state.device;
 
         return (
             <Fragment>
                 <Image image={image} />
                 <div className={style.device_details__content}>
-                <GeneralInfo type={type}
-                            name={name}
-                            status={status}
-                            handleToggle={this.handleToggle}/>
+                    <GeneralInfo type={category}
+                        name={name}
+                        status={status}
+                        handleToggle={this.handleToggle} />
                     <Modes modes={modes} currentMode={currentMode} handleCurrentMode={this.handleCurrentMode} />
                     <div className={style.row}>
                         <Button
