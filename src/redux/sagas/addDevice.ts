@@ -1,7 +1,7 @@
 import { takeEvery, call, put } from "redux-saga/effects";
 import { Oven } from "../reducers/deviceReducer";
 import { fetchData } from "./fetchDevices";
-import { setDevices } from "../actions/deviceActions/deviceActions";
+import { setDevices, AddSagaOvenAction } from "../actions/deviceActions/deviceActions";
 import { PostOven } from "../../api/api";
 import { ADD_SAGA_OVEN } from "../../constants/deviceActions";
 
@@ -15,10 +15,11 @@ const fetchNewOven = (device: PostOven) => fetch('http://localhost:3001/api/v1/h
     body: JSON.stringify(device)
 });
 //////////////// Add new device (Oven) //////////////
-function* workAddDevice(device: PostOven) {
+function* workAddDevice(action: AddSagaOvenAction) {
     try {
-        //  yield console.log(device);
-        yield call(fetchNewOven, device);
+        yield console.log(action.payload.name);
+        const newOven = yield call(fetchNewOven, action.payload);
+        yield console.log(newOven);
         const data = yield call(fetchData);
         yield put(setDevices(data));
     } catch {
