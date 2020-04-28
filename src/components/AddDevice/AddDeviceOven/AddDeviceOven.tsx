@@ -22,7 +22,6 @@ interface Props {
     handleToggleDialog: () => void,
     addDevice: (p: Oven) => AddDeviceAction,
     handleContent: (count: number) => void,
-    //  getAllDevices: () => FetchDevicesAction,
     addSagaOven: (p: PostOven) => AddSagaOvenAction
 }
 

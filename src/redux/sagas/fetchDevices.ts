@@ -9,6 +9,8 @@ export const fetchData = () => {
         .then(response => response.json())
         .then(json => json.data)
 }
+
+
 // eslint-disable-next-line require-yield
 /////////////// Get all devices ///////////////
 function* workFetchDevices() {
