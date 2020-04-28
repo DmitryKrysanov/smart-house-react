@@ -67,10 +67,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   },
   setTotalItems: (p: number) => {
     return dispatch(setTotalItems(p))
-  },
-  getAllDevices: () => {
-    return dispatch(fetchDevices());
   }
+  // getAllDevices: () => {
+  //   return dispatch(fetchDevices());
+  // }
 })
 
 const filterWithRouter = withRouter(Filter);

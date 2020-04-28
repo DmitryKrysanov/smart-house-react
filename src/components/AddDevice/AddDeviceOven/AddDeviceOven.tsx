@@ -123,10 +123,11 @@ class AddDeviceOven extends Component<Props, State> {
 
     private onSubmit = async (event: { preventDefault: () => void; }): Promise<void> => {
         event.preventDefault();
+        //наши старый метод
         // const respOven = await devicesAPI.postOven(this.state.device);
         // this.props.addDevice(respOven);
         console.log(this.state.device);
-        this.props.addSagaOven(this.state.device);
+        this.props.addSagaOven(this.state.device); //метод саги
         this.props.handleToggleDialog();
     }
 
