@@ -1,0 +1,8 @@
+@import '../../constants/variables.scss';
+
+.alert {
+    padding: 1em 1.5rem;
+    border-radius: 4px;
+    background-color: $primary;
+    color: $white;
+}

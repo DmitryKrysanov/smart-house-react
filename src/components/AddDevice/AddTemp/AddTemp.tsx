@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import style from './AddTemp.module.scss';
 import TextField from '@material-ui/core/TextField';
-import { Temp } from '../../api/api';
+import { Temp } from '../../../api/api';
 
 interface Props {
     temp: Temp,

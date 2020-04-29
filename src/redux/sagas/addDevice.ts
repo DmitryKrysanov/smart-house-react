@@ -1,5 +1,4 @@
 import { takeEvery, call, put } from "redux-saga/effects";
-import { Oven } from "../reducers/deviceReducer";
 import { fetchData } from "./fetchDevices";
 import { setDevices, AddSagaOvenAction, AddSagaRobotAction } from "../actions/deviceActions/deviceActions";
 import { PostOven, devicesAPI, PostRobot } from "../../api/api";
@@ -13,19 +12,25 @@ import { ADD_SAGA_OVEN, ADD_SAGA_ROBOT } from "../../constants/deviceActions";
 const fetchNewOven = (device: PostOven) => fetch('http://localhost:3001/api/v1/homes/1/devices', {
     method: "POST",
     body: JSON.stringify(device),
-    headers: {
-        "Content-type": "application/json; charset=UTF-8"
-    }
+    // headers: {
+    //     "Content-type": "application/json; charset=UTF-8"
+    // }
 
-}).then(res => console.log(res));
+});
 //////////////// Add new device (Oven) //////////////
 function* workAddOven(action: AddSagaOvenAction) {
     try {
-        yield console.log(action.payload);
+        // yield console.log(action.payload);
+        
         const newOven = yield call(fetchNewOven, action.payload);
-        yield console.log(newOven);
+        if (newOven.status >= 200 && newOven.status < 300) {
+        // yield console.log(newOven);
         const data = yield call(fetchData);
         yield put(setDevices(data));
+        } else {
+            // throw newOven
+            console.log('error');
+        }
     } catch (error) {
         console.log(error);
     }
@@ -44,13 +49,13 @@ const fetchNewRobot = (device: PostRobot) => fetch('http://localhost:3001/api/v1
         "Content-type": "application/json; charset=UTF-8"
     }
 
-}).then(res => console.log(res));
+});
 //////////////// Add new device (Robot) //////////////
 function* workAddRobot(action: AddSagaRobotAction) {
     try {
-        yield console.log(action.payload);
+        // yield console.log(action.payload);
         const newOven = yield call(fetchNewRobot, action.payload);
-        yield console.log(newOven);
+        // yield console.log(newOven);
         const data = yield call(fetchData);
         yield put(setDevices(data));
     } catch (error) {

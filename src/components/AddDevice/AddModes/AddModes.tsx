@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react';
 import style from './AddModes.module.scss';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Chips from './Chips';
+import Chips from '../Chips/Chips';
 
 interface Props {
     modes: string[],

@@ -4,10 +4,10 @@ import { Oven } from '../../../redux/reducers/deviceReducer';
 import style from './AddDeviceOven.module.scss';
 import Button from '@material-ui/core/Button';
 import { devicesAPI, PostOven, Temp } from '../../../api/api';
-import AddModes from '../AddModes';
-import NameTextfield from '../NameTextfield';
-import ImageTextfield from '../ImageTextfield';
-import AddTemp from '../AddTemp';
+import AddModes from '../AddModes/AddModes';
+import NameTextfield from '../NameTextfield/NameTextfield';
+import ImageTextfield from '../ImageTextfield/ImageTextfield';
+import AddTemp from '../AddTemp/AddTemp';
 
 interface State {
     device: PostOven,
@@ -125,7 +125,7 @@ class AddDeviceOven extends Component<Props, State> {
         //наши старый метод
         // const respOven = await devicesAPI.postOven(this.state.device);
         // this.props.addDevice(respOven);
-        console.log(this.state.device);
+        // console.log(this.state.device);
         this.props.addSagaOven(this.state.device); //метод саги
         this.props.handleToggleDialog();
     }

@@ -12,9 +12,10 @@ import { Loader } from '../Loader/Loader';
 import { Dispatch } from '../../redux/store';
 import { connect } from 'react-redux';
 import DevicesList from './DevicesList';
-import { Switch, Route, useRouteMatch } from 'react-router-dom';
-import { routes } from '../../routes';
+import { Switch, Route} from 'react-router-dom';
 import { PostOven, PostRobot } from '../../api/api';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '../Alert/Alert';
 
 interface ConnectedProps {
   devices: Array<Oven | RobotHoover>
@@ -27,11 +28,20 @@ const Devices = (props: ComponentProps) => {
 
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  let { path, url } = useRouteMatch();
+  const [ open, setOpen ] = useState(true);
 
   const handleToggleDialog = (): void => {
     setShowModal(!showModal)
   }
+
+  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   return (
     <div>
       <DevicesHeader />
@@ -52,22 +62,22 @@ const Devices = (props: ComponentProps) => {
         />,
         document.getElementById('modal-root') as HTMLInputElement
       ) : null}
-
       <Fragment>
         <div>
           {
             isLoading ?
               <Loader /> : null
           }
-
           <Switch>
             <Route path='/home/devices/:deviceType'>
               <DevicesList devices={props.devices} />
             </Route>
           </Switch>
-
         </div>
       </Fragment>
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+          <Alert text={'Alert text'}/>
+      </Snackbar>
     </div>
   )
 }
