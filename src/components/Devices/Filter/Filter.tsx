@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import style from './Filter.module.scss';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import { devicesAPI } from '../../api/api';
-import { Oven, RobotHoover } from '../../redux/reducers/deviceReducer';
-import { setDevices, setDevicesType, setTotalItems, fetchDevices, filterSagaDevices } from '../../redux/actions/deviceActions/deviceActions';
-import { Dispatch } from '../../redux/store';
+import { devicesAPI } from '../../../api/api';
+import { Oven, RobotHoover } from '../../../redux/reducers/deviceReducer';
+import { setDevices, setDevicesType, setTotalItems, fetchDevices, filterSagaDevices } from '../../../redux/actions/deviceActions/deviceActions';
+import { Dispatch } from '../../../redux/store';
 import { connect } from 'react-redux';
 import { Link, NavLink, withRouter, RouteComponentProps } from 'react-router-dom';
-import { routes } from '../../routes';
+import { routes } from '../../../routes';
 
 type Props = RouteComponentProps<{ deviceType: string }> & ReturnType<typeof mapDispatchToProps>
 

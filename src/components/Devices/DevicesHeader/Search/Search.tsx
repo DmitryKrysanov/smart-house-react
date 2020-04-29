@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import style from './Search.module.scss';
-import { Dispatch } from '../../redux/store';
-import { RobotHoover, Oven } from '../../redux/reducers/deviceReducer';
-import { setDevices } from '../../redux/actions/deviceActions/deviceActions';
+import { Dispatch } from '../../../../redux/store';
+import { RobotHoover, Oven } from '../../../../redux/reducers/deviceReducer';
+import { setDevices } from '../../../../redux/actions/deviceActions/deviceActions';
 import { connect } from 'react-redux';
-import { devicesAPI } from '../../api/api';
+import { devicesAPI } from '../../../../api/api';
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 

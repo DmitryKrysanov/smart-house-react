@@ -4,14 +4,14 @@ import style from './Devices.module.scss';
 import { RobotHoover, Oven, DevicesState } from '../../redux/reducers/deviceReducer'
 import AddIcon from '@material-ui/icons/Add';
 import AddDeviceContainer from '../AddDevice/AddDeviceContainer'
-import Filter from '../Tabs/Filter';
+import Filter from './Filter/Filter';
 import { addDevice, fetchDevices, addSagaOven, addSagaRobot } from '../../redux/actions/deviceActions/deviceActions';
-import DevicesHeader from '../DevicesHeader/DevicesHeader'
+import DevicesHeader from './DevicesHeader/DevicesHeader'
 import Fab from '@material-ui/core/Fab';
 import { Loader } from '../Loader/Loader';
 import { Dispatch } from '../../redux/store';
 import { connect } from 'react-redux';
-import DevicesList from './DevicesList';
+import DevicesList from './DeviceList/DevicesList';
 import { Switch, Route} from 'react-router-dom';
 import { PostOven, PostRobot } from '../../api/api';
 import Snackbar from '@material-ui/core/Snackbar';

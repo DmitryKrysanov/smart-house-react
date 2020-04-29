@@ -2,7 +2,7 @@ import React from 'react';
 import './App.scss';
 import { Switch, Route } from 'react-router-dom';
 import Devices from './components/Devices/Devices';
-import DevicesHeader from './components/DevicesHeader/DevicesHeader'
+import DevicesHeader from './components/Devices/DevicesHeader/DevicesHeader'
 import { routes } from './routes';
 import DeviceDetails from './components/DeviceDetails/DeviceDetails';
 

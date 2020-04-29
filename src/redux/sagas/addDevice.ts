@@ -12,9 +12,9 @@ import { ADD_SAGA_OVEN, ADD_SAGA_ROBOT } from "../../constants/deviceActions";
 const fetchNewOven = (device: PostOven) => fetch('http://localhost:3001/api/v1/homes/1/devices', {
     method: "POST",
     body: JSON.stringify(device),
-    // headers: {
-    //     "Content-type": "application/json; charset=UTF-8"
-    // }
+    headers: {
+        "Content-type": "application/json; charset=UTF-8"
+    }
 
 });
 //////////////// Add new device (Oven) //////////////

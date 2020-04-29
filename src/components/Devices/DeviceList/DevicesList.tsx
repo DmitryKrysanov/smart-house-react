@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
-import { Oven, RobotHoover } from '../../redux/reducers/deviceReducer';
+import { Oven, RobotHoover } from '../../../redux/reducers/deviceReducer';
 import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
-import Card from '../Card/Card';
+import Card from '../../Card/Card';
 import style from './DevicesList.module.scss';
-import Pagination from './Pagination';
-import EmptyState from './EmptyState';
-import { routes } from '../../routes';
+import Pagination from '../Pagination/Pagination';
+import EmptyState from '../EmptyState/EmptyState';
+import { routes } from '../../../routes';
 
 
 interface Props {
