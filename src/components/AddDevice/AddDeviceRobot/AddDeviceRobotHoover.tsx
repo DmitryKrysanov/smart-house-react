@@ -4,9 +4,9 @@ import { RobotHoover } from '../../../redux/reducers/deviceReducer';
 import style from './AddDeviceRobotHoover.module.scss';
 import Button from '@material-ui/core/Button';
 import { devicesAPI, PostRobot } from '../../../api/api';
-import AddModes from '../AddModes';
-import NameTextfield from '../NameTextfield';
-import ImageTextfield from '../ImageTextfield';
+import AddModes from '../AddModes/AddModes';
+import NameTextfield from '../NameTextfield/NameTextfield';
+import ImageTextfield from '../ImageTextfield/ImageTextfield';
 
 interface State {
     device: PostRobot,

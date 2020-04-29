@@ -1,6 +1,6 @@
 import React from 'react';
 import style from './DeviceDetails.module.scss'
-import DeviceDetailsHeader from '../DeviceDetailsHeader/DeviceDetailsHeader';
+import DeviceDetailsHeader from './DeviceDetailsHeader/DeviceDetailsHeader';
 import { Oven, RobotHoover, DevicesState } from '../../redux/reducers/deviceReducer';
 import { useParams } from 'react-router-dom';
 import RobotHooverContent from './RobotHooverContent/RobotHooverContent';
