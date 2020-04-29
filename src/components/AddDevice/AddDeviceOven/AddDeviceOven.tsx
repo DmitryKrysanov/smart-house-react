@@ -29,7 +29,7 @@ class AddDeviceOven extends Component<Props, State> {
     public state: State = {
         device: {
             category: 'oven',
-            name: 'Oven',
+            name: '',
             image: 'https://www.stleos.uq.edu.au/wp-content/uploads/2016/08/image-placeholder.png',
             status: false,
             temp: {
@@ -168,7 +168,7 @@ class AddDeviceOven extends Component<Props, State> {
                                 className={style.right}
                                 color="secondary"
                                 type='submit'
-                                disabled={!name || this.state.errors.isImageError || this.state.errors.isImageError}
+                                disabled={!name || this.state.errors.isNameError || this.state.errors.isImageError}
                                 onClick={this.onSubmit}>Add Device</Button>
                         </div>
                     </div>
