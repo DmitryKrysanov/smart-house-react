@@ -26,9 +26,7 @@ const Filter: React.FC<Props> = (props) => {
   const loadAllDevices = async () => {
     props.setDevicesType(type);
     props.filterSagaDevices({ page: 1, type: type });
-    // const respOvens: any = await devicesAPI.filter(1, type);
-    // props.loadDevices(respOvens.data);
-    // props.setTotalItems(respOvens.totalItems);
+
   }
 
   useEffect(() => {
@@ -38,7 +36,6 @@ const Filter: React.FC<Props> = (props) => {
   const handleChange = async (event: React.ChangeEvent<{}>, value: string) => {
     setValue(value);
   };
-
 
   return (
     <div className={style.filter}>
@@ -65,7 +62,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   filterSagaDevices: (p: { page: number, type: string }) => {
     return dispatch(filterSagaDevices(p))
   }
-  
 })
 
 const filterWithRouter = withRouter(Filter);
