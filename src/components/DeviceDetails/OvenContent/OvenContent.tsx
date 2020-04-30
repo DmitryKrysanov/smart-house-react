@@ -38,7 +38,8 @@ class OvenContent extends Component<Props, State> {
 
     private handleSubmit = async (event: { preventDefault: () => void; }): Promise<void> => {
         event.preventDefault();
-        await devicesAPI.updateOven(this.state.device, this.props.device.id);
+        const resp = await devicesAPI.updateOven(this.state.device, this.props.device.id);
+        console.log(resp);
     }
 
     private handleDelete = async (event: { preventDefault: () => void; }): Promise<void> => {

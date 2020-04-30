@@ -21,12 +21,12 @@ const fetchNewOven = (device: PostOven) => fetch('http://localhost:3001/api/v1/h
 function* workAddOven(action: AddSagaOvenAction) {
     try {
         // yield console.log(action.payload);
-        
+
         const newOven = yield call(fetchNewOven, action.payload);
         if (newOven.status >= 200 && newOven.status < 300) {
-        // yield console.log(newOven);
-        const data = yield call(fetchData);
-        yield put(setDevices(data));
+            // yield console.log(newOven);
+            const data = yield call(fetchData);
+            yield put(setDevices(data));
         } else {
             // throw newOven
             console.log('error');
@@ -41,7 +41,6 @@ export function* watchAddOven() {
 }
 
 
-
 const fetchNewRobot = (device: PostRobot) => fetch('http://localhost:3001/api/v1/homes/1/devices', {
     method: "POST",
     body: JSON.stringify(device),
@@ -53,9 +52,7 @@ const fetchNewRobot = (device: PostRobot) => fetch('http://localhost:3001/api/v1
 //////////////// Add new device (Robot) //////////////
 function* workAddRobot(action: AddSagaRobotAction) {
     try {
-        // yield console.log(action.payload);
-        const newOven = yield call(fetchNewRobot, action.payload);
-        // yield console.log(newOven);
+        yield call(fetchNewRobot, action.payload);
         const data = yield call(fetchData);
         yield put(setDevices(data));
     } catch (error) {
