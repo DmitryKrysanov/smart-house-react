@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { AddDeviceAction, AddSagaOvenAction } from '../../../redux/actions/deviceActions/deviceActions';
-import { Oven } from '../../../redux/reducers/deviceReducer';
+import { AddSagaOvenAction } from '../../../redux/actions/deviceActions/deviceActions';
 import style from './AddDeviceOven.module.scss';
 import Button from '@material-ui/core/Button';
 import { PostOven, Temp } from '../../../api/api';
@@ -19,7 +18,7 @@ interface State {
 
 interface Props {
     handleToggleDialog: () => void,
-    addDevice: (p: Oven) => AddDeviceAction,
+  //  addDevice: (p: Oven) => AddDeviceAction,
     handleContent: (count: number) => void,
     addSagaOven: (p: PostOven) => AddSagaOvenAction,
     alert: string
@@ -123,7 +122,7 @@ class AddDeviceOven extends Component<Props, State> {
         event.preventDefault();
         this.props.addSagaOven(this.state.device);
         setTimeout(() => {
-            if(this.props.alert.length === 0) {
+            if (this.props.alert.length === 0) {
                 this.props.handleToggleDialog();
             }
         }, 500)

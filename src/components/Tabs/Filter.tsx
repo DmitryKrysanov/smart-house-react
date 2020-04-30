@@ -2,21 +2,16 @@ import React, { useState, useEffect } from 'react';
 import style from './../Filter.module.scss';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import { devicesAPI } from '../../api/api';
-import { Oven, RobotHoover } from '../../redux/reducers/deviceReducer';
-import { setDevices, setDevicesType, setTotalItems, fetchDevices, filterSagaDevices } from '../../redux/actions/deviceActions/deviceActions';
+import { setDevicesType, filterSagaDevices } from '../../redux/actions/deviceActions/deviceActions';
 import { Dispatch } from '../../redux/store';
 import { connect } from 'react-redux';
-import { Link, NavLink, withRouter, RouteComponentProps } from 'react-router-dom';
-import { routes } from '../../routes';
+import { NavLink, withRouter, RouteComponentProps } from 'react-router-dom';
 
 type Props = RouteComponentProps<{ deviceType: string }> & ReturnType<typeof mapDispatchToProps>
 
 const Filter: React.FC<Props> = (props) => {
 
   const [value, setValue] = useState('');
-
-  console.log(props.match.params.deviceType);
 
   let type = '';
 
@@ -26,12 +21,11 @@ const Filter: React.FC<Props> = (props) => {
   const loadAllDevices = async () => {
     props.setDevicesType(type);
     props.filterSagaDevices({ page: 1, type: type });
-
   }
 
   useEffect(() => {
     loadAllDevices()
-  }, [type]);
+  }, []);
 
   const handleChange = async (event: React.ChangeEvent<{}>, value: string) => {
     setValue(value);
@@ -67,4 +61,3 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 const filterWithRouter = withRouter(Filter);
 
 export default connect(null, mapDispatchToProps)(filterWithRouter);
-//export default connect(null, mapDispatchToProps)(Filter);

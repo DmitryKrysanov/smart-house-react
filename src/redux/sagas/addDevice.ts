@@ -14,7 +14,6 @@ const fetchNewOven = (device: PostOven) => fetch('http://localhost:3001/api/v1/h
     headers: {
         "Content-type": "application/json; charset=UTF-8"
     }
-
 });
 //////////////// Add new device (Oven) //////////////
 function* workAddOven(action: AddSagaOvenAction) {
@@ -48,16 +47,26 @@ const fetchNewRobot = (device: PostRobot) => fetch('http://localhost:3001/api/v1
     headers: {
         "Content-type": "application/json; charset=UTF-8"
     }
-
 });
 //////////////// Add new device (Robot) //////////////
 function* workAddRobot(action: AddSagaRobotAction) {
     try {
-        yield call(fetchNewRobot, action.payload);
-        const data = yield call(fetchData);
-        yield put(setDevices(data));
+        yield put(showLoader());
+        const newRobot = yield call(fetchNewRobot, action.payload);
+        if (newRobot.status >= 200 && newRobot.status < 300) {
+            const data = yield call(fetchData);
+            yield put(setDevices(data));
+            yield put(hideLoader());
+        } else {
+            yield put(showAlert("Something went wrong"))
+            yield put(hideLoader());
+            yield delay(3000)
+            yield put(hideAlert())
+        }
     } catch (error) {
-        console.log(error);
+        yield put(showAlert("Server is not responding."))
+        yield delay(3000)
+        yield put(hideAlert())
     }
 }
 

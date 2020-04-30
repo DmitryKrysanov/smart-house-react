@@ -2,8 +2,7 @@ import React, { Component, Fragment } from 'react';
 import AddDeviceOven from './AddDeviceOven/AddDeviceOven';
 import AddDeviceRobot from './AddDeviceRobot/AddDeviceRobotHoover';
 import style from './AddDeviceContainer.module.scss';
-import { Oven, RobotHoover } from '../../redux/reducers/deviceReducer'
-import { AddDeviceAction, FetchDevicesAction, AddSagaOvenAction, AddSagaRobotAction } from '../../redux/actions/deviceActions/deviceActions'
+import { AddSagaOvenAction, AddSagaRobotAction } from '../../redux/actions/deviceActions/deviceActions'
 import SelectDevice from './SelectDevice/SelectDevice';
 import { PostOven, PostRobot } from '../../api/api';
 import Snackbar from '@material-ui/core/Snackbar';
@@ -16,7 +15,7 @@ import { Loader } from '../Loader/Loader';
 
 interface Props {
     handleToggleDialog: () => void,
-    addDevice: (p: Oven | RobotHoover) => AddDeviceAction,
+    // addDevice: (p: Oven | RobotHoover) => AddDeviceAction,
     addSagaOven: (p: PostOven) => AddSagaOvenAction,
     addSagaRobot: (p: PostRobot) => AddSagaRobotAction
 }
@@ -66,7 +65,7 @@ class AddDeviceContainer extends Component<ComponentProps> {
     }
 
     private renderContent = (): JSX.Element | null => {
-        const { addDevice, handleToggleDialog, addSagaOven, addSagaRobot } = this.props;
+        const { handleToggleDialog, addSagaOven, addSagaRobot } = this.props;
         switch (this.state.content) {
             case 0:
                 return <SelectDevice
@@ -74,17 +73,18 @@ class AddDeviceContainer extends Component<ComponentProps> {
                     handleContent={this.handleContent} />;
             case 1:
                 return <AddDeviceOven
-                    alert = {this.props.alert}
+                    alert={this.props.alert}
                     handleToggleDialog={handleToggleDialog}
                     handleContent={this.handleContent}
-                    addDevice={addDevice}
+                    //  addDevice={addDevice}
                     addSagaOven={addSagaOven}
                 />;
             case 2:
                 return <AddDeviceRobot
+                    alert={this.props.alert}
                     handleToggleDialog={handleToggleDialog}
                     handleContent={this.handleContent}
-                    addDevice={addDevice}
+                    //   addDevice={addDevice}
                     addSagaRobot={addSagaRobot}
                 />;
             default:
@@ -97,16 +97,16 @@ class AddDeviceContainer extends Component<ComponentProps> {
         console.log(this.props)
         return (
             <Fragment>
-                        {
-            this.props.isLoad ?
-              <Loader /> : null
-          }
-                { this.props.alert.length === 0 ? null : 
+                {
+                    this.props.isLoad ?
+                        <Loader /> : null
+                }
+                {this.props.alert.length === 0 ? null :
                     <Snackbar open={true}>
                         <Alert text={this.props.alert} />
-                    </Snackbar> 
+                    </Snackbar>
                 }
-                
+
                 <div className={style.dialog}>
                     {this.renderContent()}
                 </div>
@@ -118,8 +118,8 @@ class AddDeviceContainer extends Component<ComponentProps> {
 
 const mapStateToProps = (state: { alertReducer: AlertState, loaderReducer: LoaderState }): ConnectedProps => {
     return ({
-      alert: state.alertReducer.alert,
-      isLoad: state.loaderReducer.isLoad
+        alert: state.alertReducer.alert,
+        isLoad: state.loaderReducer.isLoad
     });
 }
 
