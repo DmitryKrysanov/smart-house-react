@@ -57,11 +57,11 @@ export const devicesAPI = {
         return instance.get<Array<Oven | RobotHoover>>(`?subname=${subname}`).then(response => response.data)
     },
 
-    updateOven(oven: PostOven, id: number): Promise<Oven> {
-        return instance.put<Oven>(`${id}`, oven).then(response => response.data)
+    updateOven(oven: PostOven, id: number) {
+        return instance.put<Oven>(`${id}`, oven)
     },
 
-    updateRobotHoover(robot: PostRobot, id: number): Promise<RobotHoover> {
-        return instance.put<RobotHoover>(`${id}`, robot).then(response => response.data)
+    updateRobotHoover(robot: PostRobot, id: number) {
+        return instance.put<RobotHoover>(`${id}`, robot)
     }
 }

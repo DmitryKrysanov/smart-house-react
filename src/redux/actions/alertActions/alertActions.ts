@@ -1,58 +1,25 @@
 import { 
-    ADD_DEVICE_FAILED, 
-    DEVICE_DELETED, 
-    DEVICE_DELETE_FAILED, 
-    DEVICE_UPDATED, 
-    DEVICE_UPDATE_FAILED 
+    SHOW_ALERT,
+    HIDE_ALERT
 } from '../../../constants/alertActions';
 
-export interface AddDeviceFailedAction {
-    type: typeof ADD_DEVICE_FAILED,
-    payload: boolean
+export interface ShowAlertAction {
+    type: typeof SHOW_ALERT,
+    payload: string
 }
-export const AddDeviceFailed = (payload: boolean): AddDeviceFailedAction => ({
-    type: ADD_DEVICE_FAILED,
+
+export const showAlert = (payload: string): ShowAlertAction => ({
+    type: SHOW_ALERT,
     payload
 })
 
-export interface DeviceDeletedAction {
-    type: typeof DEVICE_DELETED,
-    payload: boolean
+export interface HideAlertAction {
+    type: typeof HIDE_ALERT
 }
-export const DeviceDeleted = (payload: boolean): DeviceDeletedAction => ({
-    type: DEVICE_DELETED,
-    payload
+
+export const hideAlert = (): HideAlertAction => ({
+    type: HIDE_ALERT
 })
 
-export interface DeviceDeleteFailedAction {
-    type: typeof DEVICE_DELETE_FAILED,
-    payload: boolean
-}
-export const DeviceDeleteFailed = (payload: boolean): DeviceDeleteFailedAction => ({
-    type: DEVICE_DELETE_FAILED,
-    payload
-})
-
-export interface DeviceUpdatedAction {
-    type: typeof DEVICE_UPDATED,
-    payload: boolean
-}
-export const DeviceUpdated = (payload: boolean): DeviceUpdatedAction => ({
-    type: DEVICE_UPDATED,
-    payload
-})
-
-export interface DeviceUpdatedFailedAction {
-    type: typeof DEVICE_UPDATE_FAILED,
-    payload: boolean
-}
-export const DeviceUpdatedFailed = (payload: boolean): DeviceUpdatedFailedAction => ({
-    type: DEVICE_UPDATE_FAILED,
-    payload
-})
-
-export type alertActions = AddDeviceFailedAction
-    | DeviceDeletedAction
-    | DeviceDeleteFailedAction
-    | DeviceUpdatedAction
-    | DeviceUpdatedFailedAction;
+export type alertActions = ShowAlertAction
+    | HideAlertAction

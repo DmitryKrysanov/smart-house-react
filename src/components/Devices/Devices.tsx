@@ -64,10 +64,10 @@ const Devices = (props: ComponentProps) => {
       ) : null}
       <Fragment>
         <div>
-          {
+          {/* {
             isLoading ?
               <Loader /> : null
-          }
+          } */}
           <Switch>
             <Route path='/home/devices/:deviceType'>
               <DevicesList devices={props.devices} />
@@ -75,9 +75,9 @@ const Devices = (props: ComponentProps) => {
           </Switch>
         </div>
       </Fragment>
-      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+      {/* <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
           <Alert text={'Alert text'}/>
-      </Snackbar>
+      </Snackbar> */}
     </div>
   )
 }
