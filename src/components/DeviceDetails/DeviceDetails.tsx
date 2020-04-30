@@ -7,7 +7,8 @@ import RobotHooverContent from './RobotHooverContent/RobotHooverContent';
 import OvenContent from './OvenContent/OvenContent'
 import { connect } from 'react-redux';
 import { Dispatch } from '../../redux/store';
-import { turnOnOffDevice, removeDevice } from '../../redux/actions/deviceActions/deviceActions';
+import { turnOnOffDevice, removeDevice, updateOven, updateRobot } from '../../redux/actions/deviceActions/deviceActions';
+import { PostOven, PostRobot } from '../../api/api';
 
 interface ConnectedProps {
     devices: Array<Oven | RobotHoover>
@@ -31,7 +32,9 @@ const DeviceDetails = (props: ComponentProps) => {
                     <OvenContent
                         device={oven}
                         deviceToggle={props.deviceToggle}
-                        removeDevice={props.removeDevice} />
+                        removeDevice={props.removeDevice}
+                        updateOven={props.updateOven}
+                    />
                 )
             } else {
                 const robotHoover = device as RobotHoover;
@@ -39,7 +42,9 @@ const DeviceDetails = (props: ComponentProps) => {
                     <RobotHooverContent
                         device={robotHoover}
                         deviceToggle={props.deviceToggle}
-                        removeDevice={props.removeDevice} />
+                        removeDevice={props.removeDevice}
+                        updateRobot={props.updateRobot}
+                    />
                 )
             }
         }
@@ -67,6 +72,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     },
     removeDevice: (id: number) => {
         return dispatch(removeDevice(id));
+    },
+    updateOven: (p: { device: PostOven, id: number }) => {
+        return dispatch(updateOven(p));
+    },
+    updateRobot: (p: { device: PostRobot, id: number }) => {
+        return dispatch(updateRobot(p));
     }
 });
 

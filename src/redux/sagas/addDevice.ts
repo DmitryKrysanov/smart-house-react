@@ -8,13 +8,15 @@ import { showLoader, hideLoader } from '../actions/loaderActions/loaderActions';
 
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms))
 
-const fetchNewOven = (device: PostOven) => fetch('http://localhost:3001/api/v1/homes/1/devices', {
-    method: "POST",
-    body: JSON.stringify(device),
-    headers: {
-        "Content-type": "application/json; charset=UTF-8"
-    }
-});
+const fetchNewOven = (device: PostOven) => {
+    return fetch('http://localhost:3001/api/v1/homes/1/devices', {
+        method: "POST",
+        body: JSON.stringify(device),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
+};
 //////////////// Add new device (Oven) //////////////
 function* workAddOven(action: AddSagaOvenAction) {
     try {
@@ -41,13 +43,15 @@ export function* watchAddOven() {
     yield takeEvery(ADD_SAGA_OVEN, workAddOven)
 }
 
-const fetchNewRobot = (device: PostRobot) => fetch('http://localhost:3001/api/v1/homes/1/devices', {
-    method: "POST",
-    body: JSON.stringify(device),
-    headers: {
-        "Content-type": "application/json; charset=UTF-8"
-    }
-});
+const fetchNewRobot = (device: PostRobot) => {
+    return fetch('http://localhost:3001/api/v1/homes/1/devices', {
+        method: "POST",
+        body: JSON.stringify(device),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
+};
 //////////////// Add new device (Robot) //////////////
 function* workAddRobot(action: AddSagaRobotAction) {
     try {

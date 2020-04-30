@@ -13,7 +13,8 @@ import { Redirect } from 'react-router-dom';
 interface Props {
     device: Oven,
     deviceToggle: (id: number) => void,
-    removeDevice: (id: number) => void
+    removeDevice: (id: number) => void,
+    updateOven: (p: { device: PostOven, id: number }) => void
 }
 
 interface State {
@@ -38,12 +39,7 @@ class OvenContent extends Component<Props, State> {
 
     private handleSubmit = async (event: { preventDefault: () => void; }): Promise<void> => {
         event.preventDefault();
-        const resp = await devicesAPI.updateOven(this.state.device, this.props.device.id);
-        console.log(resp)
-        // if(resp === 'OK') {
-        //         // тут будет алерт
-        // }
-       
+        this.props.updateOven({ device: this.state.device, id: this.props.device.id });
     }
 
     private handleDelete = async (event: { preventDefault: () => void; }): Promise<void> => {

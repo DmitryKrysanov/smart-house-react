@@ -11,7 +11,9 @@ import {
     SET_TOTAL_ITEMS,
     ADD_SAGA_OVEN,
     ADD_SAGA_ROBOT,
-    FILTER_DEVICES
+    FILTER_DEVICES,
+    UPDATE_ROBOT,
+    UPDATE_OVEN
 } from '../../../constants/deviceActions';
 import { RobotHoover, Oven } from '../../reducers/deviceReducer';
 import { PostOven, PostRobot } from '../../../api/api';
@@ -135,6 +137,32 @@ export const updateDevice = (payload: Oven | RobotHoover): updateDeviceAction =>
     payload
 })
 
+export interface UpdateRobotAction {
+    type: typeof UPDATE_ROBOT,
+    payload: {
+        device: PostRobot,
+        id: number
+    }
+}
+
+export const updateRobot = (payload: { device: PostRobot, id: number }): UpdateRobotAction => ({
+    type: UPDATE_ROBOT,
+    payload
+})
+
+export interface UpdateOvenAction {
+    type: typeof UPDATE_OVEN,
+    payload: {
+        device: PostOven,
+        id: number
+    }
+}
+
+export const updateOven = (payload: { device: PostOven, id: number }): UpdateOvenAction => ({
+    type: UPDATE_OVEN,
+    payload
+})
+
 interface removeDeviceAction {
     type: typeof REMOVE_DEVICE,
     id: number
@@ -157,4 +185,6 @@ export type deviceActions = AddDeviceAction
     | SetTotalItemsAction
     | AddSagaOvenAction
     | AddSagaRobotAction
-    | FilterDevicesAction;
+    | FilterDevicesAction
+    | UpdateOvenAction
+    | UpdateRobotAction;
