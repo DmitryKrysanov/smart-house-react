@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import AddDeviceOven from './AddDeviceOven/AddDeviceOven';
 import AddDeviceRobot from './AddDeviceRobot/AddDeviceRobotHoover';
 import style from './AddDeviceContainer.module.scss';
@@ -6,6 +6,12 @@ import { Oven, RobotHoover } from '../../redux/reducers/deviceReducer'
 import { AddDeviceAction, FetchDevicesAction, AddSagaOvenAction, AddSagaRobotAction } from '../../redux/actions/deviceActions/deviceActions'
 import SelectDevice from './SelectDevice/SelectDevice';
 import { PostOven, PostRobot } from '../../api/api';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '../Alert/Alert';
+import { AlertState } from '../../redux/reducers/alertReducer';
+import { connect } from 'react-redux';
+import { LoaderState } from '../../redux/reducers/loaderReducer';
+import { Loader } from '../Loader/Loader';
 
 
 interface Props {
@@ -15,7 +21,14 @@ interface Props {
     addSagaRobot: (p: PostRobot) => AddSagaRobotAction
 }
 
-export default class AddDeviceContainer extends Component<Props> {
+interface ConnectedProps {
+    alert: string,
+    isLoad: boolean
+}
+
+type ComponentProps = ConnectedProps & Props;
+
+class AddDeviceContainer extends Component<ComponentProps> {
 
     public state = {
         content: 0
@@ -61,6 +74,7 @@ export default class AddDeviceContainer extends Component<Props> {
                     handleContent={this.handleContent} />;
             case 1:
                 return <AddDeviceOven
+                    alert = {this.props.alert}
                     handleToggleDialog={handleToggleDialog}
                     handleContent={this.handleContent}
                     addDevice={addDevice}
@@ -79,10 +93,34 @@ export default class AddDeviceContainer extends Component<Props> {
     }
 
     render() {
+
+        console.log(this.props)
         return (
-            <div className={style.dialog}>
-                {this.renderContent()}
-            </div>
+            <Fragment>
+                        {
+            this.props.isLoad ?
+              <Loader /> : null
+          }
+                { this.props.alert.length === 0 ? null : 
+                    <Snackbar open={true}>
+                        <Alert text={this.props.alert} />
+                    </Snackbar> 
+                }
+                
+                <div className={style.dialog}>
+                    {this.renderContent()}
+                </div>
+            </Fragment>
         )
     }
 }
+
+
+const mapStateToProps = (state: { alertReducer: AlertState, loaderReducer: LoaderState }): ConnectedProps => {
+    return ({
+      alert: state.alertReducer.alert,
+      isLoad: state.loaderReducer.isLoad
+    });
+}
+
+export default connect(mapStateToProps)(AddDeviceContainer);
