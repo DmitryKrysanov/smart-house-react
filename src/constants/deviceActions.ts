@@ -14,3 +14,6 @@ export const ADD_SAGA_OVEN = "ADD_SAGA_OVEN";
 export const ADD_SAGA_ROBOT = "ADD_SAGA_ROBOT";
 
 export const FILTER_DEVICES = "FILTER_DEVICES";
+
+export const UPDATE_OVEN = "UPDATE_OVEN";
+export const UPDATE_ROBOT = "UPDATE_ROBOT";

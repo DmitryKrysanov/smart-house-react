@@ -5,7 +5,6 @@ import Card from '../../Card/Card';
 import style from './DevicesList.module.scss';
 import Pagination from '../Pagination/Pagination';
 import EmptyState from '../EmptyState/EmptyState';
-import { routes } from '../../../routes';
 
 
 interface Props {

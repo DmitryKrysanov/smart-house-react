@@ -12,7 +12,8 @@ import { Redirect } from 'react-router-dom';
 interface Props {
     device: RobotHoover,
     deviceToggle: (id: number) => void,
-    removeDevice: (id: number) => void
+    removeDevice: (id: number) => void,
+    updateRobot: (p: { device: PostRobot, id: number }) => void
 }
 
 interface State {
@@ -37,19 +38,21 @@ class RobotHooverContent extends Component<Props, State> {
     private handleSubmit = async (e: { preventDefault: () => void; }): Promise<void> => {
         e.preventDefault();
         const { id } = this.props.device;
-        await devicesAPI.updateRobotHoover(this.state.device, id);
+        this.props.updateRobot({ device: this.state.device, id: id })
     }
 
     private handleDelete = async (e: { preventDefault: () => void; }): Promise<void> => {
         e.preventDefault();
-        const { id } = this.props.device;
-        if (typeof this.props.device != 'undefined') {
-            await devicesAPI.deleteDevice(id);
-            this.props.removeDevice(id);
-            this.redirect()
-        } else {
-            console.log('nothing to delete');
-        }
+        this.props.removeDevice(this.props.device.id);
+        this.redirect();
+        // const { id } = this.props.device;
+        // if (typeof this.props.device != 'undefined') {
+        //     await devicesAPI.deleteDevice(id);
+        //     this.props.removeDevice(id);
+        //     this.redirect()
+        // } else {
+        //     console.log('nothing to delete');
+        // }
     }
 
     private handleToggle = (): void => {
