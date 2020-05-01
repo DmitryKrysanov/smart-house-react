@@ -43,14 +43,16 @@ class RobotHooverContent extends Component<Props, State> {
 
     private handleDelete = async (e: { preventDefault: () => void; }): Promise<void> => {
         e.preventDefault();
-        const { id } = this.props.device;
-        if (typeof this.props.device != 'undefined') {
-            await devicesAPI.deleteDevice(id);
-            this.props.removeDevice(id);
-            this.redirect()
-        } else {
-            console.log('nothing to delete');
-        }
+        this.props.removeDevice(this.props.device.id);
+        this.redirect();
+        // const { id } = this.props.device;
+        // if (typeof this.props.device != 'undefined') {
+        //     await devicesAPI.deleteDevice(id);
+        //     this.props.removeDevice(id);
+        //     this.redirect()
+        // } else {
+        //     console.log('nothing to delete');
+        // }
     }
 
     private handleToggle = (): void => {

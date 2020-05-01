@@ -163,7 +163,7 @@ export const updateOven = (payload: { device: PostOven, id: number }): UpdateOve
     payload
 })
 
-interface removeDeviceAction {
+export interface removeDeviceAction {
     type: typeof REMOVE_DEVICE,
     id: number
 }

@@ -44,13 +44,16 @@ class OvenContent extends Component<Props, State> {
 
     private handleDelete = async (event: { preventDefault: () => void; }): Promise<void> => {
         event.preventDefault();
-        if (typeof this.props.device != 'undefined') {
-            await devicesAPI.deleteDevice(this.props.device.id);
-            this.props.removeDevice(this.props.device.id);
-            this.redirect()
-        } else {
-            console.log('nothing to delete');
-        }
+        this.props.removeDevice(this.props.device.id);
+        this.redirect();
+        // if (typeof this.props.device != 'undefined') {
+        //     await devicesAPI.deleteDevice(this.props.device.id);
+        //     this.props.removeDevice(this.props.device.id);
+        //     this.redirect()
+        // } else {
+        //     console.log('nothing to delete');
+        // }
+
     }
 
     private handleTempChange = (name: string, value: number): void => {

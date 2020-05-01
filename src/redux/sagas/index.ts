@@ -3,6 +3,7 @@ import { watchFetchDevices } from './fetchDevices'
 import { watchAddOven, watchAddRobot } from './addDevice'
 import { watchFilterDevices } from './filterDevices'
 import { watchUpdateOven, watchUpdateRobot } from './updateDevices'
+import { watchRemoveDevice } from './removeDevice'
 
 export default function* rootSaga() {
   yield all([
@@ -11,6 +12,7 @@ export default function* rootSaga() {
     watchAddRobot(),
     watchFilterDevices(),
     watchUpdateOven(),
-    watchUpdateRobot()
+    watchUpdateRobot(),
+    watchRemoveDevice()
   ])
 }
