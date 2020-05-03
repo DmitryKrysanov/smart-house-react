@@ -16,10 +16,12 @@ function* workRemoveDevice(action: removeDeviceAction) {
         yield put(showLoader());
         const removeDev = yield call(fetchRemoveDevice, action.id);
         if (removeDev.status >= 200 && removeDev.status < 300) {
-            yield put(showAlert("Device has been deleted successfully"));
+            yield put(showAlert("Device has been removed"));
             const data = yield call(fetchData);
             yield put(setDevices(data));
             yield put(hideLoader());
+            yield delay(3000)
+            yield put(hideAlert())
         } else {
             yield put(showAlert("Something went wrong"))
             yield put(hideLoader());

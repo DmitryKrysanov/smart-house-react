@@ -9,9 +9,16 @@ import { connect } from 'react-redux';
 import { Dispatch } from '../../redux/store';
 import { turnOnOffDevice, removeDevice, updateOven, updateRobot } from '../../redux/actions/deviceActions/deviceActions';
 import { PostOven, PostRobot } from '../../api/api';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '../Alert/Alert';
+import { Loader } from '../Loader/Loader';
+import { AlertState } from '../../redux/reducers/alertReducer';
+import { LoaderState } from '../../redux/reducers/loaderReducer';
 
 interface ConnectedProps {
-    devices: Array<Oven | RobotHoover>
+    devices: Array<Oven | RobotHoover>,
+    alert: string,
+    isLoad: boolean
 }
 
 type ComponentProps = ConnectedProps & ReturnType<typeof mapDispatchToProps>;
@@ -56,15 +63,31 @@ const DeviceDetails = (props: ComponentProps) => {
             <div className={style.device_details}>
                 {content(device)}
             </div>
+            {
+                props.isLoad ?
+                  <Loader /> : null
+              }
+              {props.alert.length === 0 ? null :
+                <Snackbar open={true}>
+                  <Alert text={props.alert} />
+                </Snackbar>
+              }
         </div>
     )
 }
 
-const mapStateToProps = (state: { deviceReducer: DevicesState }): ConnectedProps => {
+const mapStateToProps = (state: {
+    deviceReducer: DevicesState,
+    alertReducer: AlertState,
+    loaderReducer: LoaderState
+  }): ConnectedProps => {
     return ({
-        devices: state.deviceReducer.devices
+      devices: state.deviceReducer.devices,
+      alert: state.alertReducer.alert,
+      isLoad: state.loaderReducer.isLoad
     });
-}
+  }
+  
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     deviceToggle: (id: number) => {

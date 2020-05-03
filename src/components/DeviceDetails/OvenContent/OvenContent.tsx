@@ -5,7 +5,7 @@ import Image from '../Image/Image';
 import GeneralInfo from '../GeneralInfo/GeneralInfo';
 import Modes from '../Modes/Modes';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { devicesAPI, PostOven } from '../../../api/api';
+import { PostOven } from '../../../api/api';
 import Button from '@material-ui/core/Button';
 import Temperature from '../Temperature/Temperature';
 import { Redirect } from 'react-router-dom';
@@ -46,14 +46,6 @@ class OvenContent extends Component<Props, State> {
         event.preventDefault();
         this.props.removeDevice(this.props.device.id);
         this.redirect();
-        // if (typeof this.props.device != 'undefined') {
-        //     await devicesAPI.deleteDevice(this.props.device.id);
-        //     this.props.removeDevice(this.props.device.id);
-        //     this.redirect()
-        // } else {
-        //     console.log('nothing to delete');
-        // }
-
     }
 
     private handleTempChange = (name: string, value: number): void => {

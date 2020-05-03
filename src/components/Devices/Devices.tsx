@@ -15,10 +15,14 @@ import { Switch, Route } from 'react-router-dom';
 import { PostOven, PostRobot } from '../../api/api';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '../Alert/Alert';
+import { AlertState } from '../../redux/reducers/alertReducer';
+import { LoaderState } from '../../redux/reducers/loaderReducer';
+import { Loader } from '../Loader/Loader';
 
 interface ConnectedProps {
-  devices: Array<Oven | RobotHoover>
-  // currentType: string
+  devices: Array<Oven | RobotHoover>,
+  alert: string,
+  isLoad: boolean
 }
 
 type ComponentProps = ConnectedProps & ReturnType<typeof mapDispatchToProps>;
@@ -26,7 +30,6 @@ type ComponentProps = ConnectedProps & ReturnType<typeof mapDispatchToProps>;
 const Devices = (props: ComponentProps) => {
 
   const [showModal, setShowModal] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(true);
 
   const handleToggleDialog = (): void => {
@@ -55,7 +58,6 @@ const Devices = (props: ComponentProps) => {
       {showModal ? ReactDOM.createPortal(
         <AddDeviceContainer
           handleToggleDialog={handleToggleDialog}
-          // addDevice={props.addResourse}
           addSagaOven={props.addSagaOven}
           addSagaRobot={props.addSagaRobot}
         />,
@@ -63,10 +65,15 @@ const Devices = (props: ComponentProps) => {
       ) : null}
       <Fragment>
         <div>
-          {/* {
-            isLoading ?
+          {
+            props.isLoad ?
               <Loader /> : null
-          } */}
+          }
+          {props.alert.length === 0 ? null :
+            <Snackbar open={true}>
+              <Alert text={props.alert} />
+            </Snackbar>
+          }
           <Switch>
             <Route path='/home/devices/:deviceType'>
               <DevicesList devices={props.devices} />
@@ -74,23 +81,23 @@ const Devices = (props: ComponentProps) => {
           </Switch>
         </div>
       </Fragment>
-      {/* <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
-          <Alert text={'Alert text'}/>
-      </Snackbar> */}
     </div>
   )
 }
 
-const mapStateToProps = (state: { deviceReducer: DevicesState }): ConnectedProps => {
+const mapStateToProps = (state: {
+  deviceReducer: DevicesState,
+  alertReducer: AlertState,
+  loaderReducer: LoaderState
+}): ConnectedProps => {
   return ({
-    devices: state.deviceReducer.devices
+    devices: state.deviceReducer.devices,
+    alert: state.alertReducer.alert,
+    isLoad: state.loaderReducer.isLoad
   });
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  // addResourse: (p: Oven | RobotHoover) => {
-  //   return dispatch(addDevice(p))
-  // },
   getAllDevices: () => {
     return dispatch(fetchDevices())
   },
