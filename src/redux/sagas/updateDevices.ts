@@ -25,6 +25,7 @@ function* workUpdateRobot(action: UpdateRobotAction) {
         if (updRobot.status >= 200 && updRobot.status < 300) {
             yield put(showAlert("Device has been updated successfully"));
             yield put(hideLoader());
+            yield delay(3000)
             yield put(hideAlert());
         } else {
             yield put(showAlert("Something went wrong"))
@@ -62,6 +63,7 @@ function* workUpdateOven(action: UpdateOvenAction) {
         if (updOven.status >= 200 && updOven.status < 300) {
             yield put(showAlert("Device has been updated successfully"));
             yield put(hideLoader());
+            yield delay(3000)
             yield put(hideAlert());
         } else {
             yield put(showAlert("Something went wrong"))
