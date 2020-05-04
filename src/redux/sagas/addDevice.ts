@@ -35,7 +35,10 @@ function* workAddOven(action: AddSagaOvenAction) {
     } catch (error) {
         yield put(showAlert("Server is not responding."))
         yield delay(3000)
+
+    } finally {
         yield put(hideAlert())
+        yield put(hideLoader())
     }
 }
 
@@ -70,7 +73,9 @@ function* workAddRobot(action: AddSagaRobotAction) {
     } catch (error) {
         yield put(showAlert("Server is not responding."))
         yield delay(3000)
+    } finally {
         yield put(hideAlert())
+        yield put(hideLoader())
     }
 }
 
