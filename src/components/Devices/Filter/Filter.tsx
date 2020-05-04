@@ -20,7 +20,7 @@ const Filter: React.FC<Props> = (props) => {
 
   let type = '';
 
-  (props.match.params.deviceType !== 'all') ?
+  (props.match.params.deviceType !== '&type=All') ?
     type = `${props.match.params.deviceType}` : type = '';
 
   const loadAllDevices = async () => {
@@ -49,7 +49,7 @@ const Filter: React.FC<Props> = (props) => {
         textColor="secondary"
       >
 
-        <Tab value={''} label="All" component={NavLink} to='/home/devices/all' />
+        <Tab value={''} label="All" component={NavLink} to='/home/devices/&type=All' />
         <Tab value={'&type=Oven'} label="Oven" component={NavLink} to='/home/devices/&type=Oven' />
         <Tab value={'&type=Robot-hoover'} label="Robot" component={NavLink} to='/home/devices/&type=Robot-hoover' />
 
