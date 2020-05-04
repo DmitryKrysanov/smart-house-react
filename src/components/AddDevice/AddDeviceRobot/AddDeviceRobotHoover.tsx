@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { AddDeviceAction, FetchDevicesAction, AddSagaRobotAction } from '../../../redux/actions/deviceActions/deviceActions';
-import { RobotHoover } from '../../../redux/reducers/deviceReducer';
+import { AddSagaRobotAction } from '../../../redux/actions/deviceActions/deviceActions';
 import style from './AddDeviceRobotHoover.module.scss';
 import Button from '@material-ui/core/Button';
-import { devicesAPI, PostRobot } from '../../../api/api';
-import AddModes from '../AddModes';
-import NameTextfield from '../NameTextfield';
-import ImageTextfield from '../ImageTextfield';
+import { PostRobot } from '../../../api/api';
+import AddModes from '../AddModes/AddModes';
+import NameTextfield from '../NameTextfield/NameTextfield';
+import ImageTextfield from '../ImageTextfield/ImageTextfield';
 
 interface State {
     device: PostRobot,
@@ -18,23 +17,23 @@ interface State {
 
 interface Props {
     handleToggleDialog: () => void,
-    addDevice: (p: RobotHoover) => AddDeviceAction,
+    //  addDevice: (p: RobotHoover) => AddDeviceAction,
     handleContent: (count: number) => void,
-    addSagaRobot: (p: PostRobot) => AddSagaRobotAction
+    addSagaRobot: (p: PostRobot) => AddSagaRobotAction,
+    alert: string
 }
 
 class AddDeviceRobot extends Component<Props, State> {
     public state: State = {
         device: {
             category: 'robot-hoover',
-            name: 'Robot',
+            name: '',
             image: 'https://www.stleos.uq.edu.au/wp-content/uploads/2016/08/image-placeholder.png',
             status: false,
             modes: [],
             currentMode: ''
         },
         errors: {
-            // isError: boolean
             isNameError: false,
             isImageError: false
         }
@@ -84,24 +83,12 @@ class AddDeviceRobot extends Component<Props, State> {
         })
     }
 
-    // handleIsError = (error: boolean) => {
-    //     this.setState({
-    //         errors: {
-    //             ...this.state.device,
-
-    //         }
-    //     })
-    // }
     handleIsNameError = (error: boolean) => {
         this.setState({
             errors: {
                 ...this.state.errors,
                 isNameError: error
             }
-            //  ...this.state.device,
-            //  isError: error
-
-
         })
     }
 
@@ -116,11 +103,12 @@ class AddDeviceRobot extends Component<Props, State> {
 
     private onSubmit = async (event: { preventDefault: () => void; }): Promise<void> => {
         event.preventDefault();
-        console.log(this.state.device);
         this.props.addSagaRobot(this.state.device);
-        // const respRobot = await devicesAPI.postRobot(this.state.device);
-        // this.props.addDevice(respRobot);
-        this.props.handleToggleDialog();
+        setTimeout(() => {
+            if (this.props.alert.length === 0) {
+                this.props.handleToggleDialog();
+            }
+        }, 500)
     }
 
     render() {

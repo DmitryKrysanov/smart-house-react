@@ -4,21 +4,25 @@ import style from './Devices.module.scss';
 import { RobotHoover, Oven, DevicesState } from '../../redux/reducers/deviceReducer'
 import AddIcon from '@material-ui/icons/Add';
 import AddDeviceContainer from '../AddDevice/AddDeviceContainer'
-import Filter from '../Tabs/Filter';
-import { addDevice, fetchDevices, addSagaOven, addSagaRobot } from '../../redux/actions/deviceActions/deviceActions';
-import DevicesHeader from '../DevicesHeader/DevicesHeader'
+import Filter from './Filter/Filter';
+import { fetchDevices, addSagaOven, addSagaRobot } from '../../redux/actions/deviceActions/deviceActions';
+import DevicesHeader from './DevicesHeader/DevicesHeader'
 import Fab from '@material-ui/core/Fab';
-import { Loader } from '../Loader/Loader';
 import { Dispatch } from '../../redux/store';
 import { connect } from 'react-redux';
-import DevicesList from './DevicesList';
-import { Switch, Route, useRouteMatch } from 'react-router-dom';
-import { routes } from '../../routes';
+import DevicesList from './DeviceList/DevicesList';
+import { Switch, Route } from 'react-router-dom';
 import { PostOven, PostRobot } from '../../api/api';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '../Alert/Alert';
+import { AlertState } from '../../redux/reducers/alertReducer';
+import { LoaderState } from '../../redux/reducers/loaderReducer';
+import { Loader } from '../Loader/Loader';
 
 interface ConnectedProps {
-  devices: Array<Oven | RobotHoover>
-  // currentType: string
+  devices: Array<Oven | RobotHoover>,
+  alert: string,
+  isLoad: boolean
 }
 
 type ComponentProps = ConnectedProps & ReturnType<typeof mapDispatchToProps>;
@@ -26,12 +30,20 @@ type ComponentProps = ConnectedProps & ReturnType<typeof mapDispatchToProps>;
 const Devices = (props: ComponentProps) => {
 
   const [showModal, setShowModal] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  let { path, url } = useRouteMatch();
+  const [open, setOpen] = useState(true);
 
   const handleToggleDialog = (): void => {
     setShowModal(!showModal)
   }
+
+  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   return (
     <div>
       <DevicesHeader />
@@ -46,43 +58,46 @@ const Devices = (props: ComponentProps) => {
       {showModal ? ReactDOM.createPortal(
         <AddDeviceContainer
           handleToggleDialog={handleToggleDialog}
-          addDevice={props.addResourse}
           addSagaOven={props.addSagaOven}
           addSagaRobot={props.addSagaRobot}
         />,
         document.getElementById('modal-root') as HTMLInputElement
       ) : null}
-
       <Fragment>
         <div>
           {
-            isLoading ?
+            props.isLoad ?
               <Loader /> : null
           }
-
+          {props.alert.length === 0 ? null :
+            <Snackbar open={true}>
+              <Alert text={props.alert} />
+            </Snackbar>
+          }
           <Switch>
             <Route path='/home/devices/:deviceType'>
               <DevicesList devices={props.devices} />
             </Route>
           </Switch>
-
         </div>
       </Fragment>
     </div>
   )
 }
 
-const mapStateToProps = (state: { deviceReducer: DevicesState }): ConnectedProps => {
+const mapStateToProps = (state: {
+  deviceReducer: DevicesState,
+  alertReducer: AlertState,
+  loaderReducer: LoaderState
+}): ConnectedProps => {
   return ({
-    devices: state.deviceReducer.devices
-    //  currentType: state.deviceReducer.devicesType
+    devices: state.deviceReducer.devices,
+    alert: state.alertReducer.alert,
+    isLoad: state.loaderReducer.isLoad
   });
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  addResourse: (p: Oven | RobotHoover) => {
-    return dispatch(addDevice(p))
-  },
   getAllDevices: () => {
     return dispatch(fetchDevices())
   },

@@ -1,6 +1,6 @@
 import React from 'react';
 import style from './DevicesHeader.module.scss';
-import Search from './Search';
+import Search from './Search/Search';
 
 const DevicesHeader = () => {
     return (

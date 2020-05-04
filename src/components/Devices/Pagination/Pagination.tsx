@@ -1,10 +1,10 @@
 import React, { Component, useState } from 'react';
-import { devicesAPI } from '../../api/api';
+import { devicesAPI } from '../../../api/api';
 import style from './Pagination.module.scss';
 // import { render } from '@testing-library/react';
-import { Dispatch } from '../../redux/store';
-import { DevicesState, Oven, RobotHoover } from '../../redux/reducers/deviceReducer';
-import { setDevices, SetCurrentPage } from '../../redux/actions/deviceActions/deviceActions';
+import { Dispatch } from '../../../redux/store';
+import { DevicesState, Oven, RobotHoover } from '../../../redux/reducers/deviceReducer';
+import { setDevices, SetCurrentPage } from '../../../redux/actions/deviceActions/deviceActions';
 import { connect } from 'react-redux';
 
 

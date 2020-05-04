@@ -1,16 +1,24 @@
 import React from 'react';
 import style from './DeviceDetails.module.scss'
-import DeviceDetailsHeader from '../DeviceDetailsHeader/DeviceDetailsHeader';
+import DeviceDetailsHeader from './DeviceDetailsHeader/DeviceDetailsHeader';
 import { Oven, RobotHoover, DevicesState } from '../../redux/reducers/deviceReducer';
 import { useParams } from 'react-router-dom';
 import RobotHooverContent from './RobotHooverContent/RobotHooverContent';
 import OvenContent from './OvenContent/OvenContent'
 import { connect } from 'react-redux';
 import { Dispatch } from '../../redux/store';
-import { turnOnOffDevice, removeDevice } from '../../redux/actions/deviceActions/deviceActions';
+import { turnOnOffDevice, removeDevice, updateOven, updateRobot } from '../../redux/actions/deviceActions/deviceActions';
+import { PostOven, PostRobot } from '../../api/api';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '../Alert/Alert';
+import { Loader } from '../Loader/Loader';
+import { AlertState } from '../../redux/reducers/alertReducer';
+import { LoaderState } from '../../redux/reducers/loaderReducer';
 
 interface ConnectedProps {
-    devices: Array<Oven | RobotHoover>
+    devices: Array<Oven | RobotHoover>,
+    alert: string,
+    isLoad: boolean
 }
 
 type ComponentProps = ConnectedProps & ReturnType<typeof mapDispatchToProps>;
@@ -31,7 +39,9 @@ const DeviceDetails = (props: ComponentProps) => {
                     <OvenContent
                         device={oven}
                         deviceToggle={props.deviceToggle}
-                        removeDevice={props.removeDevice} />
+                        removeDevice={props.removeDevice}
+                        updateOven={props.updateOven}
+                    />
                 )
             } else {
                 const robotHoover = device as RobotHoover;
@@ -39,7 +49,9 @@ const DeviceDetails = (props: ComponentProps) => {
                     <RobotHooverContent
                         device={robotHoover}
                         deviceToggle={props.deviceToggle}
-                        removeDevice={props.removeDevice} />
+                        removeDevice={props.removeDevice}
+                        updateRobot={props.updateRobot}
+                    />
                 )
             }
         }
@@ -51,15 +63,31 @@ const DeviceDetails = (props: ComponentProps) => {
             <div className={style.device_details}>
                 {content(device)}
             </div>
+            {
+                props.isLoad ?
+                  <Loader /> : null
+              }
+              {props.alert.length === 0 ? null :
+                <Snackbar open={true}>
+                  <Alert text={props.alert} />
+                </Snackbar>
+              }
         </div>
     )
 }
 
-const mapStateToProps = (state: { deviceReducer: DevicesState }): ConnectedProps => {
+const mapStateToProps = (state: {
+    deviceReducer: DevicesState,
+    alertReducer: AlertState,
+    loaderReducer: LoaderState
+  }): ConnectedProps => {
     return ({
-        devices: state.deviceReducer.devices
+      devices: state.deviceReducer.devices,
+      alert: state.alertReducer.alert,
+      isLoad: state.loaderReducer.isLoad
     });
-}
+  }
+  
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     deviceToggle: (id: number) => {
@@ -67,6 +95,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     },
     removeDevice: (id: number) => {
         return dispatch(removeDevice(id));
+    },
+    updateOven: (p: { device: PostOven, id: number }) => {
+        return dispatch(updateOven(p));
+    },
+    updateRobot: (p: { device: PostRobot, id: number }) => {
+        return dispatch(updateRobot(p));
     }
 });
 

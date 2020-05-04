@@ -1,5 +1,5 @@
 import React from 'react';
-import style from './DevicesList.module.scss';
+import style from './EmptyState.module.scss';
 
 const EmptyState = () => {
     return (

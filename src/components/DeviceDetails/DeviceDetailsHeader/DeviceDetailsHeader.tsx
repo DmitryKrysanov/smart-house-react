@@ -3,7 +3,7 @@ import style from './DeviceDetailsHeader.module.scss';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
-import { routes } from '../../routes';
+import { routes } from '../../../routes';
 
 
 const DeviceDetailsHeader = (props: RouteComponentProps) => {

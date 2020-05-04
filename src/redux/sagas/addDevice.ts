@@ -1,33 +1,41 @@
+import { showAlert, hideAlert } from './../actions/alertActions/alertActions';
 import { takeEvery, call, put } from "redux-saga/effects";
-import { Oven } from "../reducers/deviceReducer";
 import { fetchData } from "./fetchDevices";
 import { setDevices, AddSagaOvenAction, AddSagaRobotAction } from "../actions/deviceActions/deviceActions";
-import { PostOven, devicesAPI, PostRobot } from "../../api/api";
+import { PostOven, PostRobot } from "../../api/api";
 import { ADD_SAGA_OVEN, ADD_SAGA_ROBOT } from "../../constants/deviceActions";
+import { showLoader, hideLoader } from '../actions/loaderActions/loaderActions';
 
+const delay = (ms: number) => new Promise(res => setTimeout(res, ms))
 
-// export const addNewOven = (device: PostOven): Promise<Oven> => {
-//     return devicesAPI.postOven(device);
-// }
-
-const fetchNewOven = (device: PostOven) => fetch('http://localhost:3001/api/v1/homes/1/devices', {
-    method: "POST",
-    body: JSON.stringify(device),
-    headers: {
-        "Content-type": "application/json; charset=UTF-8"
-    }
-
-}).then(res => console.log(res));
+const fetchNewOven = (device: PostOven) => {
+    return fetch('http://localhost:3001/api/v1/homes/1/devices', {
+        method: "POST",
+        body: JSON.stringify(device),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
+};
 //////////////// Add new device (Oven) //////////////
 function* workAddOven(action: AddSagaOvenAction) {
     try {
-        yield console.log(action.payload);
+        yield put(showLoader());
         const newOven = yield call(fetchNewOven, action.payload);
-        yield console.log(newOven);
-        const data = yield call(fetchData);
-        yield put(setDevices(data));
+        if (newOven.status >= 200 && newOven.status < 300) {
+            const data = yield call(fetchData);
+            yield put(setDevices(data));
+            yield put(hideLoader());
+        } else {
+            yield put(showAlert("Something went wrong"))
+            yield put(hideLoader());
+            yield delay(3000)
+            yield put(hideAlert())
+        }
     } catch (error) {
-        console.log(error);
+        yield put(showAlert("Server is not responding."))
+        yield delay(3000)
+        yield put(hideAlert())
     }
 }
 
@@ -35,26 +43,34 @@ export function* watchAddOven() {
     yield takeEvery(ADD_SAGA_OVEN, workAddOven)
 }
 
-
-
-const fetchNewRobot = (device: PostRobot) => fetch('http://localhost:3001/api/v1/homes/1/devices', {
-    method: "POST",
-    body: JSON.stringify(device),
-    headers: {
-        "Content-type": "application/json; charset=UTF-8"
-    }
-
-}).then(res => console.log(res));
+const fetchNewRobot = (device: PostRobot) => {
+    return fetch('http://localhost:3001/api/v1/homes/1/devices', {
+        method: "POST",
+        body: JSON.stringify(device),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
+};
 //////////////// Add new device (Robot) //////////////
 function* workAddRobot(action: AddSagaRobotAction) {
     try {
-        yield console.log(action.payload);
-        const newOven = yield call(fetchNewRobot, action.payload);
-        yield console.log(newOven);
-        const data = yield call(fetchData);
-        yield put(setDevices(data));
+        yield put(showLoader());
+        const newRobot = yield call(fetchNewRobot, action.payload);
+        if (newRobot.status >= 200 && newRobot.status < 300) {
+            const data = yield call(fetchData);
+            yield put(setDevices(data));
+            yield put(hideLoader());
+        } else {
+            yield put(showAlert("Something went wrong"))
+            yield put(hideLoader());
+            yield delay(3000)
+            yield put(hideAlert())
+        }
     } catch (error) {
-        console.log(error);
+        yield put(showAlert("Server is not responding."))
+        yield delay(3000)
+        yield put(hideAlert())
     }
 }
 

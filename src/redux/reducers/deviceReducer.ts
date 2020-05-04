@@ -100,7 +100,6 @@ export const deviceReducer = (state = initialState, action: deviceActions): Devi
         case SET_DEVICES:
             return { ...state, devices: action.payload };
 
-
         case TURN_OFF_ALL_DEVICES:
             return {
                 ...state,
@@ -112,6 +111,7 @@ export const deviceReducer = (state = initialState, action: deviceActions): Devi
                 ...state,
                 devices: toggleStatus(state.devices, action.id)
             }
+
         case SET_CURRENT_PAGE:
             return {
                 ...state,
@@ -124,11 +124,11 @@ export const deviceReducer = (state = initialState, action: deviceActions): Devi
         //         devices: 
         //     } 
 
-        case REMOVE_DEVICE:
-            return {
-                ...state,
-                devices: findAndDelete(state.devices, action.id)
-            }
+        // case REMOVE_DEVICE:
+        //     return {
+        //         ...state,
+        //         devices: findAndDelete(state.devices, action.id)
+        //     }
 
         default:
             return state;

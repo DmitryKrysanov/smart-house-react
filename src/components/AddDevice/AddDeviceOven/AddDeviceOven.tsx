@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
-import { AddDeviceAction, FetchDevicesAction, AddSagaOvenAction } from '../../../redux/actions/deviceActions/deviceActions';
-import { Oven } from '../../../redux/reducers/deviceReducer';
+import { AddSagaOvenAction } from '../../../redux/actions/deviceActions/deviceActions';
 import style from './AddDeviceOven.module.scss';
 import Button from '@material-ui/core/Button';
-import { devicesAPI, PostOven, Temp } from '../../../api/api';
-import AddModes from '../AddModes';
-import NameTextfield from '../NameTextfield';
-import ImageTextfield from '../ImageTextfield';
-import AddTemp from '../AddTemp';
+import { PostOven, Temp } from '../../../api/api';
+import AddModes from '../AddModes/AddModes';
+import NameTextfield from '../NameTextfield/NameTextfield';
+import ImageTextfield from '../ImageTextfield/ImageTextfield';
+import AddTemp from '../AddTemp/AddTemp';
 
 interface State {
     device: PostOven,
     errors: {
-        // isError: boolean
         isNameError: boolean,
         isImageError: boolean
     }
@@ -20,16 +18,17 @@ interface State {
 
 interface Props {
     handleToggleDialog: () => void,
-    addDevice: (p: Oven) => AddDeviceAction,
+  //  addDevice: (p: Oven) => AddDeviceAction,
     handleContent: (count: number) => void,
-    addSagaOven: (p: PostOven) => AddSagaOvenAction
+    addSagaOven: (p: PostOven) => AddSagaOvenAction,
+    alert: string
 }
 
 class AddDeviceOven extends Component<Props, State> {
     public state: State = {
         device: {
             category: 'oven',
-            name: 'Oven',
+            name: '',
             image: 'https://www.stleos.uq.edu.au/wp-content/uploads/2016/08/image-placeholder.png',
             status: false,
             temp: {
@@ -42,7 +41,6 @@ class AddDeviceOven extends Component<Props, State> {
             currentMode: ''
         },
         errors: {
-            //   isError: false,
             isNameError: false,
             isImageError: false
         }
@@ -122,12 +120,12 @@ class AddDeviceOven extends Component<Props, State> {
 
     private onSubmit = async (event: { preventDefault: () => void; }): Promise<void> => {
         event.preventDefault();
-        //наши старый метод
-        // const respOven = await devicesAPI.postOven(this.state.device);
-        // this.props.addDevice(respOven);
-        console.log(this.state.device);
-        this.props.addSagaOven(this.state.device); //метод саги
-        this.props.handleToggleDialog();
+        this.props.addSagaOven(this.state.device);
+        setTimeout(() => {
+            if (this.props.alert.length === 0) {
+                this.props.handleToggleDialog();
+            }
+        }, 500)
     }
 
     render() {
@@ -143,7 +141,6 @@ class AddDeviceOven extends Component<Props, State> {
                             <NameTextfield setName={this.setName}
                                 handleIsNameError={this.handleIsNameError}
                                 isNameError={this.state.errors.isNameError} />
-
                         </div>
                         <div className={style.row}>
                             <ImageTextfield setImageURL={this.setImageURL}
@@ -168,7 +165,7 @@ class AddDeviceOven extends Component<Props, State> {
                                 className={style.right}
                                 color="secondary"
                                 type='submit'
-                                disabled={!name || this.state.errors.isImageError || this.state.errors.isImageError}
+                                disabled={!name || this.state.errors.isNameError || this.state.errors.isImageError}
                                 onClick={this.onSubmit}>Add Device</Button>
                         </div>
                     </div>
